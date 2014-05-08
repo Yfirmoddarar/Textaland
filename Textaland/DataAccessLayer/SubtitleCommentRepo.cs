@@ -9,10 +9,12 @@ namespace Textaland.DataAccessLayer
 	public class SubtitleCommentRepo {
 		private static SubtitleCommentRepo _instance;
 
+		//this function creates a new SubtitleCommentRepo
 		public static SubtitleCommentRepo Instance {
 			get {
-				if (_instance == null)
+				if (_instance == null) {
 					_instance = new SubtitleCommentRepo();
+				}
 				return _instance;
 			}
 		}
@@ -52,6 +54,17 @@ namespace Textaland.DataAccessLayer
 			_newSubtitleComment._dateAdded = DateTime.Now;
 			_subtitleComments.Add(_newSubtitleComment);
 		}
+
+		//this operation removes the comment that matches the given ID
+		public void RemoveComment(int _removeId) {
+			foreach (var item in _subtitleComments) {
+				if (item._id == _removeId) {
+					_subtitleComments.Remove(item);
+					break;
+				}
+			}
+		}
+	
 
 	}
 }
