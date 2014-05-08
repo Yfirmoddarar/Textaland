@@ -10,6 +10,7 @@ namespace Textaland.Models
 		// Attributes.
 
 		public int Id { get; set; }
+        public int _lineNumber { get; set; }
 		public int _textFileId { get; set; }
 		public string _time { get; set; }
 		public string _line1 { get; set; }

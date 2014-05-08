@@ -25,7 +25,14 @@ namespace Textaland.DataAccessLayer
 		}
 
 		// Initialize a list of SubtitleLines.
-		private List<SubtitleLine> _subtitleLines = null;
+		private IQueryable<SubtitleLine> _subtitleLines = null;
+
+        private void updateList() {
+            AppDataContext db = new AppDataContext();
+
+            _subtitleLines = from l in db.SubtitleLines
+                             select l;
+        }
 
 		// Function that will get all lines in the list _subtitleLines
 		// and order them in ascending order by their id.
@@ -35,6 +42,9 @@ namespace Textaland.DataAccessLayer
 							select temp;
 			return _allLines;
 		}
+
+
+        /*
 
 		// This function will go through my list '_subtitleLines'
 		// and return the lines that matches with the given 'id'.
@@ -51,7 +61,7 @@ namespace Textaland.DataAccessLayer
 			int newId = 1;
 
 			// But if the list is not empty than it will get id according the the list.
-			if (_subtitleLines.Count > 0) {
+			if (_subtitleLines.Count() > 0) {
 				newId = _subtitleLines.Max(x => x.Id) + 1;
 			}
 
@@ -85,5 +95,7 @@ namespace Textaland.DataAccessLayer
 			}
 		}
 
+         * 
+         */
 	}
 }
