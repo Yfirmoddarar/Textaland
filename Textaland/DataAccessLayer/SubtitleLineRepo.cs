@@ -52,7 +52,7 @@ namespace Textaland.DataAccessLayer
 
 			// But if the list is not empty than it will get id according the the list.
 			if (_subtitleLines.Count > 0) {
-				newId = _subtitleLines.Count + 1;
+				newId = _subtitleLines.Max(x => x._id) + 1;
 			}
 
 			// Give the new line the id.
@@ -62,7 +62,7 @@ namespace Textaland.DataAccessLayer
 		}
 
 		public void RemoveLine(int id) {
-			int id = 5;
+			
 		}
 
 	}
