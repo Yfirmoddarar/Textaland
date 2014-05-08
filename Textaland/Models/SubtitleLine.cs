@@ -18,8 +18,7 @@ namespace Textaland.Models
 		// Operations.
 
 		// This function is unfinished - but is should update '_time'.
-        void ShiftTime(int shiftBy)
-        {
+        void ShiftTime(int shiftBy){
 
         }
 
