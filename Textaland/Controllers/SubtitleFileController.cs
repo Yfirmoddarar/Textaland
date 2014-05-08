@@ -28,8 +28,11 @@ namespace Textaland.Controllers
                 var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
                 file.SaveAs(path);
             }
+
+            //NEED CODE FOR NEW SUBFILE
+
             // redirect back to the index action to show the form once again
-            return RedirectToAction("Upload");
+            return RedirectToAction("UploadSubtitleFile");
         }
 	}
 }

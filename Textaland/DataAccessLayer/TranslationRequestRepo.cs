@@ -23,7 +23,14 @@ namespace Textaland.DataAccessLayer
 
 		//This operation returns all TranslationRequests.
 		public IEnumerable<TranslationRequest> GetAllTranslationRequests() {
-
+			//allTranslationRequests will be a list of all Requests ordered by
+			//number of upvotes.
+			var allTranslationRequests = from temp in _translationRequests
+										 orderby temp._numUpvotes descending
+										 select temp;
+			return allTranslationRequests;
 		}
+
+
 	}
 }
