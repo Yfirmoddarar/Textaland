@@ -27,5 +27,23 @@ namespace Textaland.DataAccessLayer
 		// Initialize a list of SubtitleLines.
 		private List<SubtitleLine> _subtitleLines = null;
 
+		// Function that will get all lines in the list _subtitleLines
+		// and order them in ascending order by their id.
+		public IEnumerable<SubtitleLine> GetAllLines() {
+			var _allLines = from temp in _subtitleLines
+							orderby temp._id ascending
+							select temp;
+			return _allLines;
+		}
+
+		// This function will go through my list '_subtitleLines'
+		// and return the line that matches with the given 'id'.
+		public IEnumerable<SubtitleLine> GetLineById(int id) {
+			var _subtitleLinesById = from temp in _subtitleLines
+									 where temp._id == id
+									 select temp;
+			return _subtitleLinesById;
+		}
+
 	}
 }
