@@ -22,9 +22,7 @@ namespace Textaland.DataAccessLayer
         private List<SubtitleFile> _subtitleFiles = null;
 
         //this operation returns all SubtitleFiles
-        public IEnumerable<SubtitleFile> GetAllSubtitles()
-        {
-
+        public IEnumerable<SubtitleFile> GetAllSubtitles() {
             //select all comments from the SubtitleComment list in an ascending order
             var _allSubtitles = from temp in _subtitleFiles
                                orderby temp._dateAdded ascending
@@ -32,5 +30,12 @@ namespace Textaland.DataAccessLayer
             return _allSubtitles;
         }
 
+        //this operation returns the Subtitle File that matches the given ID
+        public IEnumerable<SubtitleFile> GetSubtitleFileById(int id) {
+            var _subtitleFileById = from temp in _subtitleFiles
+                                       where temp._id == id
+                                       select temp;
+            return _subtitleFileById;
+        }
 	}
 }
