@@ -72,8 +72,17 @@ namespace Textaland.DataAccessLayer
 			}
 		}
 
-		public void UpdateLine(int id) {
-
+		// This function will update the lines of the subtitleline with the
+ 		// same id as 'newLine'. First I find the line in the list and than I
+		// update the lines.
+		public void UpdateLine(SubtitleLine newLine) {
+			foreach (var item in _subtitleLines) {
+				if (item._id == newLine._id) {
+					item._line1 = newLine._line1;
+					item._line2 = newLine._line2;
+					break;
+				}
+			}
 		}
 
 	}
