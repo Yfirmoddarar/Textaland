@@ -45,12 +45,22 @@ namespace Textaland.DataAccessLayer
 
 			if (_translationRequestUpvotes.Count > 0) {
 
-				newId = _translationRequestUpvotes.Count + 1;
+				newId = _translationRequestUpvotes.Max(x => x._id) + 1;
 			}
 
 			newUpvote._id = newId;
 			_translationRequestUpvotes.Add(newUpvote);
 		}
+
+		public void RemoveUpvote(int id) {
+			foreach (var item in _translationRequestUpvotes) {
+				if (item._id == id) {
+					_translationRequestUpvotes.Remove(item);
+					break;
+				}
+			}
+		}
+
 
 
 	}
