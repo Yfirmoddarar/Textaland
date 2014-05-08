@@ -7,6 +7,7 @@ namespace Textaland.Models
 {
 	public class SubtitleComment
 	{
+		//Attributes
 		public int _id { get; set; }
 		public int _textFileId { get; set; }
 		public int _userId { get; set; }
