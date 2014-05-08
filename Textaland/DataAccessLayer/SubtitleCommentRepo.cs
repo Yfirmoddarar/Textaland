@@ -30,5 +30,13 @@ namespace Textaland.DataAccessLayer
 			return _allComments;						   
 		}
 
+		//this operation returns the Comment that matches the given ID
+		private IEnumerable<SubtitleComment> GetCommentById(int _newId) {
+			var _subtitleCommentById = from temp in _subtitleComments
+									   where temp._id == _newId
+									   select temp;
+			return _subtitleCommentById;
+		}
+
 	}
 }
