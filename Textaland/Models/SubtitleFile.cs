@@ -8,21 +8,45 @@ namespace Textaland.Models
 	public class SubtitleFile {
 		// Attributes.
 
-		int _id { get; set; }
-		int _userId { get; set; }
-		int _numOfTranslationParticipants { get; set; }
-		int _numOfDownloads { get; set; }
-		int _rating { get; set; }
-		string _name { get; set; }
-		string _type { get; set; }
-		string _languageFrom { get; set; }
-		string _languageTo { get; set; }
-		string _description { get; set; }
-		DateTime _dateAdded { get; set; }
-		bool _readyForDownload { get; set; }
-		bool _inTranslation { get; set; }
-		bool _hearingImpaired { get; set; }
+		public int _id { get; set; }
+		public int _userId { get; set; }
+		public int _numOfTranslationParticipants { get; set; }
+		public int _numOfDownloads { get; set; }
+		public int _rating { get; set; }
+		public string _name { get; set; }
+		public string _type { get; set; }
+		public string _languageFrom { get; set; }
+		public string _languageTo { get; set; }
+		public string _description { get; set; }
+		public DateTime _dateAdded { get; set; }
+		public bool _readyForDownload { get; set; }
+		public bool _inTranslation { get; set; }
+		public bool _hearingImpaired { get; set; }
 
 		// Operations
+
+		// Function that tell us whether textfile is in
+		// translation or not.
+		bool IsInTranslation() {
+			return _inTranslation;
+		}
+
+		// Function that tell us whether textfile is ready for
+		// download or not.
+		bool IsReadyForDownload() {
+			return _readyForDownload;
+		}
+
+		// Function that will increase 'numOfDownload' by one.
+		void IncreaseNumDownloads() {
+			_numOfDownloads++;
+		}
+
+		// 
+		void ChangeRating() {
+
+		}
+
+
 	}
 }
