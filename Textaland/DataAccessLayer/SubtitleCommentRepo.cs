@@ -48,7 +48,7 @@ namespace Textaland.DataAccessLayer
 			//if the list isn't empty the new comment gets the ID according to 
 			//the numnber of comments
 			if (_subtitleComments.Count > 0) {
-				newId = _subtitleComments.Count + 1;
+				newId = _subtitleComments.Max(x => x._id) + 1;
 			}
 			_newSubtitleComment._id = newId;
 			_newSubtitleComment._dateAdded = DateTime.Now;
@@ -57,6 +57,7 @@ namespace Textaland.DataAccessLayer
 
 		//this operation removes the comment that matches the given ID
 		public void RemoveComment(int removeId) {
+
 			foreach (var item in _subtitleComments) {
 				if (item._id == removeId) {
 					_subtitleComments.Remove(item);
