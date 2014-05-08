@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Textaland.Models;
 
 namespace Textaland.DataAccessLayer
 {
@@ -23,7 +24,8 @@ namespace Textaland.DataAccessLayer
 			}
 		}
 
-
+		// Initialize a list of SubtitleLines.
+		private List<SubtitleLine> _subtitleLines = null;
 
 	}
 }
