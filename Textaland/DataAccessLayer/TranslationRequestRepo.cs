@@ -9,7 +9,7 @@ namespace Textaland.DataAccessLayer
 	public class TranslationRequestRepo {
 
 	    //Initialize a list of Translation Requests.
-		private List<TranslationRequest> _translationRequests = null;
+		private List<TranslationRequest> _translationRequests = new List<TranslationRequest>();
 
 		//This operation returns all TranslationRequests.
 		public IEnumerable<TranslationRequest> GetAllTranslationRequests() {
