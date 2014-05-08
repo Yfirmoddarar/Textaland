@@ -61,8 +61,19 @@ namespace Textaland.DataAccessLayer
 			_subtitleLines.Add(newSubtitleLine);
 		}
 
+		// This function will remove the line with a given id. If no line has the given
+		// id than the function will do nothing.
 		public void RemoveLine(int id) {
-			
+			foreach (var item in _subtitleLines) {
+				if (item._id == id) {
+					_subtitleLines.Remove(item);
+					break;
+				}
+			}
+		}
+
+		public void UpdateLine(int id) {
+
 		}
 
 	}
