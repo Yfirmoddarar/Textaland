@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "UploadSubtitleFile";
+}
+
+<h2>UploadSubtitleFile</h2>
+
+@using (Html.BeginForm("UploadSubtitleFile", "SubtitleFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="file" />
+    <input type="submit" value="OK" />
+}
