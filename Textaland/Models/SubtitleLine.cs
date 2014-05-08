@@ -9,7 +9,7 @@ namespace Textaland.Models
 	public class SubtitleLine {
 		// Attributes.
 
-		public int _id { get; set; }
+		public int Id { get; set; }
 		public int _textFileId { get; set; }
 		public string _time { get; set; }
 		public string _line1 { get; set; }

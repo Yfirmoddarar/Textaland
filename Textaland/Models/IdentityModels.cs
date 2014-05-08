@@ -11,7 +11,7 @@ namespace Textaland.Models
     public class ApplicationDbContext : IdentityDbContext<UserAccount>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection")
+            : base("AppDataContext")
         {
         }
     }

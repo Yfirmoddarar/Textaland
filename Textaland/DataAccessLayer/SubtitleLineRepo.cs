@@ -31,7 +31,7 @@ namespace Textaland.DataAccessLayer
 		// and order them in ascending order by their id.
 		public IEnumerable<SubtitleLine> GetAllLines() {
 			var _allLines = from temp in _subtitleLines
-							orderby temp._id ascending
+							orderby temp.Id ascending
 							select temp;
 			return _allLines;
 		}
@@ -40,7 +40,7 @@ namespace Textaland.DataAccessLayer
 		// and return the lines that matches with the given 'id'.
 		public IEnumerable<SubtitleLine> GetLineById(int id) {
 			var _subtitleLinesById = from temp in _subtitleLines
-									 where temp._id == id
+									 where temp.Id == id
 									 select temp;
 			return _subtitleLinesById;
 		}
@@ -52,11 +52,11 @@ namespace Textaland.DataAccessLayer
 
 			// But if the list is not empty than it will get id according the the list.
 			if (_subtitleLines.Count > 0) {
-				newId = _subtitleLines.Max(x => x._id) + 1;
+				newId = _subtitleLines.Max(x => x.Id) + 1;
 			}
 
 			// Give the new line the id.
-			newSubtitleLine._id = newId;
+			newSubtitleLine.Id = newId;
 			// And add the new line to the list.
 			_subtitleLines.Add(newSubtitleLine);
 		}
@@ -65,7 +65,7 @@ namespace Textaland.DataAccessLayer
 		// id than the function will do nothing.
 		public void RemoveLine(int id) {
 			foreach (var item in _subtitleLines) {
-				if (item._id == id) {
+				if (item.Id == id) {
 					_subtitleLines.Remove(item);
 					break;
 				}
@@ -77,7 +77,7 @@ namespace Textaland.DataAccessLayer
 		// update the lines.
 		public void UpdateLine(SubtitleLine newLine) {
 			foreach (var item in _subtitleLines) {
-				if (item._id == newLine._id) {
+				if (item.Id == newLine.Id) {
 					item._line1 = newLine._line1;
 					item._line2 = newLine._line2;
 					break;
