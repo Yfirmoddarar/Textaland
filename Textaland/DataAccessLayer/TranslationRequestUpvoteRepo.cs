@@ -19,13 +19,37 @@ namespace Textaland.DataAccessLayer
 			}
 		}
 
+		//initalize a new list of TranslationRequestUpvotes
 		private List<TranslationRequestUpvote> _translationRequestUpvotes = null;
 
 		public IEnumerable<TranslationRequestUpvote> GetAllUpvotes() {
 
+			//select all upvotes from the list and return them
 			var allUpvotes = from temp in _translationRequestUpvotes
 							select temp;
 			return allUpvotes;
+		}
+
+		public IEnumerable<TranslationRequestUpvote> GetUpvoteById(int id) {
+
+			//select the TranslationRequestUpvote that matches the given ID
+			var correctId = from temp in _translationRequestUpvotes
+							where temp._id == id
+							select temp;
+			return correctId;
+		}
+
+		public void AddUpvote(TranslationRequestUpvote newUpvote) {
+
+			int newId = 1;
+
+			if (_translationRequestUpvotes.Count > 0) {
+
+				newId = _translationRequestUpvotes.Count + 1;
+			}
+
+			newUpvote._id = newId;
+			_translationRequestUpvotes.Add(newUpvote);
 		}
 
 
