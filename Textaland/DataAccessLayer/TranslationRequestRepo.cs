@@ -47,17 +47,19 @@ namespace Textaland.DataAccessLayer
 			//If the list is not empty the new translation request will get id according
 			//to the number of TranslationRequests.
 			if (_translationRequests.Count > 0) {
-				newId = _translationRequests.Count + 1;
+				newId = _translationRequests.Max(x => x._id) + 1;
 			}
 			newTranslationRequest._id = newId;
 			_translationRequests.Add(newTranslationRequest);
 		}
 
-		//This operation removes a specific TranslationRequest from the list by id. 
-		//In this operation the id changes on the other TranslationRequests.
-		//the id changes on the other TranslationRequests.
-		public void RemoveTranslationRequestById(int id) {
-
+		//This operation removes a specific TranslationRequest from the list by id.
+		public void RemoveTranslationRequestById(int removeId) {
+			foreach(var item in _translationRequests){
+				if (item._id == removeId) {
+					_translationRequests.Remove(item);
+				}
+			}
 		}
 
 	}
