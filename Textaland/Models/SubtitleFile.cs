@@ -24,6 +24,14 @@ namespace Textaland.Models
 		public bool _inTranslation { get; set; }
 		public bool _hearingImpaired { get; set; }
 
+		// Constructor.
+
+		// Initialise the attribute '_dateAdded' to the time
+		// when the textfile is created.
+		public SubtitleFile() {
+			_dateAdded = DateTime.Now;
+		}
+
 		// Operations
 
 		// Function that tell us whether textfile is in
