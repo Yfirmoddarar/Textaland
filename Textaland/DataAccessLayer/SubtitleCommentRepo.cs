@@ -6,7 +6,8 @@ using Textaland.Models;
 
 namespace Textaland.DataAccessLayer
 {
-	public class SubtitleCommentRepo {
+	public class SubtitleCommentRepo : ApplicationDbContext {
+
 		private static SubtitleCommentRepo _instance;
 
 		//this function creates a new SubtitleCommentRepo
