@@ -37,12 +37,32 @@ namespace Textaland.DataAccessLayer
 		}
 
 		// This function will go through my list '_subtitleLines'
-		// and return the line that matches with the given 'id'.
+		// and return the lines that matches with the given 'id'.
 		public IEnumerable<SubtitleLine> GetLineById(int id) {
 			var _subtitleLinesById = from temp in _subtitleLines
 									 where temp._id == id
 									 select temp;
 			return _subtitleLinesById;
+		}
+
+		// This function will add the new line to the list.
+		public void AddLine(SubtitleLine newSubtitleLine) {
+			// If the list it empty than the 'newSubtitleLine' will get the id 1.
+			int newId = 1;
+
+			// But if the list is not empty than it will get id according the the list.
+			if (_subtitleLines.Count > 0) {
+				newId = _subtitleLines.Count + 1;
+			}
+
+			// Give the new line the id.
+			newSubtitleLine._id = newId;
+			// And add the new line to the list.
+			_subtitleLines.Add(newSubtitleLine);
+		}
+
+		public void RemoveLine(int id) {
+
 		}
 
 	}
