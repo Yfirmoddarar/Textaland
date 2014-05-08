@@ -37,5 +37,21 @@ namespace Textaland.DataAccessLayer
                                        select temp;
             return _subtitleFileById;
         }
+
+        //this operation adds a new Subtitle file to the existing List
+        public void AddSubtitle(SubtitleFile _newSubtitleFile)
+        {
+            int newId = 1;
+
+            //if the list isn't empty the new comment gets the ID according to 
+            //the number of comments
+            if (_subtitleFiles.Count > 0)
+            {
+                newId = _subtitleFiles.Max(x => x._id) + 1;
+            }
+            _newSubtitleFile._id = newId;
+            _newSubtitleFile._dateAdded = DateTime.Now;
+            _subtitleFiles.Add(_newSubtitleFile);
+        }
 	}
 }
