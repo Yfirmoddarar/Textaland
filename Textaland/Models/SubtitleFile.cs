@@ -12,7 +12,8 @@ namespace Textaland.Models
 		public int _userId { get; set; }
 		public int _numOfTranslationParticipants { get; set; }
 		public int _numOfDownloads { get; set; }
-		public int _rating { get; set; }
+		public int _numOfTimesRated { get; set; }
+		public double _rating { get; set; }
 		public string _name { get; set; }
 		public string _type { get; set; }
 		public string _languageFrom { get; set; }
@@ -22,6 +23,14 @@ namespace Textaland.Models
 		public bool _readyForDownload { get; set; }
 		public bool _inTranslation { get; set; }
 		public bool _hearingImpaired { get; set; }
+
+		// Constructor.
+
+		// Initialise the attribute '_dateAdded' to the time
+		// when the textfile is created.
+		public SubtitleFile() {
+			_dateAdded = DateTime.Now;
+		}
 
 		// Operations
 
@@ -37,14 +46,25 @@ namespace Textaland.Models
 			return _readyForDownload;
 		}
 
-		// Function that will increase 'numOfDownload' by one.
+		// Function that will increase '_numOfDownload' by one.
 		void IncreaseNumDownloads() {
 			_numOfDownloads++;
 		}
 
-		// 
-		void ChangeRating() {
+		// Function that will increase '_numOfTranslationParticipants'
+		// by one.
+		void IncreaseNumOfTranslationParticipants() {
+			_numOfTranslationParticipants++;
+		}
 
+		// This function will update the rating of some user when somebody 
+		// gives him new rating.
+		// The function has not been tested - 8th of May.
+		void ChangeRating(int newRating) {
+			double currTotalRating = _rating * _numOfTimesRated;
+			currTotalRating += newRating;
+			_numOfTimesRated++;
+			_rating = currTotalRating / _numOfTimesRated;
 		}
 
 

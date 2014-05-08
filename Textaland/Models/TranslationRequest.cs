@@ -5,8 +5,7 @@ using System.Web;
 
 namespace Textaland.Models
 {
-	public class TranslationRequest
-	{
+	public class TranslationRequest {
 		public int _id { get; set; }
 		public int _userId { get; set; }
 		public int _numUpvotes { get; set; }
