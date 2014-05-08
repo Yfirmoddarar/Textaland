@@ -34,7 +34,11 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <div class="btn-group btn-group-justified">
+                <a href="/Home/Index" class="btn btn-info">@DateTime.Now.Year - Textaland.is</a>
+                <a href="mailto:textagaurar@textaland.is" class="btn btn-default">Hafðu samband</a>
+                <a href="/Home/FAQ" class="btn btn-info">FAQ</a>
+            </div>
         </footer>
     </div>
     <script src="~/Scripts/SubtitleFileScript.js"></script>
