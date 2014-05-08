@@ -165,6 +165,7 @@
     <Compile Include="Controllers\SubtitleFileController.cs" />
     <Compile Include="DataAccessLayer\SubtitleCommentRepo.cs" />
     <Compile Include="DataAccessLayer\TranslationRequestRepo.cs" />
+    <Compile Include="DataAccessLayer\TranslationRequestUpvoteRepo.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
