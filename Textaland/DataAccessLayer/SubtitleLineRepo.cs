@@ -62,7 +62,7 @@ namespace Textaland.DataAccessLayer
 		}
 
 		public void RemoveLine(int id) {
-
+			int id = 5;
 		}
 
 	}
