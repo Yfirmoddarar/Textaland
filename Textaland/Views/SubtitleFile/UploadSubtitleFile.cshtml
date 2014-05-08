@@ -7,6 +7,12 @@
 
 @using (Html.BeginForm("UploadSubtitleFile", "SubtitleFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <input type="file" name="file" />
-    <input type="submit" value="OK" />
+    //Will only accept .srt files
+    <input type="file" name="file" id="uploadFile" onchange="checkFile()" class="btn btn-default"/>
+    <input type="submit" value="OK" id="uploadSubmit" class="hidden"/>
 }
+
+<div class="alert alert-dismissable alert-danger hidden" id="uploadError">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>Oh snap! That's the wrong file type, try using '.str'</strong>
+</div>
