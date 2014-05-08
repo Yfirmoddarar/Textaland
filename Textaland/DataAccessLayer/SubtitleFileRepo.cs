@@ -53,5 +53,18 @@ namespace Textaland.DataAccessLayer
             _newSubtitleFile._dateAdded = DateTime.Now;
             _subtitleFiles.Add(_newSubtitleFile);
         }
+
+        //this operation removes the subtitle file that matches the given ID
+        public void RemoveSubtitle(int removeId)
+        {
+            foreach (var item in _subtitleFiles)
+            {
+                if (item._id == removeId)
+                {
+                    _subtitleFiles.Remove(item);
+                    break;
+                }
+            }
+        }
 	}
 }
