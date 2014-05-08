@@ -21,7 +21,7 @@ namespace Textaland.DataAccessLayer
 		private List<SubtitleComment> _subtitleComments = null;
 
 		//this operation returns all SubtitleComments
-		private IEnumerable<SubtitleComment> GetAllComments() {
+		public IEnumerable<SubtitleComment> GetAllComments() {
 
 			//select all comments from the SubtitleComment list in an ascending order
 			var _allComments = from temp in _subtitleComments
@@ -32,11 +32,25 @@ namespace Textaland.DataAccessLayer
 
 		//this operation returns the Comment that matches the given ID
 
-		private IEnumerable<SubtitleComment> GetCommentById(int _newId) {
+		public IEnumerable<SubtitleComment> GetCommentById(int _newId) {
 			var _subtitleCommentById = from temp in _subtitleComments
 									   where temp._id == _newId
 									   select temp;
 			return _subtitleCommentById;
+		}
+
+		//this operation adds a new comment to the existing List
+		public void AddComment(SubtitleComment _newSubtitleComment) {
+			int _newId = 1;
+			
+			//if the list isn't empty the new comment gets the ID according to 
+			//the numnber of comments
+			if (_subtitleComments.Count > 0) {
+				_newId = _subtitleComments.Count + 1;
+			}
+			_newSubtitleComment._id = _newId;
+			_newSubtitleComment._dateAdded = DateTime.Now;
+			_subtitleComments.Add(_newSubtitleComment);
 		}
 
 	}
