@@ -31,6 +31,15 @@ namespace Textaland.DataAccessLayer
 			return allTranslationRequests;
 		}
 
+		//This operation returns a Request by a specific id.
+		public IEnumerable<TranslationRequest> GetTranslationRequestById(int id) {
+			//Temp will be a translation request with the id that the operation took in.
+			var translationRequestById = from temp in _translationRequests
+										 where temp._id == id
+										 select temp;
+			return translationRequestById;
+		}
+
 
 	}
 }
