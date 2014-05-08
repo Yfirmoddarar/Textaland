@@ -45,7 +45,7 @@ namespace Textaland.DataAccessLayer
 			int newId = 1;
 
 			//If the list is not empty the new translation request will get id according
-			//to the number of TranslationRequests.
+			//to the highest excisting Id.
 			if (_translationRequests.Count > 0) {
 				newId = _translationRequests.Max(x => x._id) + 1;
 			}
