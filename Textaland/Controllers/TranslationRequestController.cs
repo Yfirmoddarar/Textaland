@@ -49,6 +49,7 @@ namespace Textaland.Controllers
 			
 		}
 
+		//Get
 		public ActionResult TranslationRequests()
 		{
 			return View();
