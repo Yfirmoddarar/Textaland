@@ -8,7 +8,7 @@ namespace Textaland.Models
 {
 	public class TranslationRequest {
 		public int Id { get; set; }
-		public int _userId { get; set; }
+		public string _userId { get; set; }
 		public int _numUpvotes { get; set; }
         [Required(ErrorMessage = "Name required")]
         public string _name { get; set; }
