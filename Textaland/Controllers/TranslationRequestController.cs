@@ -62,6 +62,17 @@ namespace Textaland.Controllers
 			return View(requests);
 		}
 
+
+		public ActionResult AddVote(TranslationRequest tr) {
+		
+			//TranslationRequestUpvote upvote = new TranslationRequestUpvote();
+			
+			//var userIdUpvotes = upvote.Get
+
+			tr._numUpvotes++;
+
+			return RedirectToAction("TranslationRequests");
+		}
 	}
 
 
