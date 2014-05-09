@@ -14,28 +14,20 @@ namespace Textaland.DataAccessLayer
         // and order them in ascending order by their id.
         public IEnumerable<SubtitleFile> GetAllSubtitles()
         {
-            var allFiles = from l in db.SubtitleFiles
-                           orderby l.Id ascending
-                           select l;
+            var allFiles = from f in db.SubtitleFiles
+                           orderby f.Id ascending
+                           select f;
             return allFiles;
         }
 
-
-        //this operation returns all SubtitleFiles
-        public IEnumerable<SubtitleFile> GetAllSubtitles() {
-            //select all comments from the SubtitleComment list in an ascending order
-            var _allSubtitles = from temp in _subtitleFiles
-                               orderby temp._dateAdded ascending
-                               select temp;
-            return _allSubtitles;
-        }
-
-        //this operation returns the Subtitle File that matches the given ID
-        public IEnumerable<SubtitleFile> GetSubtitleFileById(int id) {
-            var _subtitleFileById = from temp in _subtitleFiles
-                                       where temp._id == id
-                                       select temp;
-            return _subtitleFileById;
+        // This function will go through my list '_subtitleLines'
+        // and return the lines that matches with the given 'id'.
+        public IEnumerable<SubtitleFile> GetSubtitleFileById(int id)
+        {
+            var subtitleFilesById = from f in db.SubtitleFiles
+                                    where f.Id == id
+                                    select f;
+            return subtitleFilesById;
         }
 
         //this operation adds a new Subtitle file to the existing List
