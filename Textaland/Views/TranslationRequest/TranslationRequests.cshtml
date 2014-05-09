@@ -6,7 +6,7 @@
 
 <h2>Ósvaraðar beiðnir</h2>
 
-<p> 
+<p>
     <a href="/Translationrequest/NewTranslationRequest" class="btn btn-default" >Senda inn nýja beiðni</a>
 </p>
 <table class="table">
@@ -35,9 +35,10 @@
             @Html.DisplayFor(modelItem => item._numUpvotes)
         </td>
         <td>
-            <button onclick="" class="btn btn-primary btn-sm">Kjósa</button>
+            @Html.ActionLink("Kjósa", "AddVote", new { controller = "TranslationRequest" }, item)
         </td>
     </tr>
+ 
 }
 
 </table>
@@ -45,3 +46,4 @@
 <p>
     <a href="/Translationrequest/NewTranslationRequest" class="btn btn-default">Senda inn nýja beiðni</a>
 </p>
+
