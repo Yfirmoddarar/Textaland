@@ -24,7 +24,7 @@ namespace Textaland.DataAccessLayer
 		public IEnumerable<TranslationRequest> GetTranslationRequestById(int id) {
 			//Temp will be a translation request with the id that the operation took in.
 			var translationRequestById = from r in db.TranslationRequests
-										 where r._id == id
+										 where r.Id == id
 										 select r;
 			return translationRequestById;
 		}
@@ -36,16 +36,16 @@ namespace Textaland.DataAccessLayer
 			//If the list is not empty the new translation request will get id according
 			//to the highest excisting Id.
 			if (db.TranslationRequests.Count() > 0) {
-				newId = db.TranslationRequests.Max(x => x._id) + 1;
+				newId = db.TranslationRequests.Max(x => x.Id) + 1;
 			}
-			newTranslationRequest._id = newId;
+			newTranslationRequest.Id = newId;
 			db.TranslationRequests.Add(newTranslationRequest);
 		}
 
 		//This operation removes a specific TranslationRequest from the list by id.
 		public void RemoveTranslationRequestById(int removeId) {
 			foreach(var item in db.TranslationRequests){
-				if (item._id == removeId) {
+				if (item.Id == removeId) {
 					db.TranslationRequests.Remove(item);
 				}
 			}

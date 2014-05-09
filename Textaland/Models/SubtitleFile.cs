@@ -9,7 +9,7 @@ namespace Textaland.Models
 	public class SubtitleFile {
 		// Attributes.
 
-		public int _id { get; set; }
+		public int Id { get; set; }
 		public int _userId { get; set; }
 		public int _numOfTranslationParticipants { get; set; }
 		public int _numOfDownloads { get; set; }
