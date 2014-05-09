@@ -56,8 +56,11 @@ namespace Textaland.Controllers
 		{
 
 			TranslationRequestRepo trr = new TranslationRequestRepo();
+            TranslationRequestUpvoteRepo trur = new TranslationRequestUpvoteRepo();
 
-			var requests = trr.GetAllTranslationRequests();
+            ViewBag.Upvotes = trur.GetAllUpvotes();
+
+            var requests = trr.GetAllTranslationRequests();
 
 			return View(requests);
 		}
@@ -65,10 +68,11 @@ namespace Textaland.Controllers
 		//This operation Adds a Vote to a the "tr" requests.
 		[HttpPost]
 		[Authorize]
-		public ActionResult AddVote(TranslationRequest upRequest)
+		public ActionResult AddVote(TranslationRequest request)
 		{
 			//taka við TranslationRequest Id búa til upvote út frá því. gefa því Id þ.e.a.s kalla á add fallið
 			//í TranslationRequestUpvote og búa þannig nýtt vote.
+            TranslationRequestRepo trr = new TranslationRequestRepo();
 			TranslationRequestUpvote upvote = new TranslationRequestUpvote();
 			TranslationRequestUpvoteRepo upvoteRepo = new TranslationRequestUpvoteRepo();
 			//Takes all upvotes from the TranslationRequest whith "id".
@@ -79,12 +83,13 @@ namespace Textaland.Controllers
 					return RedirectToAction("TranslationRequests");
 				}
 			}*/
-			upvote._requestId = upRequest.Id;
-			upRequest.IncreaseNumUpvotes();
+			upvote._requestId = request.Id;
+            trr.upVote(upvote._requestId);
 			upvoteRepo.AddUpvote(upvote);
 			//Changes the number of upvotes in the TranslationRequest "tr".
 			//Returns the TranslationRequests view were "tr" has one more upvotes.
-			return RedirectToAction("TranslationRequests");
+		        
+            return RedirectToAction("TranslationRequests");
 			
 		}
 	}

@@ -43,6 +43,14 @@ namespace Textaland.DataAccessLayer
             db.SaveChanges();
 		}
 
+        public void upVote(int id) {
+            var req = db.TranslationRequests.First(r => r.Id == id);
+
+            req._numUpvotes++;
+
+            db.SaveChanges();
+        }
+
 		//This operation removes a specific TranslationRequest from the list by id.
         //public void RemoveTranslationRequestById(int removeId) {
         //    foreach(var item in db.TranslationRequests){
