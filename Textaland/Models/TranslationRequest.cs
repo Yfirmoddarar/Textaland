@@ -6,7 +6,7 @@ using System.Web;
 namespace Textaland.Models
 {
 	public class TranslationRequest {
-		public int _id { get; set; }
+		public int Id { get; set; }
 		public int _userId { get; set; }
 		public int _numUpvotes { get; set; }
 		public string _name { get; set; }

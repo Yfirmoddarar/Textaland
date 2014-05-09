@@ -39,9 +39,9 @@ namespace Textaland.DataAccessLayer
             //the number of comments
             if (_subtitleFiles.Count > 0)
             {
-                newId = _subtitleFiles.Max(x => x._id) + 1;
+                newId = _subtitleFiles.Max(x => x.Id) + 1;
             }
-            _newSubtitleFile._id = newId;
+            _newSubtitleFile.Id = newId;
             _newSubtitleFile._dateAdded = DateTime.Now;
             _subtitleFiles.Add(_newSubtitleFile);
         }
@@ -51,7 +51,7 @@ namespace Textaland.DataAccessLayer
         {
             foreach (var item in _subtitleFiles)
             {
-                if (item._id == removeId)
+                if (item.Id == removeId)
                 {
                     _subtitleFiles.Remove(item);
                     break;
