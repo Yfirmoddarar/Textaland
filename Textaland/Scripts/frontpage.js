@@ -1,4 +1,0 @@
-﻿
-function hideText() {
-    $(".searchInput").hide();
-}
