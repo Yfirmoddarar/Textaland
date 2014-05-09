@@ -10,6 +10,17 @@ namespace Textaland.Controllers
 {
     public class SubtitleFileController : Controller
     {
+        /*
+        //Get
+        public ActionResult Upload ()
+        {
+            return View();
+        }
 
+        //Post
+        [HttpPost]
+        public  ActionResult upload (string name, string description, string language, )
+         * 
+         */
 	}
 }
