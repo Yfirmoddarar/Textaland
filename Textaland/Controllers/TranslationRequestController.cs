@@ -18,12 +18,14 @@ namespace Textaland.Controllers
 		}
 
 		//Get
+        [Authorize]
 		public ActionResult NewTranslationRequest()
 		{
 			return View();
 		}
 
 		[HttpPost]
+        [Authorize]
 		public ActionResult NewTranslationRequest(FormCollection formData) 
 		{
 			String strName = formData["_name"];
