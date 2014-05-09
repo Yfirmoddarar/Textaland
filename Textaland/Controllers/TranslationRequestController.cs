@@ -52,7 +52,12 @@ namespace Textaland.Controllers
 		//Get
 		public ActionResult TranslationRequests()
 		{
-			return View();
+
+			TranslationRequestRepo trr = new TranslationRequestRepo();
+
+			var requests = trr.GetAllTranslationRequests();
+
+			return View(requests);
 		}
 	}
 
