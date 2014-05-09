@@ -8,50 +8,44 @@ namespace Textaland.DataAccessLayer
 {
 	public class TranslationRequestUpvoteRepo
 	{
-		private static TranslationRequestUpvoteRepo _instance;
 
-		public static TranslationRequestUpvoteRepo Instance {
-			get {
-				if (_instance == null) {
-					_instance = new TranslationRequestUpvoteRepo();
-				}
-				return _instance;
-			}
-		}
-
-		//initalize a new list of TranslationRequestUpvotes
-		private List<TranslationRequestUpvote> _translationRequestUpvotes = null;
+        AppDataContext db = new AppDataContext();
 
 		public IEnumerable<TranslationRequestUpvote> GetAllUpvotes() {
 
 			//select all upvotes from the list and return them
-			var allUpvotes = from temp in _translationRequestUpvotes
-							select temp;
+			var allUpvotes = from u in db.TranslationRequestUpvotes
+							select u;
 			return allUpvotes;
 		}
 
 		public IEnumerable<TranslationRequestUpvote> GetUpvoteById(int id) {
 
 			//select the TranslationRequestUpvote that matches the given ID
-			var correctId = from temp in _translationRequestUpvotes
-							where temp._id == id
-							select temp;
+			var correctId = from u in db.TranslationRequestUpvotes
+							where u._requestId == id
+							select u;
 			return correctId;
 		}
 
 		public void AddUpvote(TranslationRequestUpvote newUpvote) {
 
-			int newId = 1;
+            int newId = 1;
 
-			if (_translationRequestUpvotes.Count > 0) {
+            // But if the list is not empty than it will get id according the the list.
+            if (db.TranslationRequestUpvotes.Count() > 0)
+            {
+                newId = db.TranslationRequestUpvotes.Max(x => x._id) + 1;
+            }
 
-				newId = _translationRequestUpvotes.Max(x => x._id) + 1;
-			}
-
-			newUpvote._id = newId;
-			_translationRequestUpvotes.Add(newUpvote);
+            // Give the new line the id.
+            newUpvote._id = newId;
+            // And add the new line to the list.
+            db.TranslationRequestUpvotes.Add(newUpvote);
+            db.SaveChanges();
 		}
 
+        /*
 		public void RemoveUpvote(int id) {
 			foreach (var item in _translationRequestUpvotes) {
 				if (item._id == id) {
@@ -60,7 +54,7 @@ namespace Textaland.DataAccessLayer
 				}
 			}
 		}
-
+        */
 
 	}
 }
