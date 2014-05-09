@@ -18,6 +18,7 @@ namespace Textaland.Controllers
 		}
 
 		//Get
+        [Authorize]
 		public ActionResult NewTranslationRequest()
 		{
 			return View();
@@ -50,6 +51,7 @@ namespace Textaland.Controllers
 		}
 
 		//Get
+        [Authorize]
 		public ActionResult TranslationRequests()
 		{
 
