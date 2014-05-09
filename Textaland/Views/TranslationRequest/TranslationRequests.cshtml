@@ -35,7 +35,10 @@
             @Html.DisplayFor(modelItem => item._numUpvotes)
         </td>
         <td>
-            @Html.ActionLink("Kjósa", "AddVote", new { controller = "TranslationRequest" }, item)
+            @using (Html.BeginForm("AddVote", "TranslationRequest", item))
+            {
+                <input type="submit" class="btn btn-primary btn-sm"  />
+            }
         </td>
     </tr>
  

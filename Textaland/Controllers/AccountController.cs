@@ -83,7 +83,7 @@ namespace Textaland.Controllers
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("FrontPage", "Home");
                 }
                 else
                 {
@@ -290,7 +290,7 @@ namespace Textaland.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("FrontPage", "Home");
         }
 
         //
@@ -372,7 +372,7 @@ namespace Textaland.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("FrontPage", "Home");
             }
         }
 
