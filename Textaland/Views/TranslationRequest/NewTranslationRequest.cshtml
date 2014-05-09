@@ -4,14 +4,13 @@
     ViewBag.Title = "NewTranslationRequest";
 }
 
-<h2>Hentu inn nýrri beiðni.</h2>
+<h2>Ný beiðni</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>TranslationRequest</h4>
         <hr />
         @Html.ValidationSummary(true)
 
@@ -56,5 +55,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back", "Index")
 </div>

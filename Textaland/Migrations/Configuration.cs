@@ -17,16 +17,17 @@ namespace Textaland.Migrations
         protected override void Seed(Textaland.DataAccessLayer.AppDataContext context)
         {
 
-            var subtitleLines = new List<SubtitleLine>
+            /*
+            var seedData = new List<TranslationRequestUpvote>
             {
-                new SubtitleLine{_lineNumber=1,_line1="First line of text.",_line2="Second line of text.",_time="Timestring:)"},
-                new SubtitleLine{_lineNumber=2,_line1="First  of text.",_line2="Second  of text.",_time="Timestring:)"},
-                new SubtitleLine{_lineNumber=3,_line1="First line  text.",_line2="Second line  text.",_time="Timestring:)"},
-                new SubtitleLine{_lineNumber=4,_line1="First  text.",_line2="Second text.",_time="Timestring:)"}
+                new TranslationRequestUpvote{_requestId=1},
+                new TranslationRequestUpvote{_requestId=1}
             };
-
-            subtitleLines.ForEach(l => context.SubtitleLines.Add(l));
+            
+            seedData.ForEach(d => context.TranslationRequestUpvotes.Add(d));
             context.SaveChanges();
+
+            */
 
             //  This method will be called after migrating to the latest version.
 

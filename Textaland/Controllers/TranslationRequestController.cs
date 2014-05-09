@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Textaland.Models;
+using Textaland.DataAccessLayer;
 
 namespace Textaland.Controllers
 {
@@ -23,9 +24,32 @@ namespace Textaland.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult NewTranslationRequest(FormCollection formData)
+		public ActionResult NewTranslationRequest(FormCollection formData) 
 		{
-			return Index();
+			String strName = formData["_name"];
+			String strLanguage = formData["_language"];
+
+			if (!String.IsNullOrEmpty(strName) && !String.IsNullOrEmpty(strLanguage)) {
+
+				TranslationRequest newRequest = new TranslationRequest();
+
+				newRequest._name = strName;
+				newRequest._language = strLanguage;
+
+				TranslationRequestRepo requestRepo = new TranslationRequestRepo();
+
+				requestRepo.AddTranslationRequest(newRequest);
+			}
+			else {
+
+			}
+
+			return RedirectToAction("TranslationRequests");
+		}
+
+		public ActionResult TranslationRequests()
+		{
+			return View();
 		}
 	}
 
