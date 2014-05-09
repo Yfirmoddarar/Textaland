@@ -4,10 +4,10 @@
     ViewBag.Title = "TranslationRequests";
 }
 
-<h2>TranslationRequests</h2>
+<h2>Ósvaraðar beiðnir</h2>
 
 <p>
-    @Html.ActionLink("Create New", "NewTranslationRequest")
+    @Html.ActionLink("Senda inn nýja beiðni", "NewTranslationRequest")
 </p>
 <table class="table">
     <tr>
@@ -35,7 +35,7 @@
             @Html.DisplayFor(modelItem => item._numUpvotes)
         </td>
         <td>
-            @Html.ActionLink("Kjósa", "Edit", new { id=item.Id }) |
+            <button onclick="" class="btn btn-primary btn-sm">Kjósa</button>
         </td>
     </tr>
 }
@@ -43,5 +43,9 @@
 </table>
 
 <p>
-    @Html.ActionLink("Create New", "NewTranslationRequest")
+    @Html.ActionLink("Senda inn nýja beiðni", "NewTranslationRequest")
 </p>
+
+<script>
+    function increaseNumVotes(int item)
+</script>
