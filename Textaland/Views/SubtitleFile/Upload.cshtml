@@ -1,0 +1,72 @@
+﻿@model Textaland.Models.SubtitleFile
+
+@{
+    ViewBag.Title = "Upload";
+}
+
+<h2>Upload</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>SubtitleFile</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model._name, "Nafn", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model._name)
+                @Html.ValidationMessageFor(model => model._name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model._description, "Lýsing", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model._description, new {@cols="21", @rows="4"})
+                @Html.ValidationMessageFor(model => model._description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model._type, "Flokkur", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList(
+                    "Types",
+                    (IEnumerable<SelectListItem>)ViewBag.ListOfTypes
+                )
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model._languageFrom, "Tungumál", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+               @Html.DropDownList(
+                    "Types",
+                    (IEnumerable<SelectListItem>)ViewBag.ListOfLanguages
+                )
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model._hearingImpaired, "Fyrir heyrnarskerta", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model._hearingImpaired)
+                @Html.ValidationMessageFor(model => model._hearingImpaired)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Hlaða upp" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
