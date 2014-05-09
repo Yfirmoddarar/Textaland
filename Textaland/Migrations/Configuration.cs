@@ -17,13 +17,17 @@ namespace Textaland.Migrations
         protected override void Seed(Textaland.DataAccessLayer.AppDataContext context)
         {
 
+            /*
             var seedData = new List<TranslationRequestUpvote>
             {
-                
+                new TranslationRequestUpvote{_requestId=1},
+                new TranslationRequestUpvote{_requestId=1}
             };
+            
+            seedData.ForEach(d => context.TranslationRequestUpvotes.Add(d));
+            context.SaveChanges();
 
-           // seedData.ForEach(d => context.TranslationRequests.Add(d));
-            //context.SaveChanges();
+            */
 
             //  This method will be called after migrating to the latest version.
 
