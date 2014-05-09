@@ -31,7 +31,7 @@
         </div>-->
 
         <div class="form-group">
-            @Html.LabelFor(model => model._name, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model._name, "Nafn", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model._name)
                 @Html.ValidationMessageFor(model => model._name)
@@ -39,7 +39,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model._language, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model._language, "Tungumál", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model._language)
                 @Html.ValidationMessageFor(model => model._language)

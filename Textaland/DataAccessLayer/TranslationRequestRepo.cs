@@ -40,6 +40,7 @@ namespace Textaland.DataAccessLayer
             //}
             //newTranslationRequest.Id = newId;
 			db.TranslationRequests.Add(newTranslationRequest);
+            db.SaveChanges();
 		}
 
 		//This operation removes a specific TranslationRequest from the list by id.
