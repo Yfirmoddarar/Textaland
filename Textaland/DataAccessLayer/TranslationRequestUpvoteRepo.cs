@@ -30,16 +30,16 @@ namespace Textaland.DataAccessLayer
 
 		public void AddUpvote(TranslationRequestUpvote newUpvote) {
 
-			int newId = 1;
+			//int newId = 1;
 
             // But if the list is not empty than it will get id according the the list.
-            if (db.TranslationRequestUpvotes.Count() > 0)
-            {
-                newId = db.TranslationRequestUpvotes.Max(x => x.Id) + 1;
-			}
+            //if (db.TranslationRequestUpvotes.Count() > 0)
+            //{
+            //    newId = db.TranslationRequestUpvotes.Max(x => x.Id) + 1;
+            //}
 
-            // Give the new line the id.
-			newUpvote.Id = newId;
+            //// Give the new line the id.
+            //newUpvote.Id = newId;
             // And add the new line to the list.
             db.TranslationRequestUpvotes.Add(newUpvote);
             db.SaveChanges();
