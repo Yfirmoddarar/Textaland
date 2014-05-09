@@ -31,25 +31,25 @@ namespace Textaland.DataAccessLayer
 
 		//This operation adds a new TranslationRaquest to the list.
 		public void AddTranslationRequest(TranslationRequest newTranslationRequest) {
-			int newId = 1;
+			//int newId = 1;
 
 			//If the list is not empty the new translation request will get id according
 			//to the highest excisting Id.
-			if (db.TranslationRequests.Count() > 0) {
-				newId = db.TranslationRequests.Max(x => x.Id) + 1;
-			}
-			newTranslationRequest.Id = newId;
+            //if (db.TranslationRequests.Count() > 0) {
+            //    newId = db.TranslationRequests.Max(x => x.Id) + 1;
+            //}
+            //newTranslationRequest.Id = newId;
 			db.TranslationRequests.Add(newTranslationRequest);
 		}
 
 		//This operation removes a specific TranslationRequest from the list by id.
-		public void RemoveTranslationRequestById(int removeId) {
-			foreach(var item in db.TranslationRequests){
-				if (item.Id == removeId) {
-					db.TranslationRequests.Remove(item);
-				}
-			}
-		}
+        //public void RemoveTranslationRequestById(int removeId) {
+        //    foreach(var item in db.TranslationRequests){
+        //        if (item.Id == removeId) {
+        //            db.TranslationRequests.Remove(item);
+        //        }
+        //    }
+        //}
 
 	}
 }
