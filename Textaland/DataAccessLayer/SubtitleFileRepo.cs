@@ -30,8 +30,6 @@ namespace Textaland.DataAccessLayer
             return subtitleFilesById;
         }
 
-        /*
-
         //this operation adds a new Subtitle file to the existing List
         public void AddSubtitle(SubtitleFile _newSubtitleFile)
         {
@@ -39,14 +37,17 @@ namespace Textaland.DataAccessLayer
 
             //if the list isn't empty the new comment gets the ID according to 
             //the number of comments
-            if (_subtitleFiles.Count > 0)
+            if (GetAllSubtitles().Count() > 0)
             {
-                newId = _subtitleFiles.Max(x => x.Id) + 1;
+                newId = db.SubtitleFiles.Max(x => x.Id) + 1;
             }
             _newSubtitleFile.Id = newId;
             _newSubtitleFile._dateAdded = DateTime.Now;
-            _subtitleFiles.Add(_newSubtitleFile);
+            db.SubtitleFiles.Add(_newSubtitleFile);
         }
+
+
+        /*
 
         //this operation removes the subtitle file that matches the given ID
         public void RemoveSubtitle(int removeId)
