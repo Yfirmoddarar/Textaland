@@ -256,6 +256,7 @@
     <Content Include="Views\TranslationRequest\NewTranslationRequest.cshtml" />
     <Content Include="Views\TranslationRequest\TranslationRequests.cshtml" />
     <Content Include="Views\SubtitleFile\Upload.cshtml" />
+    <Content Include="Views\SubtitleFile\AllSubtitleFiles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />

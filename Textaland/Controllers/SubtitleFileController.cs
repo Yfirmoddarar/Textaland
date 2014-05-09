@@ -26,6 +26,16 @@ namespace Textaland.Controllers
             return View();
         }
 
+		//Get
+		public ActionResult AllSubtitleFiles()
+		{
+			SubtitleFileRepo allSubtitles = new SubtitleFileRepo();
+
+			allSubtitles.GetAllSubtitles();
+
+			return View(allSubtitles);
+		}
+
         /*
         //Post
         [HttpPost]
