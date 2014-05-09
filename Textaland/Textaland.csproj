@@ -185,6 +185,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SubtitleFileController.cs" />
+    <Compile Include="Controllers\TranslationRequestController.cs" />
     <Compile Include="DataAccessLayer\AppDataContext.cs" />
     <Compile Include="DataAccessLayer\SubtitleCommentRepo.cs" />
     <Compile Include="DataAccessLayer\SubtitleFileRepo.cs" />
@@ -257,6 +258,7 @@
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
     <Folder Include="Views\SubtitleFile\" />
+    <Folder Include="Views\TranslationRequest\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
