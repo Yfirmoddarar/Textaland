@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<Textaland.Models.TranslationRequest>
-
+         
 @{
     ViewBag.Title = "TranslationRequests";
 }
@@ -35,7 +35,7 @@
             @Html.DisplayFor(modelItem => item._numUpvotes)
         </td>
         <td>
-           @using (Html.BeginForm("AddVote", new { controller = "TranslationRequest" }, FormMethod.Post))
+           @using (Html.BeginForm("AddVote", "TranslationRequest", item, FormMethod.Post))
            {
               <input type="submit" value="Kjósa" class="btn btn-primary btn-sm" />
            }
