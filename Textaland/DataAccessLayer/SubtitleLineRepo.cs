@@ -7,95 +7,66 @@ using Textaland.Models;
 namespace Textaland.DataAccessLayer
 {
 	public class SubtitleLineRepo {
-
-		// This is my repo for SubtitleLine which is private. 
-		private static SubtitleLineRepo _instance;
-
-		// My repo is private so I have to create a public repo
-		// which contains get function for my private repo.
-		public static SubtitleLineRepo Instance {
-			get {
-				// If my repo is null than I have to create a new one.
-				if (_instance == null) {
-					_instance = new SubtitleLineRepo();
-				}
-				// And than I return my repo.
-				return _instance;
-			}
-		}
-
-		// Initialize a list of SubtitleLines.
-		private IQueryable<SubtitleLine> _subtitleLines = null;
-
-        private void updateList() {
-            AppDataContext db = new AppDataContext();
-
-            _subtitleLines = from l in db.SubtitleLines
-                             select l;
-        }
+		// Initialize the db.
+		AppDataContext db = new AppDataContext();
 
 		// Function that will get all lines in the list _subtitleLines
 		// and order them in ascending order by their id.
 		public IEnumerable<SubtitleLine> GetAllLines() {
-			var _allLines = from temp in _subtitleLines
-							orderby temp.Id ascending
-							select temp;
-			return _allLines;
+			var allLines =  from l in db.SubtitleLines
+							orderby l.Id ascending
+							select l;
+			return allLines;
 		}
-
-
-        /*
 
 		// This function will go through my list '_subtitleLines'
 		// and return the lines that matches with the given 'id'.
 		public IEnumerable<SubtitleLine> GetLineById(int id) {
-			var _subtitleLinesById = from temp in _subtitleLines
-									 where temp.Id == id
-									 select temp;
-			return _subtitleLinesById;
+			var subtitleLinesById = from l in db.SubtitleLines
+									where l._textFileId == id
+									select l;
+			return subtitleLinesById;
 		}
 
 		// This function will add the new line to the list.
+		// NOTE - perhabs we will add a whole list instead of single line. 
 		public void AddLine(SubtitleLine newSubtitleLine) {
 			// If the list it empty than the 'newSubtitleLine' will get the id 1.
 			int newId = 1;
 
 			// But if the list is not empty than it will get id according the the list.
-			if (_subtitleLines.Count() > 0) {
-				newId = _subtitleLines.Max(x => x.Id) + 1;
+			if (db.SubtitleLines.Count() > 0) {
+				newId = db.SubtitleLines.Max(x => x.Id) + 1;
 			}
 
 			// Give the new line the id.
 			newSubtitleLine.Id = newId;
 			// And add the new line to the list.
-			_subtitleLines.Add(newSubtitleLine);
+			db.SubtitleLines.Add(newSubtitleLine);
+			db.SaveChanges();
 		}
 
 		// This function will remove the line with a given id. If no line has the given
 		// id than the function will do nothing.
+		// NOTE - we think that we will not use this function but we will see.
+		/*
 		public void RemoveLine(int id) {
-			foreach (var item in _subtitleLines) {
+			foreach (var item in db.SubtitleLines) {
 				if (item.Id == id) {
-					_subtitleLines.Remove(item);
+					db.SubtitleLines.Remove(item);
 					break;
 				}
 			}
 		}
+		 */
 
 		// This function will update the lines of the subtitleline with the
  		// same id as 'newLine'. First I find the line in the list and than I
 		// update the lines.
 		public void UpdateLine(SubtitleLine newLine) {
-			foreach (var item in _subtitleLines) {
-				if (item.Id == newLine.Id) {
-					item._line1 = newLine._line1;
-					item._line2 = newLine._line2;
-					break;
-				}
-			}
+			db.SubtitleLines.Find(newLine.Id)._line1 = newLine._line1;
+			db.SubtitleLines.Find(newLine.Id)._line2 = newLine._line2;
+			db.SaveChanges();
 		}
-
-         * 
-         */
 	}
 }
