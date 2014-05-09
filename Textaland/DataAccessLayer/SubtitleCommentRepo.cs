@@ -26,7 +26,7 @@ namespace Textaland.DataAccessLayer
 
 		public IEnumerable<SubtitleComment> GetCommentById(int id) {
 			var subtitleCommentById = from comment in db.SubtitleComments
-									   where comment.Id == id
+									   where comment._textFileId == id
 									   select comment;
 			return subtitleCommentById;
 		}
@@ -37,7 +37,7 @@ namespace Textaland.DataAccessLayer
 			
 			//if the list isn't empty the new comment gets the ID according to 
 			//the numnber of comments
-			if (db.SubtitleComments.Count() > 0) {
+			if (GetAllComments().Count() > 0) {
 				newId = db.SubtitleComments.Max(x => x.Id) + 1;
 			}
 			newSubtitleComment.Id = newId;
@@ -46,18 +46,18 @@ namespace Textaland.DataAccessLayer
 			db.SaveChanges();
 		}
 
-		//this operation removes the comment that matches the given ID
-		public void RemoveComment(int removeId) {
+        ////this operation removes the comment that matches the given ID
+        //public void RemoveComment(int removeId) {
 
-			foreach (var item in db.SubtitleComments) {
-				if (item.Id == removeId) {
-					db.SubtitleComments.Remove(item);
-					db.SaveChanges();
-					break;
-				}
-			}
+        //    foreach (var item in db.SubtitleComments) {
+        //        if (item.Id == removeId) {
+        //            db.SubtitleComments.Remove(item);
+        //            db.SaveChanges();
+        //            break;
+        //        }
+        //    }
 			
-		}
+        //}
 	
 
 	}
