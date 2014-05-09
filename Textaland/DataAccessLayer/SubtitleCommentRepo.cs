@@ -43,6 +43,7 @@ namespace Textaland.DataAccessLayer
 			newSubtitleComment._id = newId;
 			newSubtitleComment._dateAdded = DateTime.Now;
 			db.SubtitleComments.Add(newSubtitleComment);
+			db.SaveChanges();
 		}
 
 		//this operation removes the comment that matches the given ID
@@ -51,9 +52,11 @@ namespace Textaland.DataAccessLayer
 			foreach (var item in db.SubtitleComments) {
 				if (item._id == removeId) {
 					db.SubtitleComments.Remove(item);
+					db.SaveChanges();
 					break;
 				}
 			}
+			
 		}
 	
 
