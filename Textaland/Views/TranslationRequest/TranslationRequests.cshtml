@@ -35,7 +35,7 @@
             @Html.DisplayFor(modelItem => item._numUpvotes)
         </td>
         <td>
-            <input type="button" title="Kjósa" class="btn btn-primary btn-sm"   onclick="location.href='@Url.Action("AddVote", "TranslationRequest", new { id = item.ID })'" />
+            <button class="btn-sm btn-primary" >Kjósa</button>
         </td>
     </tr>
 }
