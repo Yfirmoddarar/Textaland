@@ -35,10 +35,10 @@
             @Html.DisplayFor(modelItem => item._numUpvotes)
         </td>
         <td>
-            @using (Html.BeginForm("AddVote", "TranslationRequest", item))
-            {
-                <input type="submit" value="Kjósa" class="btn btn-primary btn-sm" />
-            }
+           @using (Html.BeginForm("AddVote", new { controller = "TranslationRequest" }, FormMethod.Post))
+           {
+              <input type="submit" value="Kjósa" class="btn btn-primary btn-sm" />
+           }
         </td>
     </tr>
  
