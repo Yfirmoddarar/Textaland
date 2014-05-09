@@ -25,6 +25,7 @@ namespace Textaland.Controllers
 		}
 
 		[HttpPost]
+        [Authorize]
 		public ActionResult NewTranslationRequest(FormCollection formData) 
 		{
 			String strName = formData["_name"];
@@ -51,7 +52,6 @@ namespace Textaland.Controllers
 		}
 
 		//Get
-        [Authorize]
 		public ActionResult TranslationRequests()
 		{
 
