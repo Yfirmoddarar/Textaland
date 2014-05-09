@@ -8,63 +8,55 @@ namespace Textaland.DataAccessLayer
 {
 	public class SubtitleCommentRepo : ApplicationDbContext {
 
-		private static SubtitleCommentRepo _instance;
-
-		//this function creates a new SubtitleCommentRepo
-		public static SubtitleCommentRepo Instance {
-			get {
-				if (_instance == null) {
-					_instance = new SubtitleCommentRepo();
-				}
-				return _instance;
-			}
-		}
-
 		//initialize a list of SubtitleComments
-		private List<SubtitleComment> _subtitleComments = null;
+
+		AppDataContext db = new AppDataContext();
 
 		//this operation returns all SubtitleComments
 		public IEnumerable<SubtitleComment> GetAllComments() {
 
 			//select all comments from the SubtitleComment list in an ascending order
-			var _allComments = from temp in _subtitleComments
-							   orderby temp._dateAdded ascending
-							   select temp;
-			return _allComments;						   
+			var allComments = from comments in db.SubtitleComments
+							   orderby comments._dateAdded ascending
+							   select comments;
+			return allComments;						   
 		}
 
 		//this operation returns the Comment that matches the given ID
 
 		public IEnumerable<SubtitleComment> GetCommentById(int id) {
-			var _subtitleCommentById = from temp in _subtitleComments
-									   where temp._id == id
-									   select temp;
-			return _subtitleCommentById;
+			var subtitleCommentById = from comment in db.SubtitleComments
+									   where comment._id == id
+									   select comment;
+			return subtitleCommentById;
 		}
 
 		//this operation adds a new comment to the existing List
-		public void AddComment(SubtitleComment _newSubtitleComment) {
+		public void AddComment(SubtitleComment newSubtitleComment) {
 			int newId = 1;
 			
 			//if the list isn't empty the new comment gets the ID according to 
 			//the numnber of comments
-			if (_subtitleComments.Count > 0) {
-				newId = _subtitleComments.Max(x => x._id) + 1;
+			if (db.SubtitleComments.Count() > 0) {
+				newId = db.SubtitleComments.Max(x => x._id) + 1;
 			}
-			_newSubtitleComment._id = newId;
-			_newSubtitleComment._dateAdded = DateTime.Now;
-			_subtitleComments.Add(_newSubtitleComment);
+			newSubtitleComment._id = newId;
+			newSubtitleComment._dateAdded = DateTime.Now;
+			db.SubtitleComments.Add(newSubtitleComment);
+			db.SaveChanges();
 		}
 
 		//this operation removes the comment that matches the given ID
 		public void RemoveComment(int removeId) {
 
-			foreach (var item in _subtitleComments) {
+			foreach (var item in db.SubtitleComments) {
 				if (item._id == removeId) {
-					_subtitleComments.Remove(item);
+					db.SubtitleComments.Remove(item);
+					db.SaveChanges();
 					break;
 				}
 			}
+			
 		}
 	
 
