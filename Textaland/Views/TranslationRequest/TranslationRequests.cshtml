@@ -7,7 +7,7 @@
 <h2>Ósvaraðar beiðnir</h2>
 
 <p>
-    @Html.ActionLink("Senda inn nýja beiðni", "NewTranslationRequest")
+    <a href="/Translationrequest/NewTranslationRequest" class="btn btn-default" >Senda inn nýja beiðni</a>
 </p>
 <table class="table">
     <tr>
@@ -35,7 +35,7 @@
             @Html.DisplayFor(modelItem => item._numUpvotes)
         </td>
         <td>
-            <button onclick="" class="btn btn-primary btn-sm">Kjósa</button>
+            <input type="button" title="Kjósa" class="btn btn-primary btn-sm"   onclick="location.href='@Url.Action("AddVote", "TranslationRequest", new { id = item.ID })'" />
         </td>
     </tr>
 }
@@ -43,5 +43,5 @@
 </table>
 
 <p>
-    @Html.ActionLink("Senda inn nýja beiðni", "NewTranslationRequest")
+    <a href="/Translationrequest/NewTranslationRequest" class="btn btn-default">Senda inn nýja beiðni</a>
 </p>
