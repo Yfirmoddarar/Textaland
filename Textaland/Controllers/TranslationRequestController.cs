@@ -65,8 +65,10 @@ namespace Textaland.Controllers
 		//This operation Adds a Vote to a the "tr" requests.
 		/*[HttpPost]
 		[Authorize]
-		public ActionResult AddVote(TranslationRequestUpvote upvote)
+		public ActionResult AddVote(int id)
 		{
+			//taka við TranslationRequest Id búa til upvote út frá því. gefa því Id þ.e.a.s kalla á add fallið
+			//í TranslationRequestUpvote og búa þannig nýtt vote.
 			TranslationRequestRepo upvoteRepo = new TranslationRequestRepo();
 			//Takes all upvotes from the TranslationRequest tr.
 			var userIdUpvotes = upvoteRepo.GetUpvoteById(upvoteRepo.Id);
