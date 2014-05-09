@@ -6,8 +6,7 @@ using Textaland.Models;
 
 namespace Textaland.DataAccessLayer
 {
-	public class TranslationRequestUpvoteRepo
-	{
+	public class TranslationRequestUpvoteRepo {
 
         AppDataContext db = new AppDataContext();
 
