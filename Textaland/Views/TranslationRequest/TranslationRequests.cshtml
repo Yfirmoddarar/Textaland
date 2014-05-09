@@ -37,7 +37,6 @@
         <td>
             @using (Html.BeginForm("AddVote", "TranslationRequest", item))
             {
-                @Html.EditorFor(model => item)
                 <input type="submit" value="Kjósa" class="btn btn-primary btn-sm" />
             }
         </td>
