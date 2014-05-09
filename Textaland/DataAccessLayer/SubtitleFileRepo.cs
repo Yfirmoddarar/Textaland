@@ -30,6 +30,8 @@ namespace Textaland.DataAccessLayer
             return subtitleFilesById;
         }
 
+        /*
+
         //this operation adds a new Subtitle file to the existing List
         public void AddSubtitle(SubtitleFile _newSubtitleFile)
         {
@@ -58,5 +60,7 @@ namespace Textaland.DataAccessLayer
                 }
             }
         }
+         * 
+         */
 	}
 }
