@@ -39,12 +39,14 @@ namespace Textaland.Controllers
 				TranslationRequestRepo requestRepo = new TranslationRequestRepo();
 
 				requestRepo.AddTranslationRequest(newRequest);
+				return RedirectToAction("TranslationRequests");
 			}
 			else {
-
+				ModelState.AddModelError("_language", "Fylla verður út í báða reiti");
+				return NewTranslationRequest();
 			}
 
-			return RedirectToAction("TranslationRequests");
+			
 		}
 
 		public ActionResult TranslationRequests()
