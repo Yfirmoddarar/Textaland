@@ -8,19 +8,9 @@ namespace Textaland.DataAccessLayer
 {
 	public class TranslationRequestUpvoteRepo
 	{
-		private static TranslationRequestUpvoteRepo _instance;
-
-		public static TranslationRequestUpvoteRepo Instance {
-			get {
-				if (_instance == null) {
-					_instance = new TranslationRequestUpvoteRepo();
-				}
-				return _instance;
-			}
-		}
 
 		//initalize a new list of TranslationRequestUpvotes
-		private List<TranslationRequestUpvote> _translationRequestUpvotes = null;
+		private List<TranslationRequestUpvote> _translationRequestUpvotes = new List<TranslationRequestUpvote>();
 
 		public IEnumerable<TranslationRequestUpvote> GetAllUpvotes() {
 

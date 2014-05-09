@@ -10,5 +10,6 @@ namespace Textaland.DataAccessLayer
     public class AppDataContext : DbContext
     {
         public DbSet<SubtitleLine> SubtitleLines { get; set; }
+
     }
 }
