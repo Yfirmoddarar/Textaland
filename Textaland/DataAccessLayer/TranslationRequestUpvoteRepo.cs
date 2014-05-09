@@ -9,23 +9,22 @@ namespace Textaland.DataAccessLayer
 	public class TranslationRequestUpvoteRepo
 	{
 
-		//initalize a new list of TranslationRequestUpvotes
-		private List<TranslationRequestUpvote> _translationRequestUpvotes = new List<TranslationRequestUpvote>();
+        AppDataContext db = new AppDataContext();
 
 		public IEnumerable<TranslationRequestUpvote> GetAllUpvotes() {
 
 			//select all upvotes from the list and return them
-			var allUpvotes = from temp in _translationRequestUpvotes
-							select temp;
+			var allUpvotes = from u in db.TranslationRequestUpvotes
+							select u;
 			return allUpvotes;
 		}
 
 		public IEnumerable<TranslationRequestUpvote> GetUpvoteById(int id) {
 
 			//select the TranslationRequestUpvote that matches the given ID
-			var correctId = from temp in _translationRequestUpvotes
-							where temp._id == id
-							select temp;
+			var correctId = from u in db.TranslationRequestUpvotes
+							where u._requestId == id
+							select u;
 			return correctId;
 		}
 
@@ -33,15 +32,20 @@ namespace Textaland.DataAccessLayer
 
 			int newId = 1;
 
-			if (_translationRequestUpvotes.Count > 0) {
-
-				newId = _translationRequestUpvotes.Max(x => x._id) + 1;
+            // But if the list is not empty than it will get id according the the list.
+            if (db.TranslationRequestUpvotes.Count() > 0)
+            {
+                newId = db.TranslationRequestUpvotes.Max(x => x._id) + 1;
 			}
 
+            // Give the new line the id.
 			newUpvote._id = newId;
-			_translationRequestUpvotes.Add(newUpvote);
+            // And add the new line to the list.
+            db.TranslationRequestUpvotes.Add(newUpvote);
+            db.SaveChanges();
 		}
 
+        /*
 		public void RemoveUpvote(int id) {
 			foreach (var item in _translationRequestUpvotes) {
 				if (item._id == id) {
@@ -50,7 +54,7 @@ namespace Textaland.DataAccessLayer
 				}
 			}
 		}
-
+        */
 
 	}
 }
