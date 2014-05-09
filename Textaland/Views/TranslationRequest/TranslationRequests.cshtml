@@ -35,7 +35,7 @@
             @Html.DisplayFor(modelItem => item._numUpvotes)
         </td>
         <td>
-            @Html.ActionLink("Kjósa", "AddVote", "TranslationRequest", item)
+            @Html.ActionLink("Kjósa", "AddVote", new { controller = "TranslationRequest" }, item)
         </td>
     </tr>
  
