@@ -86,7 +86,7 @@ namespace Textaland.Controllers
 			//Returns the TranslationRequests view were "tr" has one more upvotes.
 			return RedirectToAction("TranslationRequests");
 			
-		}*/
+		}
 	}
 
 
