@@ -254,6 +254,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\TranslationRequest\NewTranslationRequest.cshtml" />
+    <Content Include="Views\TranslationRequest\TranslationRequests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
