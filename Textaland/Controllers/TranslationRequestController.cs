@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Textaland.Models;
 using Textaland.DataAccessLayer;
+using Microsoft.AspNet.Identity;
 
 namespace Textaland.Controllers
 {
@@ -70,11 +71,12 @@ namespace Textaland.Controllers
 		[Authorize]
 		public ActionResult AddVote(TranslationRequest request)
 		{
+            var userId = User.Identity.GetUserId();
 			//taka við TranslationRequest Id búa til upvote út frá því. gefa því Id þ.e.a.s kalla á add fallið
 			//í TranslationRequestUpvote og búa þannig nýtt vote.
             TranslationRequestRepo trr = new TranslationRequestRepo();
 			TranslationRequestUpvote upvote = new TranslationRequestUpvote();
-			TranslationRequestUpvoteRepo upvoteRepo = new TranslationRequestUpvoteRepo();
+			TranslationRequestUpvoteRepo ur = new TranslationRequestUpvoteRepo();
 			//Takes all upvotes from the TranslationRequest whith "id".
 			//var userIdUpvotes = upvoteRepo.GetUpvoteById(id);
 			//Checks if there exists an upvote with the same userId as the new vote.
@@ -83,9 +85,19 @@ namespace Textaland.Controllers
 					return RedirectToAction("TranslationRequests");
 				}
 			}*/
-			upvote._requestId = request.Id;
-            trr.upVote(upvote._requestId);
-			upvoteRepo.AddUpvote(upvote);
+
+            var upvotes = from u in ur.GetAllUpvotes()
+                          where u._userId == userId &&
+                          u._requestId == request.Id
+                          select u;
+            if (upvotes.Count() == 0)
+            {
+                upvote._requestId = request.Id;
+                upvote._userId = userId;
+                trr.upVote(upvote._requestId);
+                ur.AddUpvote(upvote);
+            }
+			
 			//Changes the number of upvotes in the TranslationRequest "tr".
 			//Returns the TranslationRequests view were "tr" has one more upvotes.
 		        
