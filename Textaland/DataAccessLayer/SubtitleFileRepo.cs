@@ -7,19 +7,19 @@ using Textaland.Models;
 namespace Textaland.DataAccessLayer
 {
 	public class SubtitleFileRepo{
-        private static SubtitleFileRepo _instance;
+        // Initialize the db.
+        AppDataContext db = new AppDataContext();
 
-        //this creates a new SubtitleFileRepo
-        public static SubtitleFileRepo Instance {
-            get {
-                if (_instance == null)
-                    _instance = new SubtitleFileRepo();
-                return _instance;
-            }
+        // Function that will get all lines in the list _subtitleLines
+        // and order them in ascending order by their id.
+        public IEnumerable<SubtitleFile> GetAllSubtitles()
+        {
+            var allFiles = from l in db.SubtitleFiles
+                           orderby l.Id ascending
+                           select l;
+            return allFiles;
         }
 
-        //initialize a list of SubtitleFiles
-        private List<SubtitleFile> _subtitleFiles = null;
 
         //this operation returns all SubtitleFiles
         public IEnumerable<SubtitleFile> GetAllSubtitles() {
