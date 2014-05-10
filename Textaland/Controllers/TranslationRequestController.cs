@@ -110,9 +110,9 @@ namespace Textaland.Controllers
 		{
 			TranslationRequestRepo trr = new TranslationRequestRepo();
 
-			trr.RemoveTranslationRequestById(tr.Id);
+			trr.RemoveTranslationRequestById(tr);
 
-			return RedirectToAction("Upload");
+			return RedirectToAction("Upload", "SubtitleFile", new { area = "" });
 		}
 	}
 
