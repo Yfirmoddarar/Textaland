@@ -104,6 +104,16 @@ namespace Textaland.Controllers
             return RedirectToAction("TranslationRequests");
 			
 		}
+
+		[HttpPost]
+		public ActionResult AnswerRequest(TranslationRequest tr)
+		{
+			TranslationRequestRepo trr = new TranslationRequestRepo();
+
+			trr.RemoveTranslationRequestById(tr.Id);
+
+			return RedirectToAction("Upload");
+		}
 	}
 
 

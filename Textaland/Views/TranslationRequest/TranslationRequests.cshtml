@@ -21,6 +21,7 @@
             Fjöldi beiðna
         </th>
         <th></th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -39,6 +40,12 @@
            {
               <input type="submit" value="Kjósa" class="btn btn-primary btn-sm" />
            }
+        </td>
+        <td>
+            @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
+            {
+                <input type="submit" value="Svara beiðni" class="btn btn-primary btn-sm" />
+            }
         </td>
     </tr>
  
