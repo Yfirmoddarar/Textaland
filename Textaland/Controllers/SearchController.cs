@@ -12,12 +12,12 @@ namespace Textaland.Controllers
     {
 		// Post
 		[HttpPost]
-		public ActionResult SearchResult(string searchInput)
+		public ActionResult SearchResult(FormCollection formdata)
 		{
-			SubtitleFileRepo myRepo = new SubtitleFileRepo(); 
+			SubtitleFileRepo sfr = new SubtitleFileRepo(); 
 
-			var searchResult = from s in myRepo.GetAllSubtitles()
-							   where s._name.Contains(searchInput)
+			var searchResult = from s in sfr.GetAllSubtitles()
+							   where s._name.Contains(formdata["leit"])
 							   select s;
 
 			return View(searchResult);
