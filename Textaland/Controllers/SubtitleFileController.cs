@@ -92,6 +92,12 @@ namespace Textaland.Controllers
 		[HttpPost]
 		public ActionResult AboutSubtitleFile(SubtitleFile s){
 			
+			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
+
+			var allComments = from c in commentRepo.GetCommentById(s.Id)
+							  orderby c._dateAdded ascending
+							  select c;
+			ViewBag.AllComments = allComments;
 			
 
 			return View(s);
