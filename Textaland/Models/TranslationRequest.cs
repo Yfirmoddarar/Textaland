@@ -15,6 +15,10 @@ namespace Textaland.Models
         [Required(ErrorMessage = "Please select language")]
 		public string _language { get; set; }
 
+		public TranslationRequest() {
+			_numUpvotes = 1;
+		}
+
 		public void IncreaseNumUpvotes(){
 			_numUpvotes++;
 		}
