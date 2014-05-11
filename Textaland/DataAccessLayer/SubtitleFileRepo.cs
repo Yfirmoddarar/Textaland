@@ -46,7 +46,6 @@ namespace Textaland.DataAccessLayer
             db.SubtitleFiles.Add(_newSubtitleFile);
         }
 
-
         /*
 
         //this operation removes the subtitle file that matches the given ID
