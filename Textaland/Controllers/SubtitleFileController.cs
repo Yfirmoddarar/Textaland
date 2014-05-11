@@ -47,5 +47,33 @@ namespace Textaland.Controllers
 
 			return View(allSubtitles);
 		}
+
+        /*
+        //Post
+        [HttpPost]
+        public  ActionResult upload (string name, string description, string language, ) {
+
+        }
+        */
+
+		// Get
+		[HttpGet]
+		public ActionResult SearchResult() {
+			
+			
+			
+			
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult SearchResult(FormCollection formData) {
+			
+			
+			
+			
+			return View();
+		}
+
 	}
 }
