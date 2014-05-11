@@ -98,6 +98,7 @@ namespace Textaland.Controllers
 							  orderby c._dateAdded ascending
 							  select c;
 			ViewBag.AllComments = allComments;
+			
 
 			return View(s);
 		}
