@@ -47,8 +47,13 @@
     </dl>
 </div>
 
+@{foreach (var item in ViewBag.AllComments) {
+    
+    <p>item._text</p>
+}
+}
 
-
-@if (User.Identity.IsAuthenticated) {
-    <p>mímímí</p>
+@{if (User.Identity.IsAuthenticated) {
+    Html.EditorFor(model => model.)
+}
 }
