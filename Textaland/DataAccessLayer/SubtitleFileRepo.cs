@@ -15,7 +15,7 @@ namespace Textaland.DataAccessLayer
         public IEnumerable<SubtitleFile> GetAllSubtitles()
         {
             var allFiles = from f in db.SubtitleFiles
-                           orderby f.Id ascending
+                           //orderby f.I ascending
                            select f;
             return allFiles;
         }
@@ -44,6 +44,7 @@ namespace Textaland.DataAccessLayer
             _newSubtitleFile.Id = newId;
             _newSubtitleFile._dateAdded = DateTime.Now;
             db.SubtitleFiles.Add(_newSubtitleFile);
+            db.SaveChanges();
         }
 
         /*
