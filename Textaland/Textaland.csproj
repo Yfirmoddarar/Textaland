@@ -263,6 +263,7 @@
     <Content Include="Views\SubtitleFile\UploadError.cshtml" />
     <Content Include="Views\Search\SearchResult.cshtml" />
     <Content Include="Views\SubtitleFile\AboutSubtitleFile.cshtml" />
+    <Content Include="Views\SubtitleFile\AddComment.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

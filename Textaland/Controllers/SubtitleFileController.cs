@@ -103,10 +103,6 @@ namespace Textaland.Controllers
 			return View(s);
 		}
 
-		public ActionResult AddComment(){
-			return View();
-		}
-
 
 		[HttpPost]
 		public ActionResult AddComment(SubtitleFile s, string addText)
@@ -122,9 +118,7 @@ namespace Textaland.Controllers
 
 			commentRepo.AddComment(newComment);
 
-			return RedirectToAction("AboutSubtitleFile(s)");
-
-			//return View(s);
+			return AboutSubtitleFile(s);
 		}
 	}
 }
