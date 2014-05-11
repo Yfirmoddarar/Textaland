@@ -102,5 +102,20 @@ namespace Textaland.Controllers
 
 			return View(s);
 		}
+
+		[HttpPost]
+		public ActionResult AddComment(SubtitleFile s, string text)
+		{
+			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
+
+			SubtitleComment newComment = new SubtitleComment();
+
+			newComment._text = text;
+			newComment._textFileId = s.Id;
+
+			commentRepo.AddComment(newComment);
+
+			return AboutSubtitleFile(s);
+		}
 	}
 }
