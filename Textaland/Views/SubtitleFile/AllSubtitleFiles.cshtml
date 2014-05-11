@@ -28,7 +28,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item._name)
+            @using (Html.BeginForm("AboutSubitleFile", "TranslationRequest", item, FormMethod.Post))
+{
+            <input type="submit" value="@item._name" />
+}
         </td>
         <td>
             @Html.DisplayFor(modelItem => item._rating)
