@@ -17,7 +17,7 @@ namespace Textaland.Controllers
 			SubtitleFileRepo sfr = new SubtitleFileRepo(); 
 
 			var searchResult = from s in sfr.GetAllSubtitles()
-							   where s._name.Contains(formdata["leit"])
+							   where s._name.ToLower().Contains(formdata["leit"].ToLower())
 							   select s;
 
 			return View(searchResult);
