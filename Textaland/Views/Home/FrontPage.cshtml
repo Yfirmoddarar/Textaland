@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Textaland.Models.SubtitleFile>
+﻿@model IEnumerable<Textaland.Models.TranslationRequest>
 
 
 @{
@@ -37,15 +37,15 @@
             int counter1 = 1;
             foreach (var item in ViewBag.NewestList) {
                 <tr>
-                    <th>
+                    <td>
                         @counter1
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @item._name
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @item._dateAdded
-                    </th>
+                    </td>
                 </tr>
                 counter1++;
             }
@@ -59,15 +59,15 @@
             foreach (var item in ViewBag.PopularList)
             {
                 <tr>
-                    <th>
+                    <td>
                         @counter2
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @item._name
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @item._numOfDownloads
-                    </th>
+                    </td>
                 </tr>
                 counter2++;
             }
@@ -81,15 +81,15 @@
             foreach (var item in ViewBag.RatingList)
             {
                 <tr>
-                    <th>
+                    <td>
                         @counter3
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @item._name
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @item._rating
-                    </th>
+                    </td>
                 </tr>
                 counter3++;
             }
@@ -123,12 +123,15 @@
         @{
         foreach (var item in ViewBag.TranslationList) {
             <tr>
-                <th>
+                <td>
                     @item._name
-                </th>
-                <th>
+                </td>
+                <td>
                     @item._numOfTranslationParticipants
-                </th>
+                </td>
+                <td>
+                    <button class="btn btn-primary">UNFINSHED</button>
+                </td>
             </tr>
         }
         }
@@ -151,17 +154,23 @@
             <th>
                 Fjöldi atkvæða
             </th>
+            <th></th>
         </tr>
         @{
-        foreach (var item in ViewBag.RequestList)
-        {
+        foreach (Textaland.Models.TranslationRequest item in ViewBag.RequestList) {
             <tr>
-                <th>
+                <td>
                     @item._name
-                </th>
-                <th>
+                </td>
+                <td>
                     @item._numUpvotes
-                </th>
+                </td>
+                <td>                    
+                    @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
+                    {
+                        <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')" type="submit" value="Svara beiðni" class="btn btn-primary btn-sm" />
+                    }
+                </td>
             </tr>
         }
         }
