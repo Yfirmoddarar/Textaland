@@ -12,11 +12,14 @@
 <!--This is for normal users - not logged in.-->
 
 @if (!User.Identity.IsAuthenticated) {
-    <div class="form-group" style="margin-bottom: 30px">
+ <div class="form-group" style="margin-bottom: 30px">
     <label class="control-label" for="searchInput"></label>
     <center>
         <input class="form-control" id="searchInput" type="text" value="Leitaðu að textaskrá hér"
-               style="text-align: center" onfocus="value=''">
+               style="text-align: center; margin-bottom: 10px" onfocus="value=''">
+        <button onclick="location.href = '/TranslationRequest/TranslationRequests'" type="button"
+                class="btn btn-primary btn-sm">Leita
+        </button>
     </center>
 </div>
 

@@ -56,24 +56,5 @@ namespace Textaland.Controllers
         }
         */
 
-		// Get
-		[HttpGet]
-		public ActionResult SearchResult() {
-			
-			
-			
-			
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult SearchResult(FormCollection formData) {
-			
-			
-			
-			
-			return View();
-		}
-
 	}
 }
