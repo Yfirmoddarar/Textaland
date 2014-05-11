@@ -81,9 +81,18 @@ namespace Textaland.Controllers
 			return View();
 		}
 
+		
 		public ActionResult AboutSubtitleFile(SubtitleFile s){
 
 
+			return View();
+		}
+
+		//Operation that shows details about subtitle files
+		[HttpPost]
+		public ActionResult AboutSubtitleFile(SubtitleFile s){
+			
+			
 			return View();
 		}
 	}
