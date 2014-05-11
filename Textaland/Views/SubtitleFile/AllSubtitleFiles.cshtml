@@ -4,7 +4,7 @@
     ViewBag.Title = "AllSubtitleFiles";
 }
 
-<h2>AllSubtitleFiles</h2>
+<h2 style="position:absolute; left:50%">AllSubtitleFiles</h2>
 
 <p>
     @Html.ActionLink("Hlaða upp skrá", "Upload")
@@ -28,10 +28,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @using (Html.BeginForm("AboutSubitleFile", "TranslationRequest", item, FormMethod.Post))
-{
-            <a href="javascript:$('form').submit();">@item._name</a>
-}
+            @using (Html.BeginForm("AboutSubtitleFile", "SubtitleFile", item, FormMethod.Post))
+            {
+            <a href="javascript:$('form').submit();">@item._name</a>  
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item._rating)
