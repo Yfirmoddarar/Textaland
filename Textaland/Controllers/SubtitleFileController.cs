@@ -123,6 +123,8 @@ namespace Textaland.Controllers
 			commentRepo.AddComment(newComment);
 
 			return RedirectToAction("AboutSubtitleFile(s)");
+
+			//return View(s);
 		}
 	}
 }

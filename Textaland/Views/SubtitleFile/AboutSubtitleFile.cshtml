@@ -60,12 +60,13 @@
 }
 }
 
+@{if (User.Identity.IsAuthenticated) { 
 
-
-@using (Html.BeginForm("AddComment", "SubtitleFile", @Model,  FormMethod.Post))
+using (Html.BeginForm("AddComment", "SubtitleFile", @Model,  FormMethod.Post))
 {
     
     @Html.TextBox("addText")
 
     <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" />
 }
+}}
