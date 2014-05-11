@@ -49,11 +49,17 @@
 
 @{foreach (var item in ViewBag.AllComments) {
     
-    <p>item._text</p>
+    @item._text <br />
 }
 }
 
-@{if (User.Identity.IsAuthenticated) {
-    Html.EditorFor(model => model.)
-}
+
+
+@using (Html.BeginForm("AddComment", "SubtitleFile", FormMethod.Post, null))
+{
+    
+    @Html.TextBox("addText")
+    @Html.Hidden("fileID", @Model.Id)
+
+    <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" />
 }
