@@ -34,8 +34,10 @@
             <div class="col-md-10">
                 @Html.DropDownList(
                     "Types",
-                    (IEnumerable<SelectListItem>)ViewBag.ListOfTypes
+                    (IEnumerable<SelectListItem>)ViewBag.ListOfTypes,
+                    "Select Type"
                 )
+                @Html.ValidationMessageFor(model => model._type)
             </div>
         </div>
 
@@ -44,8 +46,10 @@
             <div class="col-md-10">
                @Html.DropDownList(
                     "Types",
-                    (IEnumerable<SelectListItem>)ViewBag.ListOfLanguages
+                    (IEnumerable<SelectListItem>)ViewBag.ListOfLanguages,
+                    "Select Language"
                 )
+                @Html.ValidationMessageFor(model => model._languageFrom)
             </div>
         </div>
 
