@@ -44,6 +44,7 @@ namespace Textaland.DataAccessLayer
             _newSubtitleFile.Id = newId;
             _newSubtitleFile._dateAdded = DateTime.Now;
             db.SubtitleFiles.Add(_newSubtitleFile);
+            db.SaveChanges();
         }
 
         /*
