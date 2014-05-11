@@ -81,5 +81,10 @@ namespace Textaland.Controllers
 			return View();
 		}
 
+		public ActionResult AboutSubtitleFile(SubtitleFile s){
+
+
+			return View();
+		}
 	}
 }
