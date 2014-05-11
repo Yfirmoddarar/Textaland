@@ -16,30 +16,29 @@ namespace Textaland.Migrations
 
         protected override void Seed(Textaland.DataAccessLayer.AppDataContext context)
         {
-			/*
-			var seedData = new List<SubtitleFile> {
-				new SubtitleFile{_name="Up", _description="this is awesome"}, 
-				new SubtitleFile{ _name="Die Hard", _description="w8 what?"}
+			
+			/*var seedData = new List<SubtitleFile> {
+				new SubtitleFile{ _name="Avatar", _description="wblaba blatt folk?"}
 			};
 			
 			 
 
 			seedData.ForEach(d => context.SubtitleFiles.Add(d));
 			context.SaveChanges();
-			 
-			*/
+			 */
+	
 
-            /*
-            var seedData = new List<TranslationRequestUpvote>
-            {
-                new TranslationRequestUpvote{_requestId=1},
-                new TranslationRequestUpvote{_requestId=1}
-            };
+			/*
+			var seedData = new List<TranslationRequestUpvote>
+			{
+				new TranslationRequestUpvote{_requestId=1},
+				new TranslationRequestUpvote{_requestId=1}
+			};
             
-            seedData.ForEach(d => context.TranslationRequestUpvotes.Add(d));
-            context.SaveChanges();
+			seedData.ForEach(d => context.TranslationRequestUpvotes.Add(d));
+			context.SaveChanges();
 
-            */
+			*/
 
             //  This method will be called after migrating to the latest version.
 
