@@ -33,6 +33,8 @@ namespace Textaland.Models
 		// when the textfile is created.
 		public SubtitleFile() {
 			_dateAdded = DateTime.Now;
+			_inTranslation = false;
+			_readyForDownload = true;
 		}
 
 		// Operations
