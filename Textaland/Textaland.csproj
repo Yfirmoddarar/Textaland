@@ -259,8 +259,8 @@
     <Content Include="Views\TranslationRequest\TranslationRequests.cshtml" />
     <Content Include="Views\SubtitleFile\Upload.cshtml" />
     <Content Include="Views\SubtitleFile\AllSubtitleFiles.cshtml" />
-    <Content Include="Views\Search\SearchResult.cshtml" />
     <Content Include="Views\SubtitleFile\UploadError.cshtml" />
+    <Content Include="Views\Search\SearchResult.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
