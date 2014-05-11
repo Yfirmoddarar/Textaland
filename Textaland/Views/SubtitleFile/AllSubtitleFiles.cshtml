@@ -30,7 +30,7 @@
         <td>
             @using (Html.BeginForm("AboutSubitleFile", "TranslationRequest", item, FormMethod.Post))
 {
-            <input type="submit" value="@item._name" />
+            <a href="javascript:$('form').submit();">@item._name</a>
 }
         </td>
         <td>
