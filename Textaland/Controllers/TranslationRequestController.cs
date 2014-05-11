@@ -108,6 +108,7 @@ namespace Textaland.Controllers
 		[HttpPost]
 		public ActionResult AnswerRequest(TranslationRequest tr)
 		{
+
 			TranslationRequestRepo trr = new TranslationRequestRepo();
 
 			trr.RemoveTranslationRequestById(tr);

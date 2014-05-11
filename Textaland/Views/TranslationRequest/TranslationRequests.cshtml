@@ -44,7 +44,7 @@
         <td>
             @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
             {
-                <input type="submit" value="Svara beiðni" class="btn btn-primary btn-sm" />
+                <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')" type="submit" value="Svara beiðni" class="btn btn-primary btn-sm" />
             }
         </td>
     </tr>

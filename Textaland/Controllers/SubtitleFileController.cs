@@ -30,10 +30,10 @@ namespace Textaland.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Upload (SubtitleFile sf, HttpPostedFileBase file) {
 
-                if (file != null && file.ContentLength > 0) {
-                    var filename = Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), filename);
-                    file.SaveAs(path);
+            if (file != null && file.ContentLength > 0) {
+                var filename = Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), filename);
+                file.SaveAs(path);
 
                     SubtitleFileRepo sfr = new SubtitleFileRepo();
 
@@ -43,7 +43,7 @@ namespace Textaland.Controllers
                 }
                 else {
                     RedirectToAction("UploadError", "SubtitleFile");
-                }
+            }
 
 
             return RedirectToAction("FrontPage", "Home");
