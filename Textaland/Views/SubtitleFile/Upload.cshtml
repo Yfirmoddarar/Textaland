@@ -13,8 +13,6 @@
     <div class="form-horizontal">
         <h4>SubtitleFile</h4>
         <hr />
-        @Html.ValidationSummary(true)
-
         <div class="form-group">
             @Html.LabelFor(model => model._name, "Nafn", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -79,3 +77,8 @@
 <div>
     @Html.ActionLink("Back to List", "FrontPage")
 </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

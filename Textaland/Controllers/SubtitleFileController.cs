@@ -19,8 +19,8 @@ namespace Textaland.Controllers
             }, "Id", "Name");
 
             ViewBag.ListOfLanguages = new SelectList(new[] {
-                new {Id = "1", Name = "ISL"},
-                new {Id = "2", Name = "ENG"},
+                new {Id = "1", Name = "ENG"},
+                new {Id = "2", Name = "ISL"},
             }, "Id", "Name");
 
             return View();
@@ -34,9 +34,23 @@ namespace Textaland.Controllers
                 var filename = Path.GetFileName(file.FileName);
                 var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), filename);
                 file.SaveAs(path);
+
+                    SubtitleFileRepo sfr = new SubtitleFileRepo();
+
+                    sfr.AddSubtitle(sf);
+
+
+                }
+                else {
+                    RedirectToAction("UploadError", "SubtitleFile");
             }
 
+
             return RedirectToAction("FrontPage", "Home");
+        }
+
+        public ActionResult UploadError() {
+            return View();
         }
 
 		//Get
@@ -48,13 +62,24 @@ namespace Textaland.Controllers
 			return View(allSubtitles);
 		}
 
-        /*
-        //Post
-        [HttpPost]
-        public  ActionResult upload (string name, string description, string language, ) {
+		// Get
+		[HttpGet]
+		public ActionResult SearchResult() {
+			
+			
+			
+			
+			return View();
+		}
 
-        }
-        */
+		[HttpPost]
+		public ActionResult SearchResult(FormCollection formData) {
+			
+			
+			
+			
+			return View();
+		}
 
 	}
 }
