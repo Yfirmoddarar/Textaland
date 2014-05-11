@@ -4,46 +4,31 @@
     ViewBag.Title = "AboutSubtitleFile";
 }
 
-<h2>AboutSubtitleFile</h2>
+<h2>@Html.DisplayFor(model => model._name)</h2>
 
 <div>
-    <h4>SubtitleFile</h4>
 	<hr />
     <dl class="dl-horizontal">
+
+
         <dt>
-            @Html.DisplayNameFor(model => model._userId)
+           Nafn
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model._userId)
+            @Html.DisplayFor(model => model._name)
         </dd>
 
+        
         <dt>
-            @Html.DisplayNameFor(model => model._numOfTranslationParticipants)
+            Lýsing
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model._numOfTranslationParticipants)
+            @Html.DisplayFor(model => model._description)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model._numOfDownloads)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._numOfDownloads)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model._numOfTimesRated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._numOfTimesRated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model._rating)
+           Einkunn
         </dt>
 
         <dd>
@@ -51,80 +36,14 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model._name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model._type)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._type)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model._languageFrom)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._languageFrom)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model._languageTo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._languageTo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model._description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model._dateAdded)
+            Sett inn
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model._dateAdded)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model._readyForDownload)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._readyForDownload)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model._inTranslation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._inTranslation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model._hearingImpaired)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._hearingImpaired)
-        </dd>
-
+        
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

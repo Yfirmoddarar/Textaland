@@ -28,7 +28,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item._name)
+            @using (Html.BeginForm("AboutSubtitleFile", "SubtitleFile", item, FormMethod.Post))
+            {
+            <a href="javascript:$('form').submit();">@item._name</a>  
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item._rating)
