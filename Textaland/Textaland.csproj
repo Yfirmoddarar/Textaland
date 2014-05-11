@@ -215,6 +215,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="App_Data\uploads\12 Years a Slave - 2013 - 1080p - YIFY.srt" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -258,9 +259,7 @@
     <Content Include="Views\SubtitleFile\Upload.cshtml" />
     <Content Include="Views\SubtitleFile\AllSubtitleFiles.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\uploads\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

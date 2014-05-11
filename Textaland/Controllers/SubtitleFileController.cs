@@ -5,11 +5,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Textaland.DataAccessLayer;
+using Textaland.Models;
 
 namespace Textaland.Controllers
 {
-    public class SubtitleFileController : Controller
-    {
+    public class SubtitleFileController : Controller {
         //Get
         public ActionResult Upload () {
 
@@ -26,22 +26,26 @@ namespace Textaland.Controllers
             return View();
         }
 
+        
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Upload (SubtitleFile sf, HttpPostedFileBase file) {
+
+            if (file != null && file.ContentLength > 0) {
+                var filename = Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), filename);
+                file.SaveAs(path);
+            }
+
+            return RedirectToAction("FrontPage", "Home");
+        }
+
 		//Get
-		public ActionResult AllSubtitleFiles()
-		{
+		public ActionResult AllSubtitleFiles() {
 			SubtitleFileRepo allSubtitles = new SubtitleFileRepo();
 
 			allSubtitles.GetAllSubtitles();
 
 			return View(allSubtitles);
 		}
-
-        /*
-        //Post
-        [HttpPost]
-        public  ActionResult upload (string name, string description, string language, ) {
-
-        }
-        */
 	}
 }
