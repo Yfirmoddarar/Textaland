@@ -4,69 +4,45 @@
     ViewBag.Title = "AboutSubtitleFile";
 }
 
-<h2>@Html.DisplayFor(model => model._name)</h2>
 
-<div>
-	<hr />
-    <dl class="dl-horizontal">
-
-
-        <dt>
-           Nafn
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._name)
-        </dd>
-
-        
-        <dt>
-            Lýsing
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._description)
-        </dd>
-        <dt>
-           Einkunn
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._rating)
-        </dd>
-
-        <dt>
-            Sett inn
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model._dateAdded)
-        </dd>
-
-        
-    </dl>
+<div style="width:500px" class="btn-group btn-group-justified">
+    <div class="btn btn-primary disabled">Nafn</div>
+    <div class="btn btn-default disabled"> @Html.DisplayFor(model => model._name) </div>
+</div> 
+<div style="width:500px" class="btn-group btn-group-justified">
+    <div class="btn btn-primary disabled">Lýsing</div>
+    <div class="btn btn-default disabled">@Html.DisplayFor(model => model._description) </div>
+</div>
+<div style="width:500px" class="btn-group btn-group-justified">
+    <div class="btn btn-primary disabled">Einkunn</div>
+    <div class="btn btn-default disabled">@Html.DisplayFor(model => model._rating) </div>
 </div>
 
-@{foreach (var item in ViewBag.AllComments) {
-    
- <div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="panel-title">(Notandanafn birtist hérna)</h3>
-  </div>
-  <div class="panel-body">
-    @item._text
-  </div>
-</div>
-}
-}
 
-@{if (User.Identity.IsAuthenticated) { 
 
-using (Html.BeginForm("AddComment", "SubtitleFile", @Model,  FormMethod.Post))
-{
-    
-    @Html.TextBox("addText")
+    <h3>Athugasemdir</h3>
+    @{foreach (var item in ViewBag.AllComments)
+    {
 
-    <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" />
-}
-}}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">(Notandanafn) @item._dateAdded</h3>
+            </div>
+            <div class="panel-body">
+                @item._text
+            </div>
+        </div>
+    }
+    }
+
+    @{if (User.Identity.IsAuthenticated)
+    {
+
+        using (Html.BeginForm("AddComment", "SubtitleFile", @Model, FormMethod.Post))
+        {
+
+            @Html.TextBox("addText")
+
+            <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" />
+        }
+    }}
