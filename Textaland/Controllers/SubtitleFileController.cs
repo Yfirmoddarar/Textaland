@@ -55,11 +55,11 @@ namespace Textaland.Controllers
 
 		//Get
 		public ActionResult AllSubtitleFiles() {
-			SubtitleFileRepo allSubtitles = new SubtitleFileRepo();
+			SubtitleFileRepo myRepo = new SubtitleFileRepo();
 
-			allSubtitles.GetAllSubtitles();
+			var allSubs = myRepo.GetAllSubtitles();
 
-			return View(allSubtitles);
+			return View(allSubs);
 		}
 
 		// Get

@@ -7,103 +7,37 @@
 <h2>AllSubtitleFiles</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Hlaða upp skrá", "Upload")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model._userId)
+            Nafn
         </th>
         <th>
-            @Html.DisplayNameFor(model => model._numOfTranslationParticipants)
+            Einkunn
         </th>
         <th>
-            @Html.DisplayNameFor(model => model._numOfDownloads)
+           Tungumál
         </th>
         <th>
-            @Html.DisplayNameFor(model => model._numOfTimesRated)
+           Sett inn
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model._rating)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model._name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model._type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model._languageFrom)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model._languageTo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model._description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model._dateAdded)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model._readyForDownload)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model._inTranslation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model._hearingImpaired)
-        </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item._userId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._numOfTranslationParticipants)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._numOfDownloads)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._numOfTimesRated)
+            @Html.DisplayFor(modelItem => item._name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item._rating)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._type)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item._languageFrom)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._languageTo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._description)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item._dateAdded)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._readyForDownload)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._inTranslation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._hearingImpaired)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
