@@ -3,31 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Textaland.Models;
+using Textaland.DataAccessLayer;
 
 namespace Textaland.Controllers
 {
     public class SearchController : Controller
     {
-		// Get
-		[HttpGet]
-		public ActionResult SearchResult()
-		{
-
-
-
-
-			return View();
-		}
-
 		// Post
 		[HttpPost]
-		public ActionResult SearchResult(FormCollection formData)
+		public ActionResult SearchResult(string searchInput)
 		{
+			SubtitleFileRepo myRepo = new SubtitleFileRepo(); 
 
+			var searchResult = from s in myRepo.GetAllSubtitles()
+							   where s._name.Contains(searchInput)
+							   select s;
 
-
-
-			return View();
+			return View(searchResult);
 		}
 	}
 }
