@@ -17,9 +17,9 @@ namespace Textaland.Models
 		public double _rating { get; set; }
         [Required(ErrorMessage="Please enter a name")]
 		public string _name { get; set; }
-        [Required(ErrorMessage="Please select type")]
+       // [Required(ErrorMessage="Please select type")]
 		public string _type { get; set; }
-        [Required(ErrorMessage="Missing language")]
+       // [Required(ErrorMessage="Missing language")]
     	public string _languageFrom { get; set; }
 		public string _languageTo { get; set; }
         [Required(ErrorMessage = "Please add a description")]
