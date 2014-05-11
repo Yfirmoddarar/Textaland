@@ -15,10 +15,12 @@ namespace Textaland.Models
 		public int _numOfDownloads { get; set; }
 		public int _numOfTimesRated { get; set; }
 		public double _rating { get; set; }
+        [Required(ErrorMessage="Please enter a name")]
 		public string _name { get; set; }
 		public string _type { get; set; }
 		public string _languageFrom { get; set; }
 		public string _languageTo { get; set; }
+        [Required(ErrorMessage = "Please add a description")]
 		public string _description { get; set; }
 		public DateTime _dateAdded { get; set; }
 		public bool _readyForDownload { get; set; }
