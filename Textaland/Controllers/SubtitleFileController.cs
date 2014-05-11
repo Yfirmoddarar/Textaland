@@ -93,7 +93,7 @@ namespace Textaland.Controllers
 		public ActionResult AboutSubtitleFile(SubtitleFile s){
 			
 			
-			return View();
+			return View(s);
 		}
 	}
 }
