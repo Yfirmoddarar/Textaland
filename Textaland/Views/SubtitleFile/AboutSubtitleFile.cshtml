@@ -47,8 +47,26 @@
     </dl>
 </div>
 
-
-
-@if (User.Identity.IsAuthenticated) {
-    <p>mímímí</p>
+@{foreach (var item in ViewBag.AllComments) {
+    
+ <div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">(Notandanafn birtist hérna)</h3>
+  </div>
+  <div class="panel-body">
+    @item._text
+  </div>
+</div>
 }
+}
+
+@{if (User.Identity.IsAuthenticated) { 
+
+using (Html.BeginForm("AddComment", "SubtitleFile", @Model,  FormMethod.Post))
+{
+    
+    @Html.TextBox("addText")
+
+    <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" />
+}
+}}
