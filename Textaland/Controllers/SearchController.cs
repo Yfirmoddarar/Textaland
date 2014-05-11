@@ -8,14 +8,6 @@ namespace Textaland.Controllers
 {
     public class SearchController : Controller
     {
-        //
-        // GET: /Search/
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-
 		// Get
 		[HttpGet]
 		public ActionResult SearchResult()
