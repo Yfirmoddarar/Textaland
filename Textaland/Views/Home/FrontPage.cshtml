@@ -16,8 +16,8 @@
     <label class="control-label" for="searchInput"></label>
     <center>
         @using (Html.BeginForm("SearchResult", "Search", FormMethod.Post)) {
-            <input type="text" name="leit" id="leit" placeholder="leit" />
-            <button class="btn btn-primary btn-sm" title="Leita" type="submit">Leita</button>   
+             <input type="text" name="leit" id="leit" value="Leitaðu að textaskrá hér" style="text-align: center" onfocus="value=''" />
+             <button class="btn btn-primary btn-sm" title="Leita" type="submit">Leita</button>
         }
     </center>
 </div>
@@ -120,15 +120,14 @@
 } else {
     <div class="form-group" style="margin-bottom: 30px">
     <label class="control-label" for="searchInput"></label>
-    <center>
-        <input class="form-control" id="searchInput" type="text" value="Type your search here"
-               style="text-align: center" onfocus="value=''">
-        <button onclick="location.href = '/Search/SearchResult'" type="button"
-                class="btn btn-primary btn-sm">
-            Leita
-        </button>
-    </center>
-</div>
+        <center>
+            @using (Html.BeginForm("SearchResult", "Search", FormMethod.Post))
+            {
+                <input type="text" name="leit" id="leit" value="Leitaðu að textaskrá hér" style="text-align: center" onfocus="value=''" />
+                <button class="btn btn-primary btn-sm" title="Leita" type="submit">Leita</button>
+            }
+        </center>
+    </div>
 
 <div class="col-xs-6">
     <table class="table table-striped table-hover">
