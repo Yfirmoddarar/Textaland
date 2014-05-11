@@ -33,86 +33,58 @@
 <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade active in" id="newest">
         <table class="table table-striped table-hover">
-            <tr>
-                <th>
-                    1.
-                </th>
-                <th>
-                    titanic.srt
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    2.
-                </th>
-                <th>
-                    pirateofthecarribian.srt
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    3.
-                </th>
-                <th>
-                    troy.srt
-                </th>
-            </tr>
+            @{
+            int i = 1;
+            foreach (var item in ViewBag.NewestList) {
+                <tr>
+                    <th>
+                        @i
+                    </th>
+                    <th>
+                        @item._name
+                    </th>
+                </tr>
+                i++;
+            }
+            }
         </table>
     </div>
     <div class="tab-pane fade" id="popular">
         <table class="table">
-            <tr>
-                <th>
-                    1.
-                </th>
-                <th>
-                    toystory.srt
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    2.
-                </th>
-                <th>
-                    lionking.srt
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    3.
-                </th>
-                <th>
-                    frozen.srt
-                </th>
-            </tr>
+            @{
+            int s = 1;
+            foreach (var item in ViewBag.PopularList)
+            {
+                <tr>
+                    <th>
+                        @s
+                    </th>
+                    <th>
+                        @item._name
+                    </th>
+                </tr>
+                s++;
+            }
+            }
         </table>
     </div>
     <div class="tab-pane fade" id="rating">
         <table class="table">
-            <tr>
-                <th>
-                    1.
-                </th>
-                <th>
-                    cosmos.srt
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    2.
-                </th>
-                <th>
-                    gameofthrones.srt
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    3.
-                </th>
-                <th>
-                    walkingdead.srt
-                </th>
-            </tr>
+            @{
+            int k = 1;
+            foreach (var item in ViewBag.RatingList)
+            {
+                <tr>
+                    <th>
+                        @k
+                    </th>
+                    <th>
+                        @item._name
+                    </th>
+                </tr>
+                k++;
+            }
+            }
         </table>
     </div>
 </div>
