@@ -26,7 +26,15 @@ namespace Textaland.Migrations
 			seedData.ForEach(d => context.SubtitleFiles.Add(d));
 			context.SaveChanges();
 			 */
-	
+
+			/*
+			var seedData = new List<SubtitleComment> {
+				new SubtitleComment{ _text="Herna er comment sem er ekki donalegt", _textFileId=2 }
+			};
+
+			seedData.ForEach(d => context.SubtitleComments.Add(d));
+			context.SaveChanges();
+			*/
 
 			/*
 			var seedData = new List<TranslationRequestUpvote>
