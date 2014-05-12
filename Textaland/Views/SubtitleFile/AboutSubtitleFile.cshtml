@@ -18,6 +18,20 @@
     <div class="btn btn-default disabled">@Html.DisplayFor(model => model._rating) </div>
 </div>
 
+@{if (User.Identity.IsAuthenticated) { 
+   
+    using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post))
+    {
+       <h4>Gefðu þessari textaskrá einkunn</h4><br />
+        @Html.TextBox("rating")
+
+         <input class="btn btn-primary btn-sm" type="submit" value="Gefa einkunn" />
+        @Html.ValidationMessage("rating")
+    }
+    }
+}
+
+
 
 
     <h3>Athugasemdir</h3>

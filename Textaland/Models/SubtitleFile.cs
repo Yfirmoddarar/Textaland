@@ -67,11 +67,13 @@ namespace Textaland.Models
 		// This function will update the rating of some user when somebody 
 		// gives him new rating.
 		// The function has not been tested - 8th of May.
-		void ChangeRating(int newRating) {
+		public void ChangeRating(double newRating) {
 			double currTotalRating = _rating * _numOfTimesRated;
 			currTotalRating += newRating;
 			_numOfTimesRated++;
 			_rating = currTotalRating / _numOfTimesRated;
+
+			Math.Round(_rating, 1);
 		}
 
 
