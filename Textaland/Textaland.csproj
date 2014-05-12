@@ -264,6 +264,7 @@
     <Content Include="Views\Search\SearchResult.cshtml" />
     <Content Include="Views\SubtitleFile\AboutSubtitleFile.cshtml" />
     <Content Include="Views\SubtitleFile\AddComment.cshtml" />
+    <Content Include="Views\SubtitleFile\FileError.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

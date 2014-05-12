@@ -53,6 +53,9 @@ namespace Textaland.Controllers
             return View();
         }
 
+        public ActionResult FileError() {
+            return View();
+        }
 		//Get
 		public ActionResult AllSubtitleFiles() {
 			SubtitleFileRepo myRepo = new SubtitleFileRepo();
