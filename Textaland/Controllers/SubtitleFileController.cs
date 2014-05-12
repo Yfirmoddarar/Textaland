@@ -188,14 +188,68 @@ namespace Textaland.Controllers
 			return View(allSubs);
 		}
 
+
+        //Generate a filelocatio path for writing and downloading
+        public string GeneratePath(int id) {
+
+            SubtitleFileRepo sfr = new SubtitleFileRepo();
+
+            string path = Server.MapPath(Url.Content("~/App_Data/uploads/"));
+
+            path += sfr.GetSubtitleFileById(id)._name.Replace(" ", "");
+            path += ".srt";
+
+            return path;
+        }
+    
+        public ActionResult Download(int id) {
+
+            WriteToFile(id);
+
+            SubtitleFileRepo sfr = new SubtitleFileRepo();
+
+            string FileName = sfr.GetSubtitleFileById(id)._name.Replace(" ", "");
+            FileName += ".srt";
+
+            string path = "~/App_Data/uploads/" + FileName;
+
+            return new DownloadResult 
+            { VirtualPath=path, FileDownloadName = FileName };
+        }
+
+        public void WriteToFile(int id) {
+            SubtitleLineRepo slr = new SubtitleLineRepo();
+
+
+            FileInfo newfile = new FileInfo(GeneratePath(id));
+
+            if (!newfile.Exists) {
+                using (StreamWriter sw = newfile.CreateText()) {
+                    foreach (var line in slr.GetLinesById(id)) {
+                        sw.WriteLine(line._lineNumber);
+                        sw.WriteLine(line._time);
+                        sw.WriteLine(line._line1);
+                        if (line._line2 != null) {
+                            sw.WriteLine(line._line2);
+                            if (line._line3 != null) {
+                                sw.WriteLine(line._line3);
+                            }
+                        }
+                        sw.WriteLine("");
+                    }
+                    sw.Close();
+                }
+            }
+        }
+
 		//Operation that shows details about subtitle files
 		
-		public ActionResult AboutSubtitleFile(int? id){
+		public ActionResult AboutSubtitleFile(int id){
 			
 			SubtitleFileRepo sfr = new SubtitleFileRepo();
 
 			//"file" vill be the SubtitleFile that has the ID the same as "id".
-			var file = sfr.GetSubtitleFileById(id.Value);
+			var file = sfr.GetSubtitleFileById(id);
 
 			if(file == null)
 			{
@@ -204,7 +258,7 @@ namespace Textaland.Controllers
 			//Getting all the comments that hafa a specific subtitleFile id.
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
-			var allComments = from c in commentRepo.GetCommentById(id.Value)
+			var allComments = from c in commentRepo.GetCommentById(id)
 							  orderby c._dateAdded ascending
 							  select c;
 			ViewBag.AllComments = allComments;

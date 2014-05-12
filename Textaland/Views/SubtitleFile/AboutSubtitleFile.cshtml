@@ -4,35 +4,34 @@
     ViewBag.Title = "AboutSubtitleFile";
 }
 
-<div>
-    <div style="width:500px" class="btn-group btn-group-justified">
-        <div class="btn btn-primary disabled">Nafn</div>
-        <div class="btn btn-default disabled"> @Html.DisplayFor(model => model._name) </div>
-    </div> <br />
-    <div style="width:500px" class="btn-group btn-group-justified">
-        <div class="btn btn-primary disabled">Lýsing</div>
-        <div class="btn btn-default disabled">@Html.DisplayFor(model => model._description) </div>
-    </div> <br />
-    <div style="width:500px" class="btn-group btn-group-justified">
-        <div class="btn btn-primary disabled">Einkunn</div>
-        <div class="btn btn-default disabled">@Model._rating.ToString("#.##") </div>
+<a href="\SubtitleFile\Download?id=@Model.Id">Download</a>
+
+    <div>
+        <div style="width:500px" class="btn-group btn-group-justified">
+            <div class="btn btn-primary disabled">Nafn</div>
+            <div class="btn btn-default disabled"> @Html.DisplayFor(model => model._name) </div>
+        </div> <br />
+        <div style="width:500px" class="btn-group btn-group-justified">
+            <div class="btn btn-primary disabled">Lýsing</div>
+            <div class="btn btn-default disabled">@Html.DisplayFor(model => model._description) </div>
+        </div> <br />
+        <div style="width:500px" class="btn-group btn-group-justified">
+            <div class="btn btn-primary disabled">Einkunn</div>
+            <div class="btn btn-default disabled">@Model._rating.ToString("#.##") </div>
+        </div>
     </div>
-</div>
-@{if (User.Identity.IsAuthenticated) { 
-   
+    @{if (User.Identity.IsAuthenticated) {
+
     using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post))
     {
-       <h4>Gefðu þessari textaskrá einkunn (0 - 10)</h4>
+        <h4>Gefðu þessari textaskrá einkunn (0 - 10)</h4>
         @Html.TextBox("rating")
 
-         <input class="btn btn-primary btn-sm" type="submit" value="Gefa einkunn" />
+        <input class="btn btn-primary btn-sm" type="submit" value="Gefa einkunn" />
         @Html.ValidationMessage("rating")
     }
     }
-}
-
-
-
+    }
 
     <h3>Athugasemdir</h3>
     @{foreach (var item in ViewBag.AllComments)
@@ -60,4 +59,7 @@
             <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" />
             @Html.ValidationMessage("addText");
         }
-    }}
+    }
+    }
+
+

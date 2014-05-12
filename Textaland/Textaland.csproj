@@ -188,6 +188,7 @@
     <Compile Include="Controllers\SubtitleFileController.cs" />
     <Compile Include="Controllers\TranslationRequestController.cs" />
     <Compile Include="DataAccessLayer\AppDataContext.cs" />
+    <Compile Include="DataAccessLayer\DownloadResult.cs" />
     <Compile Include="DataAccessLayer\SubtitleCommentRepo.cs" />
     <Compile Include="DataAccessLayer\SubtitleFileRepo.cs" />
     <Compile Include="DataAccessLayer\SubtitleLineRepo.cs" />
