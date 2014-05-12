@@ -225,7 +225,7 @@ namespace Textaland.Controllers
 		}
 
 		//Operation that shows details about subtitle files
-		[HttpPost]
+		
 		public ActionResult AboutSubtitleFile(int? id){
 			
 			SubtitleFileRepo sfr = new SubtitleFileRepo();

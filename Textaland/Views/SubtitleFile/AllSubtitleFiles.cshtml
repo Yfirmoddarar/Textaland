@@ -32,7 +32,8 @@
             {
                //<input type="submit" value="@item._name" />  
             }*@
-            @Html.ActionLink(item._name, "AboutSubtitleFile", "SubtitleFile", new { id = item.Id }, null)
+            <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
+            @*@Html.ActionLink(item._name, "AboutSubtitleFile", "SubtitleFile", new { id = item.Id }, null)*@
         </td>
         <td>
             @item._rating.ToString("#.##")
