@@ -126,15 +126,15 @@ namespace Textaland.Controllers
                             Console.WriteLine(e.Message);
                             return false;
                         }
-
+                
                         string lTime = sr.ReadLine();
 
                         if (lTime != "") {
                             sl._time = lTime;
-                        }
-                        else {
+            }
+            else {
                             return false;
-                        }
+            }
 
                         string lText1 = sr.ReadLine();
 
@@ -147,13 +147,13 @@ namespace Textaland.Controllers
                                 sl._line2 = lText2;
 
                                 string lText3 = sr.ReadLine();
-
+                    
                                 if (lText3 != "") {
                                     sl._line3 = lText3;
                                 }
                             }
                         }
-
+                        
                         sl._textFileId = id;
                         slr.AddLine(sl);
 
@@ -224,26 +224,24 @@ namespace Textaland.Controllers
 			return View();
 		}
 
-		//get
-		/*public ActionResult AboutSubtitleFile(){
-
-
-			return View();
-		}*/
-
 		//Operation that shows details about subtitle files
 		[HttpPost]
-		public ActionResult AboutSubtitleFile(SubtitleFile s){
+		public ActionResult AboutSubtitleFile(int? id){
 			
+			SubtitleFileRepo sfr = new SubtitleFileRepo();
+
+			var file = sfr.GetSubtitleFileById(id.Value);
+			//AppDataContext db  = new AppDataContext();
+			//SubtitleFile file = db.SubtitleFiles.Find(id);
+			//Getting all the comments that hafa a specific subtitleFile id.
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
-			var allComments = from c in commentRepo.GetCommentById(s.Id)
+			var allComments = from c in commentRepo.GetCommentById(id.Value)
 							  orderby c._dateAdded ascending
 							  select c;
 			ViewBag.AllComments = allComments;
 			
-
-			return View(s);
+			return View(file);
 		}
 
 		[HttpPost]
@@ -267,10 +265,10 @@ namespace Textaland.Controllers
 			else {
 				ModelState.AddModelError("rating", "Einkunnin má ekki innihalda bókstafi");
 			}
-			return AboutSubtitleFile(s);
+			return AboutSubtitleFile(s.Id);
 		}
 
-
+		//This function adds a new comment to a specific text file.
 		[HttpPost]
 		public ActionResult AddComment(SubtitleFile s, string addText)
 		{
@@ -279,13 +277,16 @@ namespace Textaland.Controllers
 			SubtitleComment newComment = new SubtitleComment();
 
 			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
-
+			if (!String.IsNullOrEmpty(addText)) {
 			newComment._text = addText;
 			newComment._textFileId = s.Id;
 
 			commentRepo.AddComment(newComment);
-
-			return AboutSubtitleFile(s);
+			}
+			else {
+				ModelState.AddModelError("addText", "Vinsamlegast sláðu inn athugasemd");
+			}
+			return AboutSubtitleFile(s.Id);
 		}
 	}
 }

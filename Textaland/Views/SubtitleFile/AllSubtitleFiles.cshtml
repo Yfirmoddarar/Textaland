@@ -28,13 +28,14 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @using (Html.BeginForm("AboutSubtitleFile", "SubtitleFile", item, FormMethod.Post))
+            @*@using (Html.BeginForm("AboutSubtitleFile", "SubtitleFileController", item, FormMethod.Post))
             {
-               <input type="submit" value="@item._name" />  
-            }
+               //<input type="submit" value="@item._name" />  
+            }*@
+            @Html.ActionLink(item._name, "AboutSubtitleFile", "SubtitleFile", new { id = item.Id }, null)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._rating)
+            @item._rating.ToString("#.##")
         </td>
         <td>
             @Html.DisplayFor(modelItem => item._languageFrom)
@@ -43,6 +44,7 @@
             @Html.DisplayFor(modelItem => item._dateAdded)
         </td>
     </tr>
+
 }
 
 </table>

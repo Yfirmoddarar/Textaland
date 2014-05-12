@@ -29,75 +29,123 @@
         <li class="" style="display: inline"><a href="#rating" data-toggle="tab">Einkunn</a></li>
     </ul>
 </div>
-    
-<div id="myTabContent" class="tab-content">
+
+<div class="col-md-3"></div>
+<div id="myTabContent" class="tab-content col-md-6">
     <div class="tab-pane fade active in" id="newest">
-        @{
-        int counter1 = 1;
-        foreach (var item in ViewBag.NewestList)
-        {
-            <div class="col-md-6 well">
-                 @counter1. 
-                 &nbsp;
-                 @item._name
-            </div>
-            <div class="col-md-6 well">
-                @{
-                    string date = item._dateAdded.ToShortDateString();
-                    @Html.Raw(date)
-                }
-            </div>
-            counter1++;
-        }
-        }
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th class="col-md-1">
+                    Númer
+                </th>
+                <th class="col-md-4">
+                    Nafn
+                </th>
+                <th class="col-md-1">
+                    Dagsetning
+                </th>
+            </tr>
+            @{
+            int counter1 = 1;
+            foreach (var item in ViewBag.NewestList) {
+                <tr>
+                    <td class="col-md-1">
+                    @counter1.
+                    &nbsp;
+                    </td>
+                    <td class="col-md-4">
+                        @item._name
+                    </td>
+                    <td class="col-md-1">
+                        @{
+                            string date = item._dateAdded.ToShortDateString();
+                            @Html.Raw(date)
+                        }   
+                    </td>
+                </tr>
+                counter1++;
+            }
+            }
+        </table>
     </div>
+
     <div class="tab-pane fade" id="popular">
-        @{
-        int counter2 = 1;
-        foreach (var item in ViewBag.PopularList)
-        {
-            <div class="col-md-6 well">
-                @counter2.
-                &nbsp;
-                @item._name
-            </div>
-            <div class="md-md-6 well">
-                &nbsp;
-                @item._numOfDownloads
-            </div>
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th class="col-md-1">
+                    Númer
+                </th>
+                <th class="col-md-4">
+                    Nafn
+                </th>
+                <th class="col-md-1">
+                    Fjöldi
+                </th>
+            </tr>
+            @{
+            int counter2 = 1;
+            foreach (var item in ViewBag.PopularList) {
+                <tr>
+                    <td class="col-md-1">
+                        @counter2.
+                        &nbsp;
+                    </td>
+                    <td class="col-md-4">
+                        @item._name
+                    </td>
+                    <td class="col-md-1">
+                        @item._numOfDownloads
+                    </td>
+                </tr>
             counter2++;
-        }
-        }
+            }
+            }
+        </table>
     </div>
+
     <div class="tab-pane fade" id="rating">
-        @{
-        int counter3 = 1;
-        foreach (var item in ViewBag.RatingList)
-        {
-            <div class="col-md-6 well">
-                @counter3.
-                &nbsp;
-                @item._name
-            </div>
-            <div class="col-md-6 well">
-                @{
-                if (item._rating == 0)
-                {
-                    @Html.Raw("Engin einkunn")
-                }
-                else
-                {
-                    @item._rating.ToString("#.##")
-                }
-                }
-            </div>
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th class="col-md-1">
+                    Númer
+                </th>
+                <th class="col-md-4">
+                    Nafn
+                </th>
+                <th class="col-md-1">
+                    Einkunn
+                </th>
+            </tr>
+            @{
+            int counter3 = 1;
+            foreach (var item in ViewBag.RatingList) {
+                <tr>
+                    <td class="col-md-1">
+                        @counter3.
+                        &nbsp;
+                    </td>
+                    <td class="col-md-4">
+                        @item._name
+                    </td>
+                    <td class="col-md-1">
+                        @{
+                            if (item._rating == 0) {
+                            @Html.Raw("Engin einkunn")
+                        } else {
+                            @item._rating.ToString("#.##")
+                        }
+                        }
+                    </td>
+                </tr>
             counter3++;
-        }
-        }
+            }
+            }
+        </table>
     </div>
 </div>
-    
-} else {
+}
+else
+{
     <div class="form-group" style="margin-bottom: 30px">
     <label class="control-label" for="searchInput"></label>
         <center>
