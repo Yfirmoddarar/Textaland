@@ -32,20 +32,17 @@ namespace Textaland.DataAccessLayer
 
         //this operation adds a new Subtitle file to the existing List
         public void AddSubtitle(SubtitleFile _newSubtitleFile)
-        {
-            int newId = 1;
-
-            //if the list isn't empty the new comment gets the ID according to 
-            //the number of comments
-            if (GetAllSubtitles().Count() > 0)
-            {
-                newId = db.SubtitleFiles.Max(x => x.Id) + 1;
-            }
-            _newSubtitleFile.Id = newId;
-            _newSubtitleFile._dateAdded = DateTime.Now;
+        {          
             db.SubtitleFiles.Add(_newSubtitleFile);
             db.SaveChanges();
         }
+
+		public void ChangeRating(int id, double rating) {
+			var req = db.SubtitleFiles.First(r => r.Id == id);
+
+			req.ChangeRating(rating);
+			db.SaveChanges();
+		}
 
         /*
 
