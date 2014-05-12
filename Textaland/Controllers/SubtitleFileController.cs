@@ -92,13 +92,16 @@ namespace Textaland.Controllers
                 sf._dateAdded = DateTime.Now;
                 sf._userId = User.Identity.GetUserId();
 
-                sfr.AddSubtitle(sf);
-
                 if (ReadFile(uc._file, sf.Id)) {
+                    sfr.AddSubtitle(sf);
                     return RedirectToAction("FrontPage", "Home");
                     // TODO redirect something!!!!
                 }
                 else {
+                    SubtitleLineRepo slr = new SubtitleLineRepo();
+
+                    slr.RemoveLines(sf.Id);
+
                     return RedirectToAction("FileError", "SubtitleFile");
                     //TODO redirect to error reading file
                 }
@@ -167,26 +170,6 @@ namespace Textaland.Controllers
                 return false;
             }
         }
-
-        
-        //[HttpPost]
-        //public ActionResult Upload (SubtitleFile sf, HttpPostedFileBase file) {
-
-        //    if (file != null && file.ContentLength > 0) {
-        //        var filename = Path.GetFileName(file.FileName);
-        //        var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), filename);
-        //        file.SaveAs(path);
-
-        //            SubtitleFileRepo sfr = new SubtitleFileRepo();
-
-        //            sfr.AddSubtitle(sf);
-
-        //        }
-        //        else {
-        //           return RedirectToAction("UploadError", "SubtitleFile");
-        //        } 
-        //   return RedirectToAction("FrontPage", "Home");
-        //}
 
         public ActionResult UploadError() {
             return View();
@@ -265,6 +248,7 @@ namespace Textaland.Controllers
 			if (!String.IsNullOrEmpty(addText)) {
 			newComment._text = addText;
 			newComment._textFileId = s.Id;
+			newComment._userId = User.Identity.GetUserId();
 
 			commentRepo.AddComment(newComment);
 			}
@@ -272,6 +256,27 @@ namespace Textaland.Controllers
 				ModelState.AddModelError("addText", "Vinsamlegast sláðu inn athugasemd");
 			}
 			return AboutSubtitleFile(s.Id);
+		}
+
+		[HttpPost]
+		public ActionResult DeleteComment(int commentID) {
+
+			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
+
+			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
+
+			SubtitleComment comment = commentRepo.GetSingleCommentById(commentID);
+
+			var userID = User.Identity.GetUserId();
+
+			if (userID == comment._userId) {
+				commentRepo.RemoveComment(comment);
+			}
+			else {
+				ModelState.AddModelError("deleteComment", "Getur aðeins fjarlægt þína eigin athugasemd");
+			}
+
+			return AboutSubtitleFile(comment._textFileId);
 		}
 	}
 }
