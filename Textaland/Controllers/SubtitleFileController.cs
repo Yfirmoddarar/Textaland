@@ -166,25 +166,6 @@ namespace Textaland.Controllers
 			return View(allSubs);
 		}
 
-		// Get
-		[HttpGet]
-		public ActionResult SearchResult() {
-			
-			
-			
-			
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult SearchResult(FormCollection formData) {
-			
-			
-			
-			
-			return View();
-		}
-
 		//Operation that shows details about subtitle files
 		[HttpPost]
 		public ActionResult AboutSubtitleFile(int? id){
