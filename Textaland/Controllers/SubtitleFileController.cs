@@ -196,32 +196,13 @@ namespace Textaland.Controllers
             return View();
         }
 		//Get
-		public ActionResult AllSubtitleFiles() {
+		public ActionResult AllSubtitleFiles(int num) {
 
 			SubtitleFileRepo myRepo = new SubtitleFileRepo();
 
-			var allSubs = myRepo.GetAllSubtitles();
+			var allSubs = myRepo.GetAllSubtitles().Skip(num * 10).Take(10);
 
 			return View(allSubs);
-		}
-
-		// Get
-		[HttpGet]
-		public ActionResult SearchResult() {
-			
-			
-			
-			
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult SearchResult(FormCollection formData) {
-			
-			
-			
-			
-			return View();
 		}
 
 		//Operation that shows details about subtitle files
