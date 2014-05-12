@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using Textaland.DataAccessLayer;
 using Textaland.Models;
+using Microsoft.AspNet.Identity;
+
 
 namespace Textaland.Controllers
 {
@@ -64,7 +66,7 @@ namespace Textaland.Controllers
 
         [HttpPost]
         public ActionResult UploadFile(UploadCollection uc) {
-        
+
             //Check if file is empty, if not save and create new subtitle file
             //Call read function to collect lines from saved file
             if (uc._file != null && uc._file.ContentLength > 0) {
@@ -77,7 +79,7 @@ namespace Textaland.Controllers
                     _languageFrom = uc._language
                 };
 
-                    SubtitleFileRepo sfr = new SubtitleFileRepo();
+                SubtitleFileRepo sfr = new SubtitleFileRepo();
 
                 int newId = 1;
 
@@ -88,46 +90,83 @@ namespace Textaland.Controllers
                 }
                 sf.Id = newId;
                 sf._dateAdded = DateTime.Now;
+                sf._userId = User.Identity.GetUserId();
 
-                    sfr.AddSubtitle(sf);
+                sfr.AddSubtitle(sf);
 
-                /*if (/ReadFile(uc._file, sf.Id)) {
+                if (ReadFile(uc._file, sf.Id)) {
+                    return RedirectToAction("FrontPage", "Home");
                     // TODO redirect something!!!!
                 }
                 else {
+                    return RedirectToAction("FileError", "SubtitleFile");
                     //TODO redirect to error reading file
-                }*/
-
-                
-
                 }
-                else {
+            }
+            else {
                 return RedirectToAction("UploadError", "SubtitleFile");
             }
-
-            return RedirectToAction("FrontPage", "Home");
         }
 
-        //public bool ReadFile(HttpPostedFileBase file, int id) {
-        //    try {
-        //        using (StreamReader sr = new StreamReader(file.InputStream, System.Text.Encoding.UTF8, true)) {
+        public bool ReadFile(HttpPostedFileBase file, int id) {
+            try {
+                using (StreamReader sr = new StreamReader(file.InputStream, System.Text.Encoding.UTF8, true)) {
 
-        //            SubtitleLineRepo slr = new SubtitleLineRepo();
+                    SubtitleLineRepo slr = new SubtitleLineRepo();
                     
-        //            while (!(sr.EndOfStream)) {
-        //                SubtitleLine sl = new SubtitleLine();
+                    while (!(sr.EndOfStream)) {
+                        SubtitleLine sl = new SubtitleLine();
+
+                        try {
+                            int lId = Convert.ToInt32(sr.ReadLine());
+                            sl._lineNumber = lId;
+                        }
+                        catch (Exception e) {
+                            Console.WriteLine("File type wrong");
+                            Console.WriteLine(e.Message);
+                            return false;
+                        }
+                
+                        string lTime = sr.ReadLine();
+
+                        if (lTime != "") {
+                            sl._time = lTime;
+            }
+            else {
+                            return false;
+            }
+
+                        string lText1 = sr.ReadLine();
+
+                        if (lText1 != "") {
+                            sl._line1 = lText1;
+
+                            string lText2 = sr.ReadLine();
+
+                            if (lText2 != "") {
+                                sl._line2 = lText2;
+
+                                string lText3 = sr.ReadLine();
+                    
+                                if (lText3 != "") {
+                                    sl._line3 = lText3;
+                                }
+                            }
+                        }
                         
-        //                Console.WriteLine(line);
-        //            } 
-        //        }
-        //        return true;
-        //    }
-        //    catch (Exception e) {
-        //        Console.WriteLine("The file could not be read:");
-        //        Console.WriteLine(e.Message);
-        //        return false;
-        //    }
-        //}
+                        sl._textFileId = id;
+                        slr.AddLine(sl);
+
+                    }
+                }
+                return true;
+            }
+            catch (Exception e) {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
 
         
         //[HttpPost]
@@ -166,30 +205,12 @@ namespace Textaland.Controllers
 			return View(allSubs);
 		}
 
-		// Get
-		[HttpGet]
-		public ActionResult SearchResult() {
-			
-			
-			
-			
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult SearchResult(FormCollection formData) {
-			
-			
-			
-			
-			return View();
-		}
-
 		//Operation that shows details about subtitle files
-		[HttpPost]
+		
 		public ActionResult AboutSubtitleFile(int? id){
 			
 			SubtitleFileRepo sfr = new SubtitleFileRepo();
+
 
 			var file = sfr.GetSubtitleFileById(id.Value);
 			//AppDataContext db  = new AppDataContext();

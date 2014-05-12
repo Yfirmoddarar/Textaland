@@ -35,7 +35,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item._name)
+            <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item._languageTo)
@@ -47,7 +47,13 @@
             @Html.DisplayFor(modelItem => item._numOfDownloads)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._rating)
+            @{
+            if (item._rating == 0) {
+                @Html.Raw("Engin einkunn")
+            } else {
+                @item._rating.ToString("#.##")
+            }
+            }
         </td>
         <td>
             @{
