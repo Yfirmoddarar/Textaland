@@ -35,7 +35,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item._name)
+            <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item._languageTo)

@@ -22,11 +22,11 @@ namespace Textaland.DataAccessLayer
 
         // This function will go through my list '_subtitleLines'
         // and return the lines that matches with the given 'id'.
-        public IEnumerable<SubtitleFile> GetSubtitleFileById(int id)
+        public SubtitleFile GetSubtitleFileById(int id)
         {
-            var subtitleFilesById = from f in db.SubtitleFiles
+            var subtitleFilesById = (from f in db.SubtitleFiles
                                     where f.Id == id
-                                    select f;
+                                    select f).SingleOrDefault();
             return subtitleFilesById;
         }
 

@@ -54,7 +54,7 @@
                     &nbsp;
                     </td>
                     <td class="col-md-4">
-                        @item._name
+                        <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
                     </td>
                     <td class="col-md-1">
                         @{
@@ -91,7 +91,7 @@
                         &nbsp;
                     </td>
                     <td class="col-md-4">
-                        @item._name
+                        <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
                     </td>
                     <td class="col-md-1">
                         @item._numOfDownloads
@@ -125,7 +125,7 @@
                         &nbsp;
                     </td>
                     <td class="col-md-4">
-                        @item._name
+                        <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
                     </td>
                     <td class="col-md-1">
                         @{
@@ -171,7 +171,7 @@ else
         foreach (var item in ViewBag.TranslationList) {
             <tr>
                 <td>
-                    @item._name
+                    <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
                 </td>
                 <td>
                     @item._numOfTranslationParticipants
@@ -207,7 +207,7 @@ else
         foreach (Textaland.Models.TranslationRequest item in ViewBag.RequestList) {
             <tr>
                 <td>
-                    @item._name
+                    <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
                 </td>
                 <td>
                     @item._numUpvotes
