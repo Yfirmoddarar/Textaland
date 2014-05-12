@@ -34,13 +34,16 @@
 
 
 
-    <h3>Athugasemdir</h3>
+    <h3>Athugasemdir</h3> @Html.ValidationMessage("deleteComment")  
     @{foreach (var item in ViewBag.AllComments)
     {
 
         <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">(Notandanafn) @item._dateAdded</h3>
+            <div class="panel-heading"> 
+                <form method="post" action="@Url.Action("DeleteComment", "SubtitleFile", new {commentID = item.Id})">
+                    <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd?')" type="submit" class="close">x</button>
+                </form>                  
+                <h3 class="panel-title">(Notandanafn) @item._dateAdded</h3>     
             </div>
             <div class="panel-body">
                 @item._text
@@ -57,7 +60,13 @@
 
             @Html.TextBox("addText", "", new { style = "height:70px" })
 
-            <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" />
+            <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" onclick="downPage()" />
             @Html.ValidationMessage("addText");
         }
     }}
+
+<script>
+    function downPage() {
+        window.scrollTo(0, document.body.clientHeight)
+    }
+</script>
