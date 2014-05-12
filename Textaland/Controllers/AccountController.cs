@@ -53,7 +53,7 @@ namespace Textaland.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Ógilt Notandanafn eða lykilorð.");
+                    ModelState.AddModelError("", "Ógilt notandanafn eða lykilorð.");
                 }
             }
 
