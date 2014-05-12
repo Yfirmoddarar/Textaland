@@ -103,6 +103,25 @@ namespace Textaland.Controllers
 			return View(s);
 		}
 
+		[HttpPost]
+		public ActionResult GiveRating(SubtitleFile s, string rating)
+		{
+			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
+
+			double newRating = Convert.ToDouble(rating);
+
+			if (newRating < 0 || newRating > 10) {
+				ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0 og 10");
+			}
+			else {
+				fileRepo.ChangeRating(s.Id, newRating);
+			}
+
+			
+
+			return AboutSubtitleFile(s);
+		}
+
 
 		[HttpPost]
 		public ActionResult AddComment(SubtitleFile s, string addText)

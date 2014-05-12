@@ -47,6 +47,13 @@ namespace Textaland.DataAccessLayer
             db.SaveChanges();
         }
 
+		public void ChangeRating(int id, double rating) {
+			var req = db.SubtitleFiles.First(r => r.Id == id);
+
+			req.ChangeRating(rating);
+			db.SaveChanges();
+		}
+
         /*
 
         //this operation removes the subtitle file that matches the given ID
