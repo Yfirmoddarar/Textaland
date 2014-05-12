@@ -11,43 +11,114 @@ namespace Textaland.Controllers
 {
     public class SubtitleFileController : Controller {
         //Get
-        public ActionResult Upload () {
+        //public ActionResult Upload () {
 
-            ViewBag.ListOfTypes = new SelectList(new[] {
-                new {Id = "1", Name = "Kvikmynd"},
-                new {Id = "2", Name = "Þáttur"},
-            }, "Id", "Name");
+        //    List<SelectListItem> types = new List<SelectListItem>();
+        //    types.Add(new SelectListItem { Text = "Kvikmynd", Value = "Kvikmynd" });
+        //    types.Add(new SelectListItem { Text = "Þáttur", Value = "Þáttur" });
 
-            ViewBag.ListOfLanguages = new SelectList(new[] {
-                new {Id = "1", Name = "ENG"},
-                new {Id = "2", Name = "ISL"},
-            }, "Id", "Name");
+        //    ViewBag.ListOfTypes = types;
+
+
+        //    List<SelectListItem> languages = new List<SelectListItem>();
+        //    languages.Add(new SelectListItem { Text = "ENG", Value = "ENG" });
+        //    languages.Add(new SelectListItem { Text = "ISL", Value = "ISL" });
+
+        //    //ViewBag.ListOfTypes = new SelectList(new[] {
+        //    //    new {Id = "1", Name = "Kvikmynd"},
+        //    //    new {Id = "2", Name = "Þáttur"},
+        //    //}, "Id", "Name");
+
+        //    ViewBag.ListOfLanguages = languages;
+
+        //    //ViewBag.ListOfLanguages = new SelectList(new[] {
+        //    //    new {Id = "1", Name = "ENG"},
+        //    //    new {Id = "2", Name = "ISL"},
+        //    //}, "Id", "Name");
+
+        //    return View();
+        //}
+
+
+        //Get
+        public ActionResult UploadFile() {
+
+            List<SelectListItem> types = new List<SelectListItem>();
+            types.Add(new SelectListItem { Text = "Kvikmynd", Value = "Kvikmynd" });
+            types.Add(new SelectListItem { Text = "Þáttur", Value = "Þáttur" });
+
+            ViewBag.ListOfTypes = types;
+
+
+            List<SelectListItem> languages = new List<SelectListItem>();
+            languages.Add(new SelectListItem { Text = "ENG", Value = "ENG" });
+            languages.Add(new SelectListItem { Text = "ISL", Value = "ISL" });
+
+            ViewBag.ListOfLanguages = languages;
 
             return View();
         }
 
-        
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Upload (SubtitleFile sf, HttpPostedFileBase file) {
+        [HttpPost]
+        public ActionResult UploadFile(UploadCollection uc) {
 
-            if (file != null && file.ContentLength > 0) {
-                var filename = Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), filename);
-                file.SaveAs(path);
+            if (uc._file != null && uc._file.ContentLength > 0) {
+                var fileName = Path.GetFileName(uc._file.FileName);
+                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName); 
+                uc._file.SaveAs(path);
 
-                    SubtitleFileRepo sfr = new SubtitleFileRepo();
+                SubtitleFile sf = new SubtitleFile {
+                    _name = uc._name,
+                    _description = uc._description,
+                    _hearingImpaired = uc._hardOfHearing,
+                    _type = uc._type,
+                    _languageFrom = uc._language
+                };
 
-                    sfr.AddSubtitle(sf);
+                SubtitleFileRepo sfr = new SubtitleFileRepo();
 
+                int newId = 1;
 
+                //if the list isn't empty the new comment gets the ID according to 
+                //the number of comments
+                if (sfr.GetAllSubtitles().Count() > 0) {
+                    newId = sfr.GetAllSubtitles().Max(x => x.Id) + 1;
                 }
-                else {
-                    RedirectToAction("UploadError", "SubtitleFile");
-            }
+                sf.Id = newId;
+                sf._dateAdded = DateTime.Now;
 
+                sfr.AddSubtitle(sf);
+
+                ReadFile(path, sf.Id);
+
+            }
 
             return RedirectToAction("FrontPage", "Home");
         }
+
+        public void ReadFile(string path, int id) {
+
+        }
+
+        
+        //[HttpPost]
+        //public ActionResult Upload (SubtitleFile sf, HttpPostedFileBase file) {
+
+        //    if (file != null && file.ContentLength > 0) {
+        //        var filename = Path.GetFileName(file.FileName);
+        //        var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), filename);
+        //        file.SaveAs(path);
+
+        //            SubtitleFileRepo sfr = new SubtitleFileRepo();
+
+        //            sfr.AddSubtitle(sf);
+
+        //        }
+        //        else {
+        //           return RedirectToAction("UploadError", "SubtitleFile");
+        //        } 
+        //   return RedirectToAction("FrontPage", "Home");
+        //}
 
         public ActionResult UploadError() {
             return View();
