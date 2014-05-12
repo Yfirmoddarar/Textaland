@@ -72,6 +72,8 @@ namespace Textaland.Models
 			currTotalRating += newRating;
 			_numOfTimesRated++;
 			_rating = currTotalRating / _numOfTimesRated;
+
+			Math.Round(_rating, 1);
 		}
 
 

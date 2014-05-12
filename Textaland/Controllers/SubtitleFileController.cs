@@ -153,8 +153,12 @@ namespace Textaland.Controllers
             return View();
         }
 
+        public ActionResult FileError() {
+            return View();
+        }
 		//Get
 		public ActionResult AllSubtitleFiles() {
+
 			SubtitleFileRepo myRepo = new SubtitleFileRepo();
 
 			var allSubs = myRepo.GetAllSubtitles();
@@ -208,17 +212,22 @@ namespace Textaland.Controllers
 		{
 			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
 
-			double newRating = Convert.ToDouble(rating);
 
-			if (newRating < 0 || newRating > 10) {
-				ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0 og 10");
+
+			double newRating;
+
+			if (Double.TryParse(rating, out newRating)) {
+
+				if (newRating < 0 || newRating > 10) {
+					ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0-10");
+				}
+				else {
+					fileRepo.ChangeRating(s.Id, newRating);
+				}
 			}
 			else {
-				fileRepo.ChangeRating(s.Id, newRating);
+				ModelState.AddModelError("rating", "Einkunnin má ekki innihalda bókstafi");
 			}
-
-			
-
 			return AboutSubtitleFile(s);
 		}
 
