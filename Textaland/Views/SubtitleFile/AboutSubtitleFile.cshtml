@@ -40,10 +40,12 @@
 
         <div class="panel panel-info">
             <div class="panel-heading"> 
+                @if (User.Identity.IsAuthenticated) { 
                 <form method="post" action="@Url.Action("DeleteComment", "SubtitleFile", new {commentID = item.Id})">
-                    <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd?')" type="submit" class="close">x</button>
-                </form>                  
-                <h3 class="panel-title">(Notandanafn) @item._dateAdded</h3>     
+                    <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd? ATH: Aðeibs er hægt að eyða sinni eigin athugasemd!')" type="submit" class="close">x</button>
+                </form> 
+                }                 
+                <h3 class="panel-title">@User.Identity.Name @item._dateAdded</h3>     
             </div>
             <div class="panel-body">
                 @item._text
