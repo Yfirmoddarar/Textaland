@@ -4,7 +4,8 @@
     ViewBag.Title = "SearchResult";
 }
 
-<h2>SearchResult</h2>
+<h2>Leitarniðurstöður</h2>
+
 @if (Model.Count() > 0) {
     <table class="table">
     <tr>
@@ -49,10 +50,20 @@
             @Html.DisplayFor(modelItem => item._rating)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._dateAdded)
+            @{
+                string date = item._dateAdded.ToShortDateString();
+                @Html.Raw(date)
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._hearingImpaired)
+            @{
+            if (item._hearingImpaired == true) {
+                @Html.Raw("Já")
+            }
+            else {
+                @Html.Raw("Nei")
+            }
+            }
         </td>
     </tr>
 }
