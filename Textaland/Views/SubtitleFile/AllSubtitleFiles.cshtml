@@ -48,3 +48,17 @@
 }
 
 </table>
+
+@{int count = @Model.Count();
+
+  int numPages = count / 10 + 1;
+    
+}
+  
+<ul class="pagination pagination-sm">
+    <li class="disabled"><a href="#">«</a></li>
+    @for (int i = 1; i <= numPages; i++) { 
+        <li>@Html.ActionLink(@i.ToString("#"), "AllSubtitleFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
+    }
+    </ul>
+
