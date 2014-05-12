@@ -38,8 +38,11 @@
                 <th class="col-md-1">
                     Númer
                 </th>
-                <th class="col-md-4">
+                <th class="col-md-2">
                     Nafn
+                </th>
+                <th class="col-md-2">
+                    Tungumál
                 </th>
                 <th class="col-md-1">
                     Dagsetning
@@ -53,8 +56,11 @@
                     @counter1.
                     &nbsp;
                     </td>
-                    <td class="col-md-4">
+                    <td class="col-md-2">
                         <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
+                    </td>
+                    <td class="col-md-2">
+                        @item._languageFrom
                     </td>
                     <td class="col-md-1">
                         @{
@@ -75,8 +81,11 @@
                 <th class="col-md-1">
                     Númer
                 </th>
-                <th class="col-md-4">
+                <th class="col-md-2">
                     Nafn
+                </th>
+                <th class="col-md-2">
+                    Tungumál
                 </th>
                 <th class="col-md-1">
                     Fjöldi
@@ -90,8 +99,11 @@
                         @counter2.
                         &nbsp;
                     </td>
-                    <td class="col-md-4">
+                    <td class="col-md-2">
                         <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
+                    </td>
+                    <td class="col-md-2">
+                        @item._languageFrom
                     </td>
                     <td class="col-md-1">
                         @item._numOfDownloads
@@ -109,8 +121,11 @@
                 <th class="col-md-1">
                     Númer
                 </th>
-                <th class="col-md-4">
+                <th class="col-md-2">
                     Nafn
+                </th>
+                <th class="col-md-2">
+                    Tungumál
                 </th>
                 <th class="col-md-1">
                     Einkunn
@@ -124,8 +139,11 @@
                         @counter3.
                         &nbsp;
                     </td>
-                    <td class="col-md-4">
+                    <td class="col-md-2">
                         <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
+                    </td>
+                    <td class="col-md-2">
+                        @item._languageFrom
                     </td>
                     <td class="col-md-1">
                         @{
@@ -157,26 +175,34 @@ else
         </center>
     </div>
 
-<div class="col-xs-6">
-    <table class="table table-striped table-hover">
+<div class="col-md-6">
+    <table class="table table-striped table-hover table-bordered">
         <tr class="info">
-            <th>
+            <th class="col-md-2">
                 Þýðingar í gangi
             </th>
-            <th>
+            <th class="col-md-1">
+                Tungumál
+            </th>
+            <th class="col-md-2">
                 Fjöldi þátttakanda
+            </th>
+            <th class="col-md-1">
             </th>
         </tr>
         @{
         foreach (var item in ViewBag.TranslationList) {
             <tr>
-                <td>
+                <td class="col-md-2">
                     <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
                 </td>
-                <td>
+                <td class="col-md-1">
+                    @item._languageTo
+                </td>
+                <td class="col-md-2">
                     @item._numOfTranslationParticipants
                 </td>
-                <td>
+                <td class="col-md-1" style="text-align: center">
                     <button class="btn btn-primary">UNFINSHED</button>
                 </td>
             </tr>
@@ -192,27 +218,34 @@ else
     </table>
 </div>
 
-<div class="col-xs-6">
-    <table class="table table-striped table-hover col-xs-6">
+<div class="col-md-6">
+    <table class="table table-striped table-hover table-bordered">
         <tr class="info">
-            <th>
-                Beiðnir
+            <th class="col-md-2">
+                Beiðni
             </th>
-            <th>
+            <th class="col-md-1">
+                Tungumál
+            </th>
+            <th class="col-md-2">
                 Fjöldi atkvæða
             </th>
-            <th></th>
+            <th class="col-md-1">
+            </th>
         </tr>
         @{
         foreach (Textaland.Models.TranslationRequest item in ViewBag.RequestList) {
             <tr>
-                <td>
+                <td class="col-md-2">
                     <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
                 </td>
-                <td>
+                <td class="col-md-1">
+                    @item._language
+                </td>
+                <td class="col-md-2">
                     @item._numUpvotes
                 </td>
-                <td>                    
+                <td class="col-md-1" style="text-align: center">
                     @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
                     {
                         <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')" type="submit" value="Svara beiðni" class="btn btn-primary btn-sm" />

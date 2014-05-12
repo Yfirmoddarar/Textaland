@@ -9,7 +9,7 @@
 <p>
     <a href="/SubtitleFile/UploadFile" class="btn btn-default btn-sm">Hlaða upp nýrri skrá</a>
 </p>
-<table class="table">
+<table class="table table-hover table-striped table-bordered">
     <tr>
         <th>
             Nafn
@@ -37,7 +37,10 @@
             @Html.DisplayFor(modelItem => item._languageFrom)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._dateAdded)
+            @{
+                string date = item._dateAdded.ToShortDateString();
+                @Html.Raw(date)
+            }
         </td>
     </tr>
 
