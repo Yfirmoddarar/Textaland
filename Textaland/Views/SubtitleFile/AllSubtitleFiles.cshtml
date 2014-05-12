@@ -15,26 +15,55 @@
             Nafn
         </th>
         <th>
+            Tungumál
+        </th>
+        <th>
+            Kvikmynd/Þáttur
+        </th>
+        <th>
+            Sótt
+        </th>
+        <th>
             Einkunn
         </th>
         <th>
-           Tungumál
+            Sent inn
         </th>
         <th>
-           Sett inn
+            Fyrir heyrnaskerta
         </th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
         </td>
         <td>
-            @item._rating.ToString("#.##")
+            @Html.DisplayFor(modelItem => item._languageTo)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._languageFrom)
+            @Html.DisplayFor(modelItem => item._type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item._numOfDownloads)
+        </td>
+        <td>
+            @{
+                 if (item._rating == 0) {
+                     @Html.Raw("Engin einkunn")
+                 }
+                 else {
+            @item._rating.ToString("#.##")
+                 }   
+            }
+        </td>
+        <td>
+            @{
+                string date = item._dateAdded.ToShortDateString();
+                @Html.Raw(date)
+            }
         </td>
         <td>
             @{
@@ -44,6 +73,21 @@
         </td>
     </tr>
 
+
 }
 
 </table>
+
+@{int count = @Model.Count();
+
+  int numPages = count / 10 + 1;
+    
+}
+  
+<ul class="pagination pagination-sm">
+    <li class="disabled"><a href="#">«</a></li>
+    @for (int i = 1; i <= numPages; i++) { 
+        <li>@Html.ActionLink(@i.ToString("#"), "AllSubtitleFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
+    }
+    </ul>
+
