@@ -6,40 +6,48 @@
 
 <a href="\SubtitleFile\Download?id=@Model.Id">Download</a>
 
-    <div>
-        <div style="width:500px" class="btn-group btn-group-justified">
-            <div class="btn btn-primary disabled">Nafn</div>
-            <div class="btn btn-default disabled"> @Html.DisplayFor(model => model._name) </div>
-        </div> <br />
-        <div style="width:500px" class="btn-group btn-group-justified">
-            <div class="btn btn-primary disabled">Lýsing</div>
-            <div class="btn btn-default disabled">@Html.DisplayFor(model => model._description) </div>
-        </div> <br />
-        <div style="width:500px" class="btn-group btn-group-justified">
-            <div class="btn btn-primary disabled">Einkunn</div>
-            <div class="btn btn-default disabled">@Model._rating.ToString("#.##") </div>
-        </div>
+<div>
+    <div style="width:500px" class="btn-group btn-group-justified">
+        <div class="btn btn-primary disabled">Nafn</div>
+        <div class="btn btn-default disabled"> @Html.DisplayFor(model => model._name) </div>
+    </div> <br />
+    <div style="width:500px" class="btn-group btn-group-justified">
+        <div class="btn btn-primary disabled">Lýsing</div>
+        <div class="btn btn-default disabled">@Html.DisplayFor(model => model._description) </div>
+    </div> <br />
+    <div style="width:500px" class="btn-group btn-group-justified">
+        <div class="btn btn-primary disabled">Einkunn</div>
+        <div class="btn btn-default disabled">@Model._rating.ToString("#.##") </div>
     </div>
-    @{if (User.Identity.IsAuthenticated) {
-
+</div>
+@{if (User.Identity.IsAuthenticated) { 
+   
     using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post))
     {
-        <h4>Gefðu þessari textaskrá einkunn (0 - 10)</h4>
+       <h4>Gefðu þessari textaskrá einkunn (0 - 10)</h4>
         @Html.TextBox("rating")
 
-        <input class="btn btn-primary btn-sm" type="submit" value="Gefa einkunn" />
+         <input class="btn btn-primary btn-sm" type="submit" value="Gefa einkunn" />
         @Html.ValidationMessage("rating")
     }
     }
-    }
+}
 
-    <h3>Athugasemdir</h3>
+
+
+
+    <h3>Athugasemdir</h3> @Html.ValidationMessage("deleteComment")  
     @{foreach (var item in ViewBag.AllComments)
     {
 
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">(Notandanafn) @item._dateAdded</h3>
+                @if (User.Identity.IsAuthenticated) { 
+                <form method="post" action="@Url.Action("DeleteComment", "SubtitleFile", new {commentID = item.Id})">
+                    <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd? ATH: Aðeibs er hægt að eyða sinni eigin athugasemd!')" type="submit" class="close">x</button>
+                </form> 
+                }                 
+                <h3 class="panel-title">@User.Identity.Name @item._dateAdded</h3>     
             </div>
             <div class="panel-body">
                 @item._text
@@ -56,10 +64,13 @@
 
             @Html.TextBox("addText", "", new { style = "height:70px" })
 
-            <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" />
+            <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" onclick="downPage()" />
             @Html.ValidationMessage("addText");
         }
-    }
-    }
+    }}
 
-
+<script>
+    function downPage() {
+        window.scrollTo(0, document.body.clientHeight)
+    }
+</script>

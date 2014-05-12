@@ -31,6 +31,14 @@ namespace Textaland.DataAccessLayer
 			return subtitleCommentById;
 		}
 
+		public SubtitleComment GetSingleCommentById(int id)
+		{
+			var subtitleCommentById = (from comment in db.SubtitleComments
+									  where comment.Id == id
+									  select comment).SingleOrDefault();
+			return subtitleCommentById;
+		}
+
 		//this operation adds a new comment to the existing List
 		public void AddComment(SubtitleComment newSubtitleComment) {
 			int newId = 1;
@@ -47,17 +55,11 @@ namespace Textaland.DataAccessLayer
 		}
 
         ////this operation removes the comment that matches the given ID
-        //public void RemoveComment(int removeId) {
-
-        //    foreach (var item in db.SubtitleComments) {
-        //        if (item.Id == removeId) {
-        //            db.SubtitleComments.Remove(item);
-        //            db.SaveChanges();
-        //            break;
-        //        }
-        //    }
-			
-        //}
+        public void RemoveComment(SubtitleComment comment) {
+			db.SubtitleComments.Attach(comment);
+			db.SubtitleComments.Remove(comment);
+			db.SaveChanges();		
+        }
 	
 
 	}

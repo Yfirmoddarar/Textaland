@@ -17,7 +17,7 @@
     <center>
         @using (Html.BeginForm("SearchResult", "Search", FormMethod.Post)) {
              <input type="text" name="leit" id="leit" value="Leitaðu að textaskrá hér" style="text-align: center" onfocus="value=''" />
-             <button class="btn btn-primary btn-sm" title="Leita" type="submit">Leita</button>
+             <button class="btn btn-info btn-sm" title="Leita" type="submit">Leita</button>
         }
     </center>
 </div>
@@ -167,7 +167,7 @@ else
             @using (Html.BeginForm("SearchResult", "Search", FormMethod.Post))
             {
                 <input type="text" name="leit" id="leit" value="Leitaðu að textaskrá hér" style="text-align: center" onfocus="value=''" />
-                <button class="btn btn-primary btn-sm" title="Leita" type="submit">Leita</button>
+                <button class="btn btn-info btn-sm" title="Leita" type="submit">Leita</button>
             }
         </center>
     </div>
@@ -201,14 +201,14 @@ else
                 </td>
                 <td class="col-md-1" style="text-align: center">
                     <input onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')" 
-                           type="submit" value="Taka þátt í þýðingu" class="btn btn-primary btn-sm" />
+                           type="submit" value="Taka þátt í þýðingu" class="btn btn-warning btn-sm" />
                 </td>
             </tr>
         }
         }
         <tr>
             <td>
-                <button onclick="location.href = '/TranslationRequest/TranslationRequests'" class="btn btn-primary">
+                <button onclick="location.href = '/TranslationRequest/TranslationRequests'" class="btn btn-info">
                     Sjá allar þýðingar
                 </button>
             </td>
@@ -247,7 +247,7 @@ else
                     @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
                     {
                         <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')" 
-                               type="submit" value="Svara beiðni" class="btn btn-primary btn-sm" />
+                               type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
                     }
                 </td>
             </tr>
@@ -255,7 +255,7 @@ else
         }
         <tr>
             <td>
-                <button onclick="location.href = '/TranslationRequest/TranslationRequests'" class="btn btn-primary">
+                <button onclick="location.href = '/TranslationRequest/TranslationRequests'" class="btn btn-info">
                     Sjá allar beiðnir
                 </button>
             </td>
