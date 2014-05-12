@@ -248,6 +248,7 @@ namespace Textaland.Controllers
 			if (!String.IsNullOrEmpty(addText)) {
 			newComment._text = addText;
 			newComment._textFileId = s.Id;
+			newComment._userId = User.Identity.GetUserId();
 
 			commentRepo.AddComment(newComment);
 			}
@@ -255,6 +256,27 @@ namespace Textaland.Controllers
 				ModelState.AddModelError("addText", "Vinsamlegast sláðu inn athugasemd");
 			}
 			return AboutSubtitleFile(s.Id);
+		}
+
+		[HttpPost]
+		public ActionResult DeleteComment(int commentID) {
+
+			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
+
+			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
+
+			SubtitleComment comment = commentRepo.GetSingleCommentById(commentID);
+
+			var userID = User.Identity.GetUserId();
+
+			if (userID == comment._userId) {
+				commentRepo.RemoveComment(comment);
+			}
+			else {
+				ModelState.AddModelError("deleteComment", "Getur aðeins fjarlægt þína eigin athugasemd");
+			}
+
+			return AboutSubtitleFile(comment._textFileId);
 		}
 	}
 }
