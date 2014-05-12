@@ -9,7 +9,7 @@
 <p>
     <a href="/SubtitleFile/UploadFile" class="btn btn-default btn-sm">Hlaða upp nýrri skrá</a>
 </p>
-<table class="table">
+<table class="table table-hover table-striped table-bordered">
     <tr>
         <th>
             Nafn
@@ -48,15 +48,14 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item._numOfDownloads)
-        </td>
+        </td> 
         <td>
             @{
-                 if (item._rating == 0) {
-                     @Html.Raw("Engin einkunn")
-                 }
-                 else {
-                     @item._rating.ToString("#.##")
-                 }   
+                if (item._rating == 0) {
+                    @Html.Raw("Engin einkunn")
+                } else {
+                @item._rating.ToString("#.##")
+                }   
             }
         </td>
         <td>
@@ -67,12 +66,12 @@
         </td>
         <td>
             @{
-                if (item._hearingImpaired == true) {
+                if (@item._hearingImpaired == true){
                     @Html.Raw("Já")
-                 }
+                }
                 else {
                     @Html.Raw("Nei")
-                 }
+                }
             }
         </td>
     </tr>
