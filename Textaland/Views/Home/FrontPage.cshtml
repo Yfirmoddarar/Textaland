@@ -171,7 +171,7 @@ else
         foreach (var item in ViewBag.TranslationList) {
             <tr>
                 <td>
-                    <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
+                    @item._name
                 </td>
                 <td>
                     @item._numOfTranslationParticipants
