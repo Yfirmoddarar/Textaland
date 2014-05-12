@@ -263,8 +263,6 @@ namespace Textaland.Controllers
 
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
-			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
-
 			SubtitleComment comment = commentRepo.GetSingleCommentById(commentID);
 
 			var userID = User.Identity.GetUserId();
