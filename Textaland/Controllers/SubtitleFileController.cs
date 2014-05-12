@@ -213,12 +213,15 @@ namespace Textaland.Controllers
 			SubtitleComment newComment = new SubtitleComment();
 
 			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
+			if (!String.IsNullOrEmpty(addText)) {
+				newComment._text = addText;
+				newComment._textFileId = s.Id;
 
-			newComment._text = addText;
-			newComment._textFileId = s.Id;
-
-			commentRepo.AddComment(newComment);
-
+				commentRepo.AddComment(newComment);
+			}
+			else {
+				ModelState.AddModelError("addText", "Vinsamlegast sláðu inn athugasemd");
+			}
 			return AboutSubtitleFile(s);
 		}
 	}
