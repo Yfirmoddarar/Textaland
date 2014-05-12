@@ -15,7 +15,7 @@ namespace Textaland.DataAccessLayer
         public IEnumerable<SubtitleFile> GetAllSubtitles()
         {
             var allFiles = from f in db.SubtitleFiles
-                           //orderby f.I ascending
+                           orderby f._rating descending
                            select f;
             return allFiles;
         }

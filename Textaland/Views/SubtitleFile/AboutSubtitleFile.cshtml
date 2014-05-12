@@ -22,10 +22,11 @@
    
     using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post))
     {
-
+       <h4>Gefðu þessari textaskrá einkunn</h4><br />
         @Html.TextBox("rating")
 
          <input class="btn btn-primary btn-sm" type="submit" value="Gefa einkunn" />
+        @Html.ValidationMessage("rating")
     }
     }
 }
