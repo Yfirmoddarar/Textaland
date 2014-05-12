@@ -92,13 +92,16 @@ namespace Textaland.Controllers
                 sf._dateAdded = DateTime.Now;
                 sf._userId = User.Identity.GetUserId();
 
-                sfr.AddSubtitle(sf);
-
                 if (ReadFile(uc._file, sf.Id)) {
+                    sfr.AddSubtitle(sf);
                     return RedirectToAction("FrontPage", "Home");
                     // TODO redirect something!!!!
                 }
                 else {
+                    SubtitleLineRepo slr = new SubtitleLineRepo();
+
+                    slr.RemoveLines(sf.Id);
+
                     return RedirectToAction("FileError", "SubtitleFile");
                     //TODO redirect to error reading file
                 }
@@ -168,26 +171,6 @@ namespace Textaland.Controllers
             }
         }
 
-        
-        //[HttpPost]
-        //public ActionResult Upload (SubtitleFile sf, HttpPostedFileBase file) {
-
-        //    if (file != null && file.ContentLength > 0) {
-        //        var filename = Path.GetFileName(file.FileName);
-        //        var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), filename);
-        //        file.SaveAs(path);
-
-        //            SubtitleFileRepo sfr = new SubtitleFileRepo();
-
-        //            sfr.AddSubtitle(sf);
-
-        //        }
-        //        else {
-        //           return RedirectToAction("UploadError", "SubtitleFile");
-        //        } 
-        //   return RedirectToAction("FrontPage", "Home");
-        //}
-
         public ActionResult UploadError() {
             return View();
         }
@@ -208,19 +191,11 @@ namespace Textaland.Controllers
 		// Get
 		[HttpGet]
 		public ActionResult SearchResult() {
-			
-			
-			
-			
 			return View();
 		}
 
 		[HttpPost]
 		public ActionResult SearchResult(FormCollection formData) {
-			
-			
-			
-			
 			return View();
 		}
 
