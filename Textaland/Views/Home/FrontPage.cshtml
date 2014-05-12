@@ -207,7 +207,7 @@ else
         foreach (Textaland.Models.TranslationRequest item in ViewBag.RequestList) {
             <tr>
                 <td>
-                    <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
+                    @item._name
                 </td>
                 <td>
                     @item._numUpvotes
