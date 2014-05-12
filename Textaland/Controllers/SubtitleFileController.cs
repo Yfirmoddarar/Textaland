@@ -211,10 +211,13 @@ namespace Textaland.Controllers
 			
 			SubtitleFileRepo sfr = new SubtitleFileRepo();
 
-
+			//"file" vill be the SubtitleFile that has the ID the same as "id".
 			var file = sfr.GetSubtitleFileById(id.Value);
-			//AppDataContext db  = new AppDataContext();
-			//SubtitleFile file = db.SubtitleFiles.Find(id);
+
+			if(file == null)
+			{
+				return HttpNotFound();
+			}
 			//Getting all the comments that hafa a specific subtitleFile id.
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
