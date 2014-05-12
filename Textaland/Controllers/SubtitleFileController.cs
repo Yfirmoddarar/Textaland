@@ -226,7 +226,7 @@ namespace Textaland.Controllers
 			else {
 				ModelState.AddModelError("rating", "Einkunnin má ekki innihalda bókstafi");
 			}
-			return AboutSubtitleFile(s);
+			return AboutSubtitleFile(s.Id);
 		}
 
 		//This function adds a new comment to a specific text file.
@@ -247,7 +247,7 @@ namespace Textaland.Controllers
 			else {
 				ModelState.AddModelError("addText", "Vinsamlegast sláðu inn athugasemd");
 			}
-			return AboutSubtitleFile(s);
+			return AboutSubtitleFile(s.Id);
 		}
 	}
 }
