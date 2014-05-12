@@ -28,12 +28,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @*@using (Html.BeginForm("AboutSubtitleFile", "SubtitleFileController", item, FormMethod.Post))
-            {
-               //<input type="submit" value="@item._name" />  
-            }*@
             <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
-            @*@Html.ActionLink(item._name, "AboutSubtitleFile", "SubtitleFile", new { id = item.Id }, null)*@
         </td>
         <td>
             @item._rating.ToString("#.##")

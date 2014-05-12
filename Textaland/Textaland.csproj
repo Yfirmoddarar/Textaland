@@ -198,7 +198,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\SubtitleFileView.cs" />
     <Compile Include="Models\UploadCollection.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\SubtitleComment.cs" />

@@ -30,7 +30,7 @@
             @Html.DisplayFor(modelItem => item._language)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._name)
+            <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item._numUpvotes)

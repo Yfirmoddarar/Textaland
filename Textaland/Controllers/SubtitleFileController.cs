@@ -230,6 +230,7 @@ namespace Textaland.Controllers
 			
 			SubtitleFileRepo sfr = new SubtitleFileRepo();
 
+
 			var file = sfr.GetSubtitleFileById(id.Value);
 			//AppDataContext db  = new AppDataContext();
 			//SubtitleFile file = db.SubtitleFiles.Find(id);
