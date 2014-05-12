@@ -7,7 +7,7 @@
 <h2>Textaskrár</h2>
 
 <p>
-    <a href="/SubtitleFile/Upload" class="btn btn-default btn-sm">Hlaða upp nýrri skrá</a>
+    <a href="/SubtitleFile/UploadFile" class="btn btn-default btn-sm">Hlaða upp nýrri skrá</a>
 </p>
 <table class="table">
     <tr>
@@ -35,7 +35,7 @@
             @Html.ActionLink(item._name, "AboutSubtitleFile", "SubtitleFile", new { id = item.Id }, null)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._rating)
+            @item._rating.ToString("#.##")
         </td>
         <td>
             @Html.DisplayFor(modelItem => item._languageFrom)

@@ -1,18 +1,19 @@
-﻿@model Textaland.Models.SubtitleFile
+﻿@model Textaland.Models.UploadCollection
 
 @{
-    ViewBag.Title = "Upload";
+    ViewBag.Title = "UploadFile";
 }
 
-<h2>Upload</h2>
+<h2>UploadFile</h2>
 
-@using (Html.BeginForm("Upload", "SubtitleFile", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+@using (Html.BeginForm("UploadFile", "SubtitleFile", FormMethod.Post, new { enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>SubtitleFile</h4>
+        <h4>FormCollection</h4>
         <hr />
+
         <div class="form-group">
             @Html.LabelFor(model => model._name, "Nafn", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -24,7 +25,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model._description, "Lýsing", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model._description, new {@cols="21", @rows="4"})
+                @Html.TextAreaFor(model => model._description, new { @cols = "21", @rows = "4" })
                 @Html.ValidationMessageFor(model => model._description)
             </div>
         </div>
@@ -38,28 +39,25 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model._languageFrom, "Tungumál", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model._language, "Tungumál", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model._languageFrom, new SelectList(ViewBag.ListOfLanguages, "Value", "Text", "Selected"))
-                @Html.ValidationMessageFor(model => model._languageFrom)
+                @Html.DropDownListFor(model => model._language, new SelectList(ViewBag.ListOfLanguages, "Value", "Text", "Selected"))
+                @Html.ValidationMessageFor(model => model._language)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model._hearingImpaired, "Fyrir heyrnarskerta", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model._hardOfHearing, "Fyrir heyrnarskerta", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model._hearingImpaired)
-                @Html.ValidationMessageFor(model => model._hearingImpaired)
+                @Html.EditorFor(model => model._hardOfHearing)
+                @Html.ValidationMessageFor(model => model._hardOfHearing)
             </div>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="form-group col-md-10">
+            <input type="file" name="_file" id="_file" onchange="checkFile(this)" />
         </div>
 
-        <div class="form-group">
-            <div class="col-md-2"></div>
-            <div class="col-md-10">
-                <input type="file" name="uploadFile" id="file" onchange="checkFile(this)"/>
-            </div>
-        </div>
-        
         <div class="col-md-2"></div>
         <div class="alert alert-dismissable alert-danger hidden col-md-4" id="uploadError">
             <button type="button" class="close" data-dismiss="alert">×</button>
@@ -68,7 +66,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Hlaða upp" id="upload" class="btn btn-default hidden" />
+                <input type="submit" value="Hlaða upp"  id="upload" class="btn btn-default hidden" />
             </div>
         </div>
     </div>

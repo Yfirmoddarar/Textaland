@@ -15,8 +15,22 @@
 </div>
 <div style="width:500px" class="btn-group btn-group-justified">
     <div class="btn btn-primary disabled">Einkunn</div>
-    <div class="btn btn-default disabled">@Html.DisplayFor(model => model._rating) </div>
+    <div class="btn btn-default disabled">@Model._rating.ToString("#.##") </div>
 </div>
+
+@{if (User.Identity.IsAuthenticated) { 
+   
+    using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post))
+    {
+       <h4>Gefðu þessari textaskrá einkunn</h4>
+        @Html.TextBox("rating")
+
+         <input class="btn btn-primary btn-sm" type="submit" value="Gefa einkunn" />
+        @Html.ValidationMessage("rating")
+    }
+    }
+}
+
 
 
 
@@ -41,8 +55,9 @@
         using (Html.BeginForm("AddComment", "SubtitleFile", @Model, FormMethod.Post))
         {
 
-            @Html.TextBox("addText")
+            @Html.TextBox("addText", "", new { style = "height:70px" })
 
             <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" />
+            @Html.ValidationMessage("addText");
         }
     }}
