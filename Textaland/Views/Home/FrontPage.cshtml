@@ -26,75 +26,74 @@
     <ul class="nav nav-pills" style= "display: inline-table;">
         <li class="active" style="display: inline"><a href="#newest" data-toggle="tab">Nýjast</a></li>
         <li class="" style="display: inline"><a href="#popular" data-toggle="tab">Vinsælast</a></li>
-        <li class="" style="display: inline"><a href="#rating" data-toggle="tab">Rating</a></li>
+        <li class="" style="display: inline"><a href="#rating" data-toggle="tab">Einkunn</a></li>
     </ul>
 </div>
-
+    
 <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade active in" id="newest">
-        <table class="table table-striped table-hover">
-            @{
-            int counter1 = 1;
-            foreach (var item in ViewBag.NewestList) {
-                <tr>
-                    <td>
-                        @counter1
-                    </td>
-                    <td>
-                        @item._name
-                    </td>
-                    <td>
-                        @item._dateAdded
-                    </td>
-                </tr>
-                counter1++;
-            }
-            }
-        </table>
+        @{
+        int counter1 = 1;
+        foreach (var item in ViewBag.NewestList)
+        {
+            <div class="col-md-6 well">
+                 @counter1. 
+                 &nbsp;
+                 @item._name
+            </div>
+            <div class="col-md-6 well">
+                @{
+                    string date = item._dateAdded.ToShortDateString();
+                    @Html.Raw(date)
+                }
+            </div>
+            counter1++;
+        }
+        }
     </div>
     <div class="tab-pane fade" id="popular">
-        <table class="table table-striped table-hover">
-            @{
-            int counter2 = 1;
-            foreach (var item in ViewBag.PopularList)
-            {
-                <tr>
-                    <td>
-                        @counter2
-                    </td>
-                    <td>
-                        @item._name
-                    </td>
-                    <td>
-                        @item._numOfDownloads
-                    </td>
-                </tr>
-                counter2++;
-            }
-            }
-        </table>
+        @{
+        int counter2 = 1;
+        foreach (var item in ViewBag.PopularList)
+        {
+            <div class="col-md-6 well">
+                @counter2.
+                &nbsp;
+                @item._name
+            </div>
+            <div class="md-md-6 well">
+                &nbsp;
+                @item._numOfDownloads
+            </div>
+            counter2++;
+        }
+        }
     </div>
     <div class="tab-pane fade" id="rating">
-        <table class="table table-striped table-hover">
-            @{
-            int counter3 = 1;
-            foreach (var item in ViewBag.RatingList)
-            {
-                <tr>
-                    <td>
-                        @counter3
-                    </td>
-                    <td>
-                        @item._name
-                    </td>
-                    <td>
-                        @item._rating
-                    </td>
-                </tr>
-                counter3++;
-            }
-            }
-        </table>
+        @{
+        int counter3 = 1;
+        foreach (var item in ViewBag.RatingList)
+        {
+            <div class="col-md-6 well">
+                @counter3.
+                &nbsp;
+                @item._name
+            </div>
+            <div class="col-md-6 well">
+                @{
+                if (item._rating == 0)
+                {
+                    @Html.Raw("Engin einkunn")
+                }
+                else
+                {
+                    @item._rating.ToString("#.##")
+                }
+                }
+            </div>
+            counter3++;
+        }
+        }
     </div>
 </div>
     

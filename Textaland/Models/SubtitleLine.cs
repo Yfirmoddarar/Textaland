@@ -14,7 +14,8 @@ namespace Textaland.Models
 		public int _textFileId { get; set; }
 		public string _time { get; set; }
 		public string _line1 { get; set; }
-		public string _line2 { get; set; }
+        public string _line2 { get; set; }
+        public string _line3 { get; set; }
 		
 		// Operations.
 

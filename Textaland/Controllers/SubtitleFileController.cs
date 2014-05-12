@@ -43,6 +43,7 @@ namespace Textaland.Controllers
         //Get
         public ActionResult UploadFile() {
 
+            //Selector info for type of video
             List<SelectListItem> types = new List<SelectListItem>();
             types.Add(new SelectListItem { Text = "select" });
             types.Add(new SelectListItem { Text = "Kvikmynd", Value = "Kvikmynd" });
@@ -50,7 +51,7 @@ namespace Textaland.Controllers
 
             ViewBag.ListOfTypes = types;
 
-
+            //selector info for language of file
             List<SelectListItem> languages = new List<SelectListItem>();
             languages.Add(new SelectListItem { Text = "select" });
             languages.Add(new SelectListItem { Text = "ENG", Value = "ENG" });
@@ -64,10 +65,9 @@ namespace Textaland.Controllers
         [HttpPost]
         public ActionResult UploadFile(UploadCollection uc) {
 
+            //Check if file is empty, if not save and create new subtitle file
+            //Call read function to collect lines from saved file
             if (uc._file != null && uc._file.ContentLength > 0) {
-                var fileName = Path.GetFileName(uc._file.FileName);
-                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName); 
-                uc._file.SaveAs(path);
 
                 SubtitleFile sf = new SubtitleFile {
                     _name = uc._name,
@@ -82,7 +82,7 @@ namespace Textaland.Controllers
                 int newId = 1;
 
                 //if the list isn't empty the new comment gets the ID according to 
-                //the number of comments
+                //the number of files
                 if (sfr.GetAllSubtitles().Count() > 0) {
                     newId = sfr.GetAllSubtitles().Max(x => x.Id) + 1;
                 }
@@ -91,16 +91,43 @@ namespace Textaland.Controllers
 
                 sfr.AddSubtitle(sf);
 
-                ReadFile(path, sf.Id);
+                /*if (/ReadFile(uc._file, sf.Id)) {
+                    // TODO redirect something!!!!
+                }
+                else {
+                    //TODO redirect to error reading file
+                }*/
 
+                
+
+            }
+            else {
+                return RedirectToAction("UploadError", "SubtitleFile");
             }
 
             return RedirectToAction("FrontPage", "Home");
         }
 
-        public void ReadFile(string path, int id) {
+        //public bool ReadFile(HttpPostedFileBase file, int id) {
+        //    try {
+        //        using (StreamReader sr = new StreamReader(file.InputStream, System.Text.Encoding.UTF8, true)) {
 
-        }
+        //            SubtitleLineRepo slr = new SubtitleLineRepo();
+                    
+        //            while (!(sr.EndOfStream)) {
+        //                SubtitleLine sl = new SubtitleLine();
+                        
+        //                Console.WriteLine(line);
+        //            } 
+        //        }
+        //        return true;
+        //    }
+        //    catch (Exception e) {
+        //        Console.WriteLine("The file could not be read:");
+        //        Console.WriteLine(e.Message);
+        //        return false;
+        //    }
+        //}
 
         
         //[HttpPost]
