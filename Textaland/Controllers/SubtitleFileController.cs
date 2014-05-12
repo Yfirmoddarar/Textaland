@@ -81,29 +81,27 @@ namespace Textaland.Controllers
 			return View();
 		}
 
-		//get
-		/*public ActionResult AboutSubtitleFile(){
-
-
-			return View();
-		}*/
-
 		//Operation that shows details about subtitle files
 		[HttpPost]
-		public ActionResult AboutSubtitleFile(SubtitleFile s){
-			
+		public ActionResult AboutSubtitleFile(int? id){
+
+			SubtitleFileRepo sfr = new SubtitleFileRepo();
+
+			var file = sfr.GetSubtitleFileById(id.Value);
+			//AppDataContext db  = new AppDataContext();
+			//SubtitleFile file = db.SubtitleFiles.Find(id);
+			//Getting all the comments that hafa a specific subtitleFile id.
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
-			var allComments = from c in commentRepo.GetCommentById(s.Id)
+			var allComments = from c in commentRepo.GetCommentById(id.Value)
 							  orderby c._dateAdded ascending
 							  select c;
 			ViewBag.AllComments = allComments;
 			
-
-			return View(s);
+			return View(file);
 		}
 
-
+		//This function adds a new comment to a specific text file.
 		[HttpPost]
 		public ActionResult AddComment(SubtitleFile s, string addText)
 		{
@@ -113,12 +111,13 @@ namespace Textaland.Controllers
 
 			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
 
+			//The new comment gets an ID and text.
 			newComment._text = addText;
 			newComment._textFileId = s.Id;
 
 			commentRepo.AddComment(newComment);
 
-			return AboutSubtitleFile(s);
+			return AboutSubtitleFile(s.Id);
 		}
 	}
 }
