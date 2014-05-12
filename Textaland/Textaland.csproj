@@ -266,6 +266,7 @@
     <Content Include="Views\SubtitleFile\AboutSubtitleFile.cshtml" />
     <Content Include="Views\SubtitleFile\AddComment.cshtml" />
     <Content Include="Views\SubtitleFile\UploadFile.cshtml" />
+    <Content Include="Views\SubtitleFile\GiveRating.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
