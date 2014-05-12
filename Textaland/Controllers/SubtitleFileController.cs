@@ -179,11 +179,11 @@ namespace Textaland.Controllers
             return View();
         }
 		//Get
-		public ActionResult AllSubtitleFiles() {
+		public ActionResult AllSubtitleFiles(int num) {
 
 			SubtitleFileRepo myRepo = new SubtitleFileRepo();
 
-			var allSubs = myRepo.GetAllSubtitles();
+			var allSubs = myRepo.GetAllSubtitles().Skip(num * 10).Take(10);
 
 			return View(allSubs);
 		}
@@ -205,9 +205,13 @@ namespace Textaland.Controllers
 			
 			SubtitleFileRepo sfr = new SubtitleFileRepo();
 
+			//"file" vill be the SubtitleFile that has the ID the same as "id".
 			var file = sfr.GetSubtitleFileById(id.Value);
-			//AppDataContext db  = new AppDataContext();
-			//SubtitleFile file = db.SubtitleFiles.Find(id);
+
+			if(file == null)
+			{
+				return HttpNotFound();
+			}
 			//Getting all the comments that hafa a specific subtitleFile id.
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
