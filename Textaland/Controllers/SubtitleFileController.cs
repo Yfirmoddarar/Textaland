@@ -44,6 +44,7 @@ namespace Textaland.Controllers
         public ActionResult UploadFile() {
 
             List<SelectListItem> types = new List<SelectListItem>();
+            types.Add(new SelectListItem { Text = "select" });
             types.Add(new SelectListItem { Text = "Kvikmynd", Value = "Kvikmynd" });
             types.Add(new SelectListItem { Text = "Þáttur", Value = "Þáttur" });
 
@@ -51,6 +52,7 @@ namespace Textaland.Controllers
 
 
             List<SelectListItem> languages = new List<SelectListItem>();
+            languages.Add(new SelectListItem { Text = "select" });
             languages.Add(new SelectListItem { Text = "ENG", Value = "ENG" });
             languages.Add(new SelectListItem { Text = "ISL", Value = "ISL" });
 
