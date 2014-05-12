@@ -48,15 +48,14 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item._numOfDownloads)
-        </td>
+        </td> 
         <td>
             @{
-                 if (item._rating == 0) {
-                     @Html.Raw("Engin einkunn")
-                 }
-                 else {
-            @item._rating.ToString("#.##")
-                 }   
+                if (item._rating == 0) {
+                    @Html.Raw("Engin einkunn")
+                } else {
+                @item._rating.ToString("#.##")
+                }   
             }
         </td>
         <td>
@@ -67,8 +66,12 @@
         </td>
         <td>
             @{
-                string date = item._dateAdded.ToShortDateString();
-                @Html.Raw(date)
+                if (@item._hearingImpaired == true){
+                    @Html.Raw("Já")
+                }
+                else {
+                    @Html.Raw("Nei")
+                }
             }
         </td>
     </tr>
