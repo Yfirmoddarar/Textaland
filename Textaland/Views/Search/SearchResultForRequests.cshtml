@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Textaland.Models.TranslationRequest>
+
+@{
+    ViewBag.Title = "SearchResultForRequests";
+}
+
+<h2>SearchResultForRequests</h2>
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-hover table-striped table-bordered">
+        <tr>
+            <th>
+                Tungumál
+            </th>
+            <th>
+                Beiðnir
+            </th>
+            <th>
+                Fjöldi beiðna
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item._language
+                </td>
+                <td>
+                    @item._name
+                </td>
+                <td>
+                    @item._numUpvotes
+                </td>
+                <td>
+                    @using (Html.BeginForm("AddVote", "TranslationRequest", item, FormMethod.Post))
+                    {
+                        <center>
+                            <input type="submit" value="Kjósa" class="btn btn-info btn-sm" />
+                        </center>
+                    }
+                </td>
+                <td>
+                    @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
+                    {
+                        <center>
+                            <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')"
+                                   type="submit" value="Svara beiðni" class="btn btn-info btn-sm" />
+                        </center>
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <p>No results</p>
+}
