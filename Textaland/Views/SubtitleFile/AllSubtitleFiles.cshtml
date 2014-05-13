@@ -1,5 +1,16 @@
 ﻿<h2>Textaskrár</h2>
 
+<div class="form-group" style="margin-bottom: 30px">
+    <label class="control-label" for="searchInput"></label>
+    <center>
+        @using (Html.BeginForm("SearchResult", "Search", FormMethod.Post))
+        {
+            <input type="text" name="leit" id="leit" value="Leitaðu að textaskrá hér" style="text-align: center" onfocus="value=''" />
+            <button class="btn btn-info btn-sm" title="Leita" type="submit">Leita</button>
+        }
+    </center>
+</div>
+
 <table class="table table-hover table-striped table-bordered">
     <tr>
         <th>
