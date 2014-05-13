@@ -12,35 +12,6 @@ using Microsoft.AspNet.Identity;
 namespace Textaland.Controllers
 {
     public class SubtitleFileController : Controller {
-        //Get
-        //public ActionResult Upload () {
-
-        //    List<SelectListItem> types = new List<SelectListItem>();
-        //    types.Add(new SelectListItem { Text = "Kvikmynd", Value = "Kvikmynd" });
-        //    types.Add(new SelectListItem { Text = "Þáttur", Value = "Þáttur" });
-
-        //    ViewBag.ListOfTypes = types;
-
-
-        //    List<SelectListItem> languages = new List<SelectListItem>();
-        //    languages.Add(new SelectListItem { Text = "ENG", Value = "ENG" });
-        //    languages.Add(new SelectListItem { Text = "ISL", Value = "ISL" });
-
-        //    //ViewBag.ListOfTypes = new SelectList(new[] {
-        //    //    new {Id = "1", Name = "Kvikmynd"},
-        //    //    new {Id = "2", Name = "Þáttur"},
-        //    //}, "Id", "Name");
-
-        //    ViewBag.ListOfLanguages = languages;
-
-        //    //ViewBag.ListOfLanguages = new SelectList(new[] {
-        //    //    new {Id = "1", Name = "ENG"},
-        //    //    new {Id = "2", Name = "ISL"},
-        //    //}, "Id", "Name");
-
-        //    return View();
-        //}
-
 
         //Get
         public ActionResult UploadFile() {
@@ -94,16 +65,15 @@ namespace Textaland.Controllers
 
                 if (ReadFile(uc._file, sf.Id)) {
                     sfr.AddSubtitle(sf);
-                    return RedirectToAction("FrontPage", "Home");
-                    // TODO redirect something!!!!
+                    return AboutSubtitleFile(sf.Id);
                 }
                 else {
                     SubtitleLineRepo slr = new SubtitleLineRepo();
 
+                    //Remove what was already uploaded, since file is of wrong format.
                     slr.RemoveLines(sf.Id);
 
                     return RedirectToAction("FileError", "SubtitleFile");
-                    //TODO redirect to error reading file
                 }
             }
             else {
