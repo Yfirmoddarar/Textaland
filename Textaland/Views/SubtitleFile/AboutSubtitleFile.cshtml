@@ -23,8 +23,7 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-        <span class="label label-info">Einkunn</span>
-        <span class="label label-default">@Model._rating.ToString("#.##")</span>
+        <span class="label label-default">Einkunn: @Model._rating.ToString("#.##")</span>
     </div>
 </div>
 
@@ -39,7 +38,7 @@
        <h4>Gefðu þessari textaskrá einkunn (0 - 10)</h4>
         @Html.TextBox("rating")
 
-         <input class="btn btn-primary btn-sm" type="submit" value="Gefa einkunn" />
+         <input class="btn btn-info btn-sm" type="submit" value="Gefa einkunn" />
         @Html.ValidationMessage("rating")
         @Html.ValidationMessage("existingRating")
     }
@@ -71,17 +70,17 @@
     }
 
     @{if (User.Identity.IsAuthenticated)
-    {
-
+{
         using (Html.BeginForm("AddComment", "SubtitleFile", @Model, FormMethod.Post))
         {
 
-            @Html.TextBox("addText", "", new { style = "height:70px" })
+        @Html.TextBox("addText", "", new { style = "height:70px" })
 
-            <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" onclick="downPage()" />
-            @Html.ValidationMessage("addText");
+
+        <input class="btn btn-info btn-sm" type="submit" value="Senda inn athugasemd" onclick="downPage()" />
+        @Html.ValidationMessage("addText");
         }
-    }}
+}}
 
 <script>
     function downPage() {
