@@ -24,7 +24,7 @@
                     <li>@Html.ActionLink("Heim", "FrontPage", "Home")</li>
                     <li>@Html.ActionLink("Um okkur", "About", "Home")</li>
                     <li>@Html.ActionLink("Textaskrár", "AllSubtitleFiles", "SubtitleFile", new { num = 0 }, null)</li>
-                    <li>@Html.ActionLink("Beiðnir", "TranslationRequests", "TranslationRequest")</li>
+                    <li>@Html.ActionLink("Beiðnir", "TranslationRequests", "TranslationRequest", new { num = 0 }, null)</li>
                     <li>@Html.ActionLink("Hlaða upp", "UploadFile", "SubtitleFile")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
