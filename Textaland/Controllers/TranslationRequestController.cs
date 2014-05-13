@@ -132,8 +132,8 @@ namespace Textaland.Controllers
 				return RedirectToAction("Upload", "SubtitleFile", new { area = "" });
 			}
 			else {
-				ModelState.AddModelError("answerRequest", "Verður að vera innskráður til þess að geta svarað beiðni");
-				return RedirectToAction("TranslationRequsts", new { num = 0 });
+				return RedirectToAction("TranslationRequests", new { num = 0 });
+				ModelState.AddModelError("answerRequest", "Verður að vera innskráður til þess að geta svarað beiðni");	
 			}
 			
 		}
