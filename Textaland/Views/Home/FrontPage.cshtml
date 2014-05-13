@@ -1,11 +1,4 @@
-﻿@model IEnumerable<Textaland.Models.TranslationRequest>
-
-
-@{
-    ViewBag.Title = "Home Page";
-}
-
-<div class="jumbotron">
+﻿<div class="jumbotron">
     <h1>TEXTALAND</h1>
 </div>
 
@@ -188,7 +181,7 @@ else
             </th>
         </tr>
         @{
-        foreach (var item in ViewBag.TranslationList) {
+        foreach (Textaland.Models.SubtitleFile item in ViewBag.TranslationList){
             <tr>
                 <td class="col-md-2">
                     <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
