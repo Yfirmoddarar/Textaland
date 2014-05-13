@@ -228,21 +228,45 @@ namespace Textaland.Controllers
 		{
 			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
 
+			RatingRepo rateRepo = new RatingRepo();
 
+			Rating giveRating = new Rating();
 
-			double newRating;
+			var userID = User.Identity.GetUserId();
 
-			if (Double.TryParse(rating, out newRating)) {
+			var allRatings = from r in rateRepo.GetAllRatings()
+							 where r._userId == userID &&
+							 r._textFileId == s.Id
+							 select r;
 
-				if (newRating < 0 || newRating > 10) {
+			if (allRatings.Count() == 0)
+			{
+
+				giveRating._textFileId = s.Id;
+				giveRating._userId = userID;
+				rateRepo.AddRating(giveRating);
+
+				double newRating;
+
+				if (Double.TryParse(rating, out newRating))
+				{
+
+					if (newRating < 0 || newRating > 10)
+					{
 						ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0-10");
 					}
-				else {
-					fileRepo.ChangeRating(s.Id, newRating);
+					else
+					{
+						fileRepo.ChangeRating(s.Id, newRating);
+					}
+				}
+				else
+				{
+					ModelState.AddModelError("rating", "Einkunnin má ekki innihalda bókstafi");
 				}
 			}
 			else {
-				ModelState.AddModelError("rating", "Einkunnin má ekki innihalda bókstafi");
+				ModelState.AddModelError("existingRating", "Ekki er hægt að gefa sömu skrá tvisvar einkunn");
 			}
 			return AboutSubtitleFile(s.Id);
 		}
