@@ -1,4 +1,9 @@
-﻿<h2>Ósvaraðar beiðnir</h2>
+﻿<div class="jumbotron" style="background: none">
+    <center>
+        <h1>ÓSVARAÐAR BEIÐNIR</h1>
+        <hr />
+    </center>
+</div>
 
 <div class="form-group" style="margin-bottom: 30px">
     <label class="control-label" for="searchInput"></label>
@@ -51,10 +56,17 @@
         <td>
             @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
             {
+                if (User.Identity.IsAuthenticated) { 
                 <center>
                     <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')"
                     type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
                 </center>
+                }
+                else {
+                    <center>
+                    <input type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
+                </center>
+                }
             }
         </td>
         
