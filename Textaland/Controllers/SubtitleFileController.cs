@@ -227,7 +227,7 @@ namespace Textaland.Controllers
 				}
 			}
 			else {
-				ModelState.AddModelError("existingRating", "Ekki er hægt að gefa sömu skrá tvisvar einkunn");
+				ModelState.AddModelError("existingRating", "Aðeins er hægt að gefa skrá einu sinni einkunn");
 			}
 			return AboutSubtitleFile(s.Id);
 		}
