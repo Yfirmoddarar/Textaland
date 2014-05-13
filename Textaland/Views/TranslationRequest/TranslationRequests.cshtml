@@ -1,5 +1,17 @@
 ﻿<h2>Ósvaraðar beiðnir</h2>
 
+<div class="form-group" style="margin-bottom: 30px">
+    <label class="control-label" for="searchInput"></label>
+    <center>
+        @using (Html.BeginForm("SearchResultForRequests", "Search", FormMethod.Post))
+        {
+            <input type="text" name="leit2" id="leit2" value="Leitaðu að beiðni hér" 
+                   style="text-align: center" onfocus="value=''" />
+            <button class="btn btn-info btn-sm" title="Leita" type="submit">Leita</button>
+        }
+    </center>
+</div>
+
 <table class="table table-hover table-striped table-bordered">
     <tr>
         <th>

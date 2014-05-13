@@ -6,77 +6,83 @@
 
 <h2>Leitarniðurstöður</h2>
 
-@if (Model.Count() > 0) {
-    <table class="table">
-    <tr>
-        <th>
-            Nafn
-        </th>
-        <th>
-            Tungumál
-        </th>
-        <th>
-            Kvikmynd/Þáttur
-        </th>
-        <th>
-            Sótt
-        </th>
-        <th>
-            Einkunn
-        </th>
-        <th>
-            Sent inn
-        </th>
-        <th>
-            Fyrir heyrnaskerta
-        </th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._languageTo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._numOfDownloads)
-        </td>
-        <td>
-            @{
-            if (item._rating == 0) {
+@if (Model.Count() > 0)
+{
+    <table class="table table-hover table-striped table-bordered">
+        <tr>
+            <th>
+                Nafn
+            </th>
+            <th>
+                Tungumál
+            </th>
+            <th>
+                Kvikmynd/Þáttur
+            </th>
+            <th>
+                Sótt
+            </th>
+            <th>
+                Einkunn
+            </th>
+            <th>
+                Sent inn
+            </th>
+            <th>
+                Fyrir heyrnaskerta
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._languageTo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._numOfDownloads)
+                </td>
+                <td>
+                    @{
+            if (item._rating == 0)
+            {
                 @Html.Raw("Engin einkunn")
-            } else {
+            }
+            else
+            {
                 @item._rating.ToString("#.##")
             }
-            }
-        </td>
-        <td>
-            @{
-                string date = item._dateAdded.ToShortDateString();
-                @Html.Raw(date)
-            }
-        </td>
-        <td>
-            @{
-            if (item._hearingImpaired == true) {
+                    }
+                </td>
+                <td>
+                    @{
+            string date = item._dateAdded.ToShortDateString();
+            @Html.Raw(date)
+                    }
+                </td>
+                <td>
+                    @{
+            if (item._hearingImpaired == true)
+            {
                 @Html.Raw("Já")
             }
-            else {
+            else
+            {
                 @Html.Raw("Nei")
             }
-            }
-        </td>
-    </tr>
-}
+                    }
+                </td>
+            </tr>
+        }
+    </table>
 
-</table>
-
 }
-else {
+else
+{
     <p>No results</p>
 }
