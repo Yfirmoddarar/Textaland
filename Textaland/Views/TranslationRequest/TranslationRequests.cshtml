@@ -51,10 +51,17 @@
         <td>
             @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
             {
+                if (User.Identity.IsAuthenticated) { 
                 <center>
                     <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')"
                     type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
                 </center>
+                }
+                else {
+                    <center>
+                    <input type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
+                </center>
+                }
             }
         </td>
         
