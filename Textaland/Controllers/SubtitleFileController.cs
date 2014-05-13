@@ -274,5 +274,11 @@ namespace Textaland.Controllers
 
 			return AboutSubtitleFile(comment._textFileId);
 		}
+
+
+        //get
+        public ActionResult EditSubtitleFile(int id) {
+            return View();
+        }
 	}
 }
