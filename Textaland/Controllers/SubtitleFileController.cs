@@ -12,6 +12,35 @@ using Microsoft.AspNet.Identity;
 namespace Textaland.Controllers
 {
     public class SubtitleFileController : Controller {
+        //Get
+        //public ActionResult Upload () {
+
+        //    List<SelectListItem> types = new List<SelectListItem>();
+        //    types.Add(new SelectListItem { Text = "Kvikmynd", Value = "Kvikmynd" });
+        //    types.Add(new SelectListItem { Text = "Þáttur", Value = "Þáttur" });
+
+        //    ViewBag.ListOfTypes = types;
+
+
+        //    List<SelectListItem> languages = new List<SelectListItem>();
+        //    languages.Add(new SelectListItem { Text = "ENG", Value = "ENG" });
+        //    languages.Add(new SelectListItem { Text = "ISL", Value = "ISL" });
+
+        //    //ViewBag.ListOfTypes = new SelectList(new[] {
+        //    //    new {Id = "1", Name = "Kvikmynd"},
+        //    //    new {Id = "2", Name = "Þáttur"},
+        //    //}, "Id", "Name");
+
+        //    ViewBag.ListOfLanguages = languages;
+
+        //    //ViewBag.ListOfLanguages = new SelectList(new[] {
+        //    //    new {Id = "1", Name = "ENG"},
+        //    //    new {Id = "2", Name = "ISL"},
+        //    //}, "Id", "Name");
+
+        //    return View();
+        //}
+
 
         //Get
         public ActionResult UploadFile() {
@@ -62,18 +91,18 @@ namespace Textaland.Controllers
                 sf.Id = newId;
                 sf._dateAdded = DateTime.Now;
                 sf._userId = User.Identity.GetUserId();
-
                 if (ReadFile(uc._file, sf.Id)) {
                     sfr.AddSubtitle(sf);
-                    return AboutSubtitleFile(sf.Id);
+                    return RedirectToAction("FrontPage", "Home");
+                    // TODO redirect something!!!!
                 }
                 else {
                     SubtitleLineRepo slr = new SubtitleLineRepo();
 
-                    //Remove what was already uploaded, since file is of wrong format.
                     slr.RemoveLines(sf.Id);
 
                     return RedirectToAction("FileError", "SubtitleFile");
+                    //TODO redirect to error reading file
                 }
             }
             else {
@@ -158,68 +187,14 @@ namespace Textaland.Controllers
 			return View(allSubs);
 		}
 
-
-        //Generate a filelocatio path for writing and downloading
-        public string GeneratePath(int id) {
-
-            SubtitleFileRepo sfr = new SubtitleFileRepo();
-
-            string path = Server.MapPath(Url.Content("~/App_Data/uploads/"));
-
-            path += sfr.GetSubtitleFileById(id)._name.Replace(" ", "");
-            path += ".srt";
-
-            return path;
-        }
-    
-        public ActionResult Download(int id) {
-
-            WriteToFile(id);
-
-            SubtitleFileRepo sfr = new SubtitleFileRepo();
-
-            string FileName = sfr.GetSubtitleFileById(id)._name.Replace(" ", "");
-            FileName += ".srt";
-
-            string path = "~/App_Data/uploads/" + FileName;
-
-            return new DownloadResult 
-            { VirtualPath=path, FileDownloadName = FileName };
-        }
-
-        public void WriteToFile(int id) {
-            SubtitleLineRepo slr = new SubtitleLineRepo();
-
-
-            FileInfo newfile = new FileInfo(GeneratePath(id));
-
-            if (!newfile.Exists) {
-                using (StreamWriter sw = newfile.CreateText()) {
-                    foreach (var line in slr.GetLinesById(id)) {
-                        sw.WriteLine(line._lineNumber);
-                        sw.WriteLine(line._time);
-                        sw.WriteLine(line._line1);
-                        if (line._line2 != null) {
-                            sw.WriteLine(line._line2);
-                            if (line._line3 != null) {
-                                sw.WriteLine(line._line3);
-                            }
-                        }
-                        sw.WriteLine("");
-                    }
-                    sw.Close();
-                }
-            }
-        }
-
 		//Operation that shows details about subtitle files
 		
-		public ActionResult AboutSubtitleFile(int id){
+		public ActionResult AboutSubtitleFile(int? id){
 			
 			SubtitleFileRepo sfr = new SubtitleFileRepo();
 
 			//"file" vill be the SubtitleFile that has the ID the same as "id".
-			var file = sfr.GetSubtitleFileById(id);
+			var file = sfr.GetSubtitleFileById(id.Value);
 
 			if(file == null)
 			{
@@ -228,7 +203,7 @@ namespace Textaland.Controllers
 			//Getting all the comments that hafa a specific subtitleFile id.
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
-			var allComments = from c in commentRepo.GetCommentById(id)
+			var allComments = from c in commentRepo.GetCommentById(id.Value)
 							  orderby c._dateAdded ascending
 							  select c;
 			ViewBag.AllComments = allComments;
@@ -241,50 +216,22 @@ namespace Textaland.Controllers
 		{
 			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
 
-			RatingRepo rateRepo = new RatingRepo();
 
-			Rating newRating = new Rating();
 
-			var userID = User.Identity.GetUserId();
+			double newRating;
 
-			var getRatings = from r in rateRepo.GetAllRatings()
-							 where r._userId == userID &&
-							 r._textFileId == s.Id
-							 select r;
+			if (Double.TryParse(rating, out newRating)) {
 
-			if (getRatings.Count() == 0) {
-
-				newRating._userId = userID;
-				newRating._textFileId = s.Id;
-
-				rateRepo.AddRating(newRating);
-
-				double giveRating;
-
-				if (Double.TryParse(rating, out giveRating))
-				{
-
-					if (giveRating < 0 || giveRating > 10)
-					{
-						ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0-10");
-					}
-					else
-					{
-						fileRepo.ChangeRating(s.Id, giveRating);
-					}
+				if (newRating < 0 || newRating > 10) {
+					ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0-10");
 				}
-				else
-				{
-					ModelState.AddModelError("rating", "Einkunnin má ekki innihalda bókstafi");
+				else {
+					fileRepo.ChangeRating(s.Id, newRating);
 				}
 			}
 			else {
-				ModelState.AddModelError("existingRating", "Aðeins má gefa skrá einkunn einu sinni");
+				ModelState.AddModelError("rating", "Einkunnin má ekki innihalda bókstafi");
 			}
-
-
-
-			
 			return AboutSubtitleFile(s.Id);
 		}
 
@@ -314,6 +261,8 @@ namespace Textaland.Controllers
 		public ActionResult DeleteComment(int commentID) {
 
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
+
+			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
 
 			SubtitleComment comment = commentRepo.GetSingleCommentById(commentID);
 
