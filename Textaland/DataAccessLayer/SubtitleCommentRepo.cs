@@ -24,10 +24,11 @@ namespace Textaland.DataAccessLayer
 
 		//this operation returns the Comment that matches the given ID
 
-		public IEnumerable<SubtitleComment> GetCommentById(int id) {
-			var subtitleCommentById = from comment in db.SubtitleComments
-									   where comment._textFileId == id
-									   select comment;
+		public IEnumerable<SubtitleComment> GetCommentsById(int id) {
+			var subtitleCommentById = from c in db.SubtitleComments
+									   where c._textFileId == id
+                                       orderby c._dateAdded ascending
+									   select c;
 			return subtitleCommentById;
 		}
 

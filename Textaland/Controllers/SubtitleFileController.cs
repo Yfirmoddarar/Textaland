@@ -12,35 +12,6 @@ using Microsoft.AspNet.Identity;
 namespace Textaland.Controllers
 {
     public class SubtitleFileController : Controller {
-        //Get
-        //public ActionResult Upload () {
-
-        //    List<SelectListItem> types = new List<SelectListItem>();
-        //    types.Add(new SelectListItem { Text = "Kvikmynd", Value = "Kvikmynd" });
-        //    types.Add(new SelectListItem { Text = "Þáttur", Value = "Þáttur" });
-
-        //    ViewBag.ListOfTypes = types;
-
-
-        //    List<SelectListItem> languages = new List<SelectListItem>();
-        //    languages.Add(new SelectListItem { Text = "ENG", Value = "ENG" });
-        //    languages.Add(new SelectListItem { Text = "ISL", Value = "ISL" });
-
-        //    //ViewBag.ListOfTypes = new SelectList(new[] {
-        //    //    new {Id = "1", Name = "Kvikmynd"},
-        //    //    new {Id = "2", Name = "Þáttur"},
-        //    //}, "Id", "Name");
-
-        //    ViewBag.ListOfLanguages = languages;
-
-        //    //ViewBag.ListOfLanguages = new SelectList(new[] {
-        //    //    new {Id = "1", Name = "ENG"},
-        //    //    new {Id = "2", Name = "ISL"},
-        //    //}, "Id", "Name");
-
-        //    return View();
-        //}
-
 
         //Get
         [Authorize]
@@ -83,13 +54,6 @@ namespace Textaland.Controllers
 
                 SubtitleFileRepo sfr = new SubtitleFileRepo();
 
-                //int newId = 1;
-
-                ////if the list isn't empty the new comment gets the ID according to 
-                ////the number of files
-                //if (sfr.GetAllSubtitles().Count() > 0) {
-                //    newId = sfr.GetAllSubtitles().Max(x => x.Id) + 1;
-                //}
                 sf.Id = 0;
                 sf._dateAdded = DateTime.Now;
                 sf._userId = User.Identity.GetUserId();
@@ -201,12 +165,12 @@ namespace Textaland.Controllers
 
 		//Operation that shows details about subtitle files
 		
-		public ActionResult AboutSubtitleFile(int? id){
+		public ActionResult AboutSubtitleFile(int id){
 			
 			SubtitleFileRepo sfr = new SubtitleFileRepo();
 
 			//"file" vill be the SubtitleFile that has the ID the same as "id".
-			var file = sfr.GetSubtitleFileById(id.Value);
+			var file = sfr.GetSubtitleFileById(id);
 
 			if(file == null)
 			{
@@ -215,10 +179,7 @@ namespace Textaland.Controllers
 			//Getting all the comments that hafa a specific subtitleFile id.
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
-			var allComments = from c in commentRepo.GetCommentById(id.Value)
-							  orderby c._dateAdded ascending
-							  select c;
-			ViewBag.AllComments = allComments;
+            ViewBag.AllComments = commentRepo.GetCommentsById(id);
 			
 			return View(file);
 		}
