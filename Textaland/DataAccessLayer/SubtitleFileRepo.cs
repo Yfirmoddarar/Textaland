@@ -44,21 +44,18 @@ namespace Textaland.DataAccessLayer
 			db.SaveChanges();
 		}
 
-        /*
-
+        
         //this operation removes the subtitle file that matches the given ID
         public void RemoveSubtitle(int removeId)
         {
-            foreach (var item in _subtitleFiles)
+            foreach (var item in db.SubtitleFiles)
             {
                 if (item.Id == removeId)
                 {
-                    _subtitleFiles.Remove(item);
-                    break;
+                    db.SubtitleFiles.Remove(item);
+                    db.SaveChanges();
                 }
             }
         }
-         * 
-         */
 	}
 }
