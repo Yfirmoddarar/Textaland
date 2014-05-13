@@ -49,13 +49,14 @@ namespace Textaland.Controllers
                     _description = uc._description,
                     _hearingImpaired = uc._hardOfHearing,
                     _type = uc._type,
-                    _languageFrom = uc._language
+                    _languageFrom = uc._language		
                 };
 
                 SubtitleFileRepo sfr = new SubtitleFileRepo();
 
                 sf.Id = 0;
                 sf._dateAdded = DateTime.Now;
+				sf._userName = User.Identity.GetUserName();
                 sf._userId = User.Identity.GetUserId();
 
                     sfr.AddSubtitle(sf);
@@ -229,7 +230,7 @@ namespace Textaland.Controllers
 			else {
 				ModelState.AddModelError("existingRating", "Aðeins er hægt að gefa skrá einu sinni einkunn");
 			}
-			return AboutSubtitleFile(s.Id);
+			return RedirectToAction("AboutSubtitleFile", new { id = s.Id });
 		}
 
 		//This function adds a new comment to a specific text file.
@@ -252,7 +253,7 @@ namespace Textaland.Controllers
 			else {
 				ModelState.AddModelError("addText", "Vinsamlegast sláðu inn athugasemd");
 			}
-			return AboutSubtitleFile(s.Id);
+			return RedirectToAction("AboutSubtitleFile", new { id = s.Id });
 		}
 
 		[HttpPost]
@@ -264,7 +265,7 @@ namespace Textaland.Controllers
 
 			commentRepo.RemoveComment(comment);
 
-			return AboutSubtitleFile(comment._textFileId);
+			return RedirectToAction("AboutSubtitleFile", new { id = comment._textFileId});
 		}
 
 

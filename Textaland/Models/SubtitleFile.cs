@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity;
 
 namespace Textaland.Models
 {
@@ -28,6 +29,7 @@ namespace Textaland.Models
 		public bool _readyForDownload { get; set; }
 		public bool _inTranslation { get; set; }
 		public bool _hearingImpaired { get; set; }
+		public string _userName { get; set; }
 
 		// Constructor.
 
