@@ -1,10 +1,4 @@
-﻿@model IEnumerable<Textaland.Models.SubtitleFile>
-
-@{
-    ViewBag.Title = "AllSubtitleFiles";
-}
-
-<h2>Textaskrár</h2>
+﻿<h2>Textaskrár</h2>
 
 <p>
     <a href="/SubtitleFile/UploadFile" class="btn btn-default btn-sm">Hlaða upp nýrri skrá</a>
@@ -34,20 +28,20 @@
         </th>
     </tr>
 
-@foreach (var item in Model)
+@foreach (var item in ViewBag.allSubs)
 {
     <tr>
         <td>
             <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._languageTo)
+            @item._languageTo
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._type)
+            @item._type
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._numOfDownloads)
+            @item._numOfDownloads
         </td> 
         <td>
             @{
@@ -81,7 +75,7 @@
 
 </table>
 
-@{int count = @Model.Count();
+@{int count = @Enumerable.Count(ViewBag.allSubs);
 
   int numPages = count / 10 + 1;
     
