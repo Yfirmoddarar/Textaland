@@ -96,18 +96,24 @@ namespace Textaland.Controllers
 				}
 			}*/
 
-            var upvotes = from u in ur.GetAllUpvotes()
-                          where u._userId == userId &&
-                          u._requestId == request.Id
-                          select u;
-            if (upvotes.Count() == 0)
-            {
-                upvote._requestId = request.Id;
-                upvote._userId = userId;
-                trr.upVote(upvote._requestId);
-                ur.AddUpvote(upvote);
-            }
-			
+			if (User.Identity.IsAuthenticated)
+			{
+
+				var upvotes = from u in ur.GetAllUpvotes()
+							  where u._userId == userId &&
+							  u._requestId == request.Id
+							  select u;
+				if (upvotes.Count() == 0)
+				{
+					upvote._requestId = request.Id;
+					upvote._userId = userId;
+					trr.upVote(upvote._requestId);
+					ur.AddUpvote(upvote);
+				}
+			}
+			else {
+				ModelState.AddModelError("upVote", "Verður að vera innskráður til þess að geta kosið beiðni");
+			}
 			//Changes the number of upvotes in the TranslationRequest "tr".
 			//Returns the TranslationRequests view were "tr" has one more upvotes.
 
@@ -118,12 +124,18 @@ namespace Textaland.Controllers
 		[HttpPost]
 		public ActionResult AnswerRequest(TranslationRequest tr)
 		{
+			if (User.Identity.IsAuthenticated)
+			{
+				TranslationRequestRepo trr = new TranslationRequestRepo();
 
-			TranslationRequestRepo trr = new TranslationRequestRepo();
-
-			trr.RemoveTranslationRequestById(tr);
-
-			return RedirectToAction("Upload", "SubtitleFile", new { area = "" });
+				trr.RemoveTranslationRequestById(tr);
+				return RedirectToAction("Upload", "SubtitleFile", new { area = "" });
+			}
+			else {
+				ModelState.AddModelError("answerRequest", "Verður að vera innskráður til þess að geta svarað beiðni");
+				return RedirectToAction("TranslationRequsts", new { num = 0 });
+			}
+			
 		}
 	}
 
