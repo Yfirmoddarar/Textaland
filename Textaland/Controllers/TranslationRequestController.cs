@@ -59,6 +59,11 @@ namespace Textaland.Controllers
 			TranslationRequestRepo trr = new TranslationRequestRepo();
             TranslationRequestUpvoteRepo trur = new TranslationRequestUpvoteRepo();
 
+			if (num == (-100)) {
+				num = 0;
+				ModelState.AddModelError("answerRequest", "Verður að vera innskráður notandi til þess að geta svarað beiðni");
+			}
+
             ViewBag.Upvotes = trur.GetAllUpvotes();
 
             var requests = (from r in trr.GetAllTranslationRequests()
@@ -129,11 +134,10 @@ namespace Textaland.Controllers
 				TranslationRequestRepo trr = new TranslationRequestRepo();
 
 				trr.RemoveTranslationRequestById(tr);
-				return RedirectToAction("Upload", "SubtitleFile", new { area = "" });
+				return RedirectToAction("UploadFile", "SubtitleFile", new { area = "" });
 			}
 			else {
-				return RedirectToAction("TranslationRequests", new { num = 0 });
-				ModelState.AddModelError("answerRequest", "Verður að vera innskráður til þess að geta svarað beiðni");	
+				return RedirectToAction("TranslationRequests", new { num = (-100) });	
 			}
 			
 		}
