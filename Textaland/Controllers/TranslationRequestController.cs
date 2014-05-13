@@ -64,8 +64,14 @@ namespace Textaland.Controllers
             var requests = (from r in trr.GetAllTranslationRequests()
 							orderby r._numUpvotes
 							select r).Skip(num * 10).Take(10);
+			var countRequests = from r in trr.GetAllTranslationRequests()
+							orderby r._numUpvotes
+							select r;
+
+
 
 			ViewBag.allRequests = requests;
+			ViewBag.countRequest = countRequests;
 
 			return View();
 		}
