@@ -25,7 +25,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model._language, "Tungumál", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model._language)
+                @Html.DropDownListFor(model => model._language, new SelectList(ViewBag.ListOfLanguages, "Value", "Text", "Selected"))
                 @Html.ValidationMessageFor(model => model._language)
             </div>
         </div>
@@ -36,4 +36,9 @@
             </div>
         </div>
     </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

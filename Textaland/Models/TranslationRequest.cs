@@ -16,7 +16,7 @@ namespace Textaland.Models
 		public string _language { get; set; }
 
 		public TranslationRequest() {
-			_numUpvotes = 1;
+			_numUpvotes = 0;
 		}
 
 		public void IncreaseNumUpvotes(){

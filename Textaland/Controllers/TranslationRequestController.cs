@@ -22,6 +22,14 @@ namespace Textaland.Controllers
         [Authorize]
 		public ActionResult NewTranslationRequest()
 		{
+
+            List<SelectListItem> languages = new List<SelectListItem>();
+            languages.Add(new SelectListItem { Text = "select" });
+            languages.Add(new SelectListItem { Text = "ENG", Value = "ENG" });
+            languages.Add(new SelectListItem { Text = "ISL", Value = "ISL" });
+
+            ViewBag.ListOfLanguages = languages;
+
 			return View();
 		}
 
@@ -32,24 +40,16 @@ namespace Textaland.Controllers
 			String strName = formData["_name"];
 			String strLanguage = formData["_language"];
 
-			if (!String.IsNullOrEmpty(strName) && !String.IsNullOrEmpty(strLanguage)) {
+			TranslationRequest newRequest = new TranslationRequest();
 
-				TranslationRequest newRequest = new TranslationRequest();
+			newRequest._name = strName;
+			newRequest._language = strLanguage;
+            newRequest._userId = User.Identity.GetUserId();
 
-				newRequest._name = strName;
-				newRequest._language = strLanguage;
+			TranslationRequestRepo requestRepo = new TranslationRequestRepo();
 
-				TranslationRequestRepo requestRepo = new TranslationRequestRepo();
-
-				requestRepo.AddTranslationRequest(newRequest);
-                return RedirectToAction("TranslationRequests", new { num = 0 });
-			}
-			else {
-				ModelState.AddModelError("_language", "Fylla verður út í báða reiti");
-				return NewTranslationRequest();
-			}
-
-			
+			requestRepo.AddTranslationRequest(newRequest);
+            return RedirectToAction("TranslationRequests", new { num = 0 });		
 		}
 
 		//Get
@@ -110,8 +110,8 @@ namespace Textaland.Controllers
 			
 			//Changes the number of upvotes in the TranslationRequest "tr".
 			//Returns the TranslationRequests view were "tr" has one more upvotes.
-		        
-            return RedirectToAction("TranslationRequests");
+
+            return RedirectToAction("TranslationRequests", new { num = 0 });
 			
 		}
 
