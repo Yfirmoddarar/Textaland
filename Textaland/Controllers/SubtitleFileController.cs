@@ -244,6 +244,7 @@ namespace Textaland.Controllers
 			if (!String.IsNullOrEmpty(addText)) {
 			newComment._text = addText;
 			newComment._textFileId = s.Id;
+			newComment._userName = User.Identity.GetUserName();
 			newComment._userId = User.Identity.GetUserId();
 
 			commentRepo.AddComment(newComment);
