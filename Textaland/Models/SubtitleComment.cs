@@ -11,6 +11,7 @@ namespace Textaland.Models
 		public int Id { get; set; }
 		public int _textFileId { get; set; }
 		public string _userId { get; set; }
+		public string _userName { get; set; }
 		public string _text { get; set; }
 		public DateTime _dateAdded { get; set; }
 

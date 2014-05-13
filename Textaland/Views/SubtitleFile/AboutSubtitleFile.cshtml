@@ -1,56 +1,141 @@
-﻿@model Textaland.Models.SubtitleFile
+﻿@using Microsoft.AspNet.Identity;
 
-@{
-    ViewBag.Title = "AboutSubtitleFile";
-}
+@model Textaland.Models.SubtitleFile
 
-
-
-<div>
-    <div style="width:500px" class="btn-group btn-group-justified">
-        <div class="btn btn-primary disabled">Nafn</div>
-        <div class="btn btn-default disabled"> @Html.DisplayFor(model => model._name) </div>
-    </div> <br />
-    <div style="width:500px" class="btn-group btn-group-justified">
-        <div class="btn btn-primary disabled">Lýsing</div>
-        <div class="btn btn-default disabled">@Html.DisplayFor(model => model._description) </div>
-    </div> <br />
-    <div style="width:500px" class="btn-group btn-group-justified">
-        <div class="btn btn-primary disabled">Einkunn</div>
-        <div class="btn btn-default disabled">@Model._rating.ToString("#.##") </div>
-    </div>
+<div class="jumbotron" style="background: none">
+    <center>
+        <h1>UM TEXTASKRÁ</h1>
+        <hr />
+    </center>
 </div>
 
-<a href="\SubtitleFile\Download?id=@Model.Id" class="btn btn-warning btn-lg"  >Download</a>
-@{if (User.Identity.IsAuthenticated) { 
-   
-    using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post))
-    {
-       <h4>Gefðu þessari textaskrá einkunn (0 - 10)</h4>
-        @Html.TextBox("rating")
+<div class="col-md-3"></div>
+<div class="col-md-6" style="margin-bottom: 30px">
+    <table class = "table table-striped table-hover table-bordered">
+        <tr>
+            <td class="col-md-1">
+                Nafn:
+            </td>
+            <td class="col-md-5">
+                @Html.DisplayFor(model => model._name)
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-1">
+                Lýsing: 
+            </td>
+            <td class="col-md-5">
+                @Html.DisplayFor(model => model._description)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Tungumál:
+            </td>
+            <td>
+                @Html.DisplayFor(model => model._languageTo)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Einkunn:
+            </td>
+            @{
+                string myString = Model._rating.ToString("#.#");
+                if (Model._rating < 6) {
+                    <td class="text-danger">
+                        @Html.Raw(myString)
+                    </td>
+                } else {
+                    <td class="text-success">
+                        @Html.Raw(myString)
+                    </td>
+                }
+            }
+        </tr>
+        <tr>
+            <td>
+                Kvikmynd/Þáttur:
+            </td>
+            <td>
+                @Html.DisplayFor(model => model._type)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Sótt: 
+            </td>
+            <td>
+                @Html.DisplayFor(model => model._numOfDownloads)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Sent inn af:
+            </td>
+            <td>
+                @Html.DisplayFor(model => model._userName)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Sent inn: 
+            </td>
+            <td>
+                @{
+                    string date = Model._dateAdded.ToShortDateString();
+                    @Html.Raw(date)
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Fyrir heyrnaskerta:
+            </td>
+            @{
+            if (@Model._hearingImpaired == true){
+                <td>@Html.Raw("Já")</td>
+            } else {
+                <td>@Html.Raw("Nei")</td>
+            }
+            }
+        </tr>
+        <tr>
+            
+        </tr>
+    </table>
+    <center>
+        <a href="\SubtitleFile\Download?id=@Model.Id" class="btn btn-warning btn-lg">Niðurhala skrá</a>
+    </center>
+    <center>
+        @{if (User.Identity.IsAuthenticated) {
+            using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post))
+            {
+                <h4>Gefðu þessari textaskrá einkunn (0 - 10)</h4>
+                @Html.TextBox("rating")
 
-         <input class="btn btn-primary btn-sm" type="submit" value="Gefa einkunn" />
-        @Html.ValidationMessage("rating")
-        @Html.ValidationMessage("existingRating")
-    }
-    }
-}
+                <input class="btn btn-info btn-sm" type="submit" value="Gefa einkunn" />
+                @Html.ValidationMessage("rating")
+                @Html.ValidationMessage("existingRating")
+            }
+        }
+        }
+    </center>
 
+    <h3>Athugasemdir</h3> @Html.ValidationMessage("deleteComment")
 
-
-
-    <h3>Athugasemdir</h3> @Html.ValidationMessage("deleteComment")  
     @{foreach (var item in ViewBag.AllComments)
     {
 
         <div class="panel panel-info">
             <div class="panel-heading">
-                @if (User.Identity.IsAuthenticated) { 
-                <form method="post" action="@Url.Action("DeleteComment", "SubtitleFile", new {commentID = item.Id})">
-                    <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd? ATH: Aðeins er hægt að eyða sinni eigin athugasemd!')" type="submit" class="close">x</button>
-                </form> 
-                }                 
-                <h3 class="panel-title">@User.Identity.Name @item._dateAdded</h3>     
+                @if (User.Identity.IsAuthenticated && item._userId == @User.Identity.GetUserId())
+                {
+                    <form method="post" action="@Url.Action("DeleteComment", "SubtitleFile", new {commentID = item.Id})">
+                        <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd?')" type="submit" class="close" style="font-size:10pt">Eyða athugasemd</button>
+                    </form>
+                }
+                <h3 class="panel-title"><strong>@item._userName</strong> @item._dateAdded</h3>
             </div>
             <div class="panel-body">
                 @item._text
@@ -59,21 +144,17 @@
     }
     }
 
-    @{if (User.Identity.IsAuthenticated)
-    {
-
+    @{if (User.Identity.IsAuthenticated) {
         using (Html.BeginForm("AddComment", "SubtitleFile", @Model, FormMethod.Post))
         {
-
-            @Html.TextBox("addText", "", new { style = "height:70px" })
-
-            <input class="btn btn-primary btn-sm" type="submit" value="Senda inn athugasemd" onclick="downPage()" />
+            <center>
+                @Html.TextArea("addText", "", new { style = "height: 100px; width: 1000px" })
+            </center>
+            
+            <center>
+                <input class="btn btn-info btn-sm" type="submit" value="Senda inn athugasemd" onclick="downPage()" />
+            </center>
             @Html.ValidationMessage("addText");
         }
     }}
-
-<script>
-    function downPage() {
-        window.scrollTo(0, document.body.clientHeight)
-    }
-</script>
+</div>

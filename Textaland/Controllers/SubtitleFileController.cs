@@ -49,13 +49,14 @@ namespace Textaland.Controllers
                     _description = uc._description,
                     _hearingImpaired = uc._hardOfHearing,
                     _type = uc._type,
-                    _languageFrom = uc._language
+                    _languageFrom = uc._language		
                 };
 
                 SubtitleFileRepo sfr = new SubtitleFileRepo();
 
                 sf.Id = 0;
                 sf._dateAdded = DateTime.Now;
+				sf._userName = User.Identity.GetUserName();
                 sf._userId = User.Identity.GetUserId();
 
                     sfr.AddSubtitle(sf);
@@ -227,9 +228,9 @@ namespace Textaland.Controllers
 				}
 			}
 			else {
-				ModelState.AddModelError("existingRating", "Ekki er hægt að gefa sömu skrá tvisvar einkunn");
+				ModelState.AddModelError("existingRating", "Aðeins er hægt að gefa skrá einu sinni einkunn");
 			}
-			return AboutSubtitleFile(s.Id);
+			return RedirectToAction("AboutSubtitleFile", new { id = s.Id });
 		}
 
 		//This function adds a new comment to a specific text file.
@@ -244,6 +245,7 @@ namespace Textaland.Controllers
 			if (!String.IsNullOrEmpty(addText)) {
 			newComment._text = addText;
 			newComment._textFileId = s.Id;
+			newComment._userName = User.Identity.GetUserName();
 			newComment._userId = User.Identity.GetUserId();
 
 			commentRepo.AddComment(newComment);
@@ -251,7 +253,7 @@ namespace Textaland.Controllers
 			else {
 				ModelState.AddModelError("addText", "Vinsamlegast sláðu inn athugasemd");
 			}
-			return AboutSubtitleFile(s.Id);
+			return RedirectToAction("AboutSubtitleFile", new { id = s.Id });
 		}
 
 		[HttpPost]
@@ -259,20 +261,11 @@ namespace Textaland.Controllers
 
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
-			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
-
 			SubtitleComment comment = commentRepo.GetSingleCommentById(commentID);
 
-			var userID = User.Identity.GetUserId();
+			commentRepo.RemoveComment(comment);
 
-			if (userID == comment._userId) {
-				commentRepo.RemoveComment(comment);
-			}
-			else {
-				ModelState.AddModelError("deleteComment", "Getur aðeins fjarlægt þína eigin athugasemd");
-			}
-
-			return AboutSubtitleFile(comment._textFileId);
+			return RedirectToAction("AboutSubtitleFile", new { id = comment._textFileId});
 		}
 
         //Generate a filelocatio path for writing and downloading
