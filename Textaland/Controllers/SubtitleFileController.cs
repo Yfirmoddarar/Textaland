@@ -14,6 +14,7 @@ namespace Textaland.Controllers
     public class SubtitleFileController : Controller {
 
         //Get
+        [Authorize]
         public ActionResult UploadFile() {
 
             //Selector info for type of video
@@ -36,6 +37,7 @@ namespace Textaland.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult UploadFile(UploadCollection uc) {
 
             //Check if file is empty, if not save and create new subtitle file
@@ -52,26 +54,31 @@ namespace Textaland.Controllers
 
                 SubtitleFileRepo sfr = new SubtitleFileRepo();
 
-                int newId = 1;
+                //int newId = 1;
 
-                //if the list isn't empty the new comment gets the ID according to 
-                //the number of files
-                if (sfr.GetAllSubtitles().Count() > 0) {
-                    newId = sfr.GetAllSubtitles().Max(x => x.Id) + 1;
-                }
-                sf.Id = newId;
+                ////if the list isn't empty the new comment gets the ID according to 
+                ////the number of files
+                //if (sfr.GetAllSubtitles().Count() > 0) {
+                //    newId = sfr.GetAllSubtitles().Max(x => x.Id) + 1;
+                //}
+                sf.Id = 0;
                 sf._dateAdded = DateTime.Now;
                 sf._userId = User.Identity.GetUserId();
 
-                if (ReadFile(uc._file, sf.Id)) {
-                    sfr.AddSubtitle(sf);
-                    return AboutSubtitleFile(sf.Id);
+                sfr.AddSubtitle(sf);
+
+                int newId = sf.Id;
+
+                if (ReadFile(uc._file, newId)) {
+                    return RedirectToAction("AboutSubtitleFile", "SubtitleFile", sf);
                 }
                 else {
                     SubtitleLineRepo slr = new SubtitleLineRepo();
 
                     //Remove what was already uploaded, since file is of wrong format.
-                    slr.RemoveLines(sf.Id);
+
+                    sfr.RemoveSubtitle(newId);
+                    slr.RemoveLines(newId);
 
                     return RedirectToAction("FileError", "SubtitleFile");
                 }
@@ -104,10 +111,10 @@ namespace Textaland.Controllers
 
                         if (lTime != "") {
                             sl._time = lTime;
-            }
-            else {
+                        }
+                        else {
                             return false;
-            }
+                        }
 
                         string lText1 = sr.ReadLine();
 
@@ -148,6 +155,7 @@ namespace Textaland.Controllers
         public ActionResult FileError() {
             return View();
         }
+
 		//Get
 		public ActionResult AllSubtitleFiles(int num) {
 

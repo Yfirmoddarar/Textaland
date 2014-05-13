@@ -1,8 +1,5 @@
 ﻿<h2>Textaskrár</h2>
 
-<p>
-    <a href="/SubtitleFile/UploadFile" class="btn btn-default btn-sm">Hlaða upp nýrri skrá</a>
-</p>
 <table class="table table-hover table-striped table-bordered">
     <tr>
         <th>
@@ -69,11 +66,12 @@
             }
         </td>
     </tr>
-
-
 }
-
 </table>
+
+<p>
+    <a href="/SubtitleFile/UploadFile" class="btn btn-info">Hlaða upp nýrri skrá</a>
+</p>
 
 @{int count = @Enumerable.Count(ViewBag.allSubs);
 
