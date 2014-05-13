@@ -2,10 +2,6 @@
 
 @model Textaland.Models.SubtitleFile
 
-@{
-    ViewBag.Title = "AboutSubtitleFile";
-}
-
 <div class="jumbotron" style="background: none">
     <center>
         <h1>UM TEXTASKRÁ</h1>
@@ -13,82 +9,28 @@
     </center>
 </div>
 
-
-<h2>@Html.DisplayFor(model => model._name)</h2>
-
-<div class="row">
-    <div class="well well-lg col-md-6">
-        @Html.DisplayFor(model => model._description)
-    </div>
+<div class="col-md-3"></div>
+<div class="col-md-6">
+    <table>
+        <tr>
+            <td>
+                <div class="col-md-1">
+                    Nafn: 
+                </div>
+                <div class="col-md-5">
+                    @Html.DisplayFor(model => model._name)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="col-md-1">
+                    Lýsing:
+                </div>
+                <div class="col-md-5">
+                    @Html.DisplayFor(model => model._description)
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>
-<div class="row">
-    <div class="col-md-6">
-        @{if (Model._rating < 6) { 
-            <span class="label label-warning" style="font-size: 16px;">Einkunn: @Model._rating.ToString("#.#")</span>
-        }
-        else{
-            <span class="label label-success" style="font-size: 16px;">Einkunn: @Model._rating.ToString("#.#")</span>
-        }}
-    </div>
-</div>
-
-
-
-
-
-@{if (User.Identity.IsAuthenticated) { 
-   
-    using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post))
-    {
-       <h4>Gefðu þessari textaskrá einkunn (0 - 10)</h4>
-        @Html.TextBox("rating")
-
-         <input class="btn btn-info btn-sm" type="submit" value="Gefa einkunn" />
-        @Html.ValidationMessage("rating")
-        @Html.ValidationMessage("existingRating")
-    }
-    }
-}
-
-<div style="margin-top: 10px">
-    <a href="\SubtitleFile\Download?id=@Model.Id" class="btn btn-warning btn-lg">Download</a>
-</div>
-
-    <h3>Athugasemdir</h3> @Html.ValidationMessage("deleteComment")  
-    @{foreach (var item in ViewBag.AllComments)
-    {
-
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                @if (User.Identity.IsAuthenticated && item._userId == @User.Identity.GetUserId()) { 
-                <form method="post" action="@Url.Action("DeleteComment", "SubtitleFile", new {commentID = item.Id})">
-                    <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd?')" type="submit" class="close" style="font-size:10pt">Eyða athugasemd</button>
-                </form> 
-                }                 
-                <h3 class="panel-title"><strong>@item._userName</strong> @item._dateAdded</h3>     
-            </div>
-            <div class="panel-body">
-                @item._text
-            </div>
-        </div>
-    }
-    }
-
-    @{if (User.Identity.IsAuthenticated)
-{
-        using (Html.BeginForm("AddComment", "SubtitleFile", @Model, FormMethod.Post))
-        {
-
-        @Html.TextBox("addText", "", new { style = "height:70px" })
-
-
-        <input class="btn btn-info btn-sm" type="submit" value="Senda inn athugasemd" onclick="downPage()" />
-        @Html.ValidationMessage("addText");
-        }
-}}
-
-<script>
-    function downPage() {
-        window.scrollTo(0, document.body.clientHeight)
-    }
-</script>
