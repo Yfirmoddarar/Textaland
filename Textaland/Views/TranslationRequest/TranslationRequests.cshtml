@@ -1,10 +1,4 @@
-﻿@model IEnumerable<Textaland.Models.TranslationRequest>
-         
-@{
-    ViewBag.Title = "TranslationRequests";
-}
-
-<h2>Ósvaraðar beiðnir</h2>
+﻿<h2>Ósvaraðar beiðnir</h2>
 
 <p>
     <a href="/Translationrequest/NewTranslationRequest" class="btn btn-default" >Senda inn nýja beiðni</a>
@@ -24,7 +18,7 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (Textaland.Models.TranslationRequest item in ViewBag.allRequests) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item._language)
@@ -56,3 +50,17 @@
 <p>
     <a href="/Translationrequest/NewTranslationRequest" class="btn btn-default">Senda inn nýja beiðni</a>
 </p>
+
+@{int count = @Enumerable.Count(ViewBag.allRequests);
+
+int numPages = count / 10 + 1;
+
+}
+
+<ul class="pagination pagination-sm">
+    <li class="disabled"><a href="#">«</a></li>
+    @for (int i = 1; i <= numPages; i++)
+    {
+        <li>@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
+    }
+</ul>
