@@ -22,5 +22,17 @@ namespace Textaland.Controllers
 
 			return View(searchResult);
 		}
+
+		[HttpPost]
+		public ActionResult SearchResultForRequests(FormCollection formdata)
+		{
+			TranslationRequestRepo trr = new TranslationRequestRepo();
+
+			var searchResult = from t in trr.GetAllTranslationRequests()
+							   where t._name.ToLower().Contains(formdata["leit2"].ToLower())
+							   select t;
+
+			return View(searchResult);
+		}
 	}
 }

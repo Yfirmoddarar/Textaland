@@ -271,6 +271,7 @@
     <Content Include="Views\SubtitleFile\GiveRating.cshtml" />
     <Content Include="Views\SubtitleFile\FileError.cshtml" />
     <Content Include="Views\SubtitleFile\DeleteComment.cshtml" />
+    <Content Include="Views\Search\SearchResultForRequests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
