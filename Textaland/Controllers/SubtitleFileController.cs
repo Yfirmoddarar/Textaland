@@ -260,18 +260,9 @@ namespace Textaland.Controllers
 
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
-			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
-
 			SubtitleComment comment = commentRepo.GetSingleCommentById(commentID);
 
-			var userID = User.Identity.GetUserId();
-
-			if (userID == comment._userId) {
-				commentRepo.RemoveComment(comment);
-			}
-			else {
-				ModelState.AddModelError("deleteComment", "Getur aðeins fjarlægt þína eigin athugasemd");
-			}
+			commentRepo.RemoveComment(comment);
 
 			return AboutSubtitleFile(comment._textFileId);
 		}

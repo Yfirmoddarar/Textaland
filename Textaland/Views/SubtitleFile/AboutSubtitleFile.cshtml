@@ -55,9 +55,9 @@
 
         <div class="panel panel-info">
             <div class="panel-heading">
-                @if (User.Identity.IsAuthenticated) { 
+                @if (User.Identity.IsAuthenticated && item._userId == @User.Identity.GetUserId()) { 
                 <form method="post" action="@Url.Action("DeleteComment", "SubtitleFile", new {commentID = item.Id})">
-                    <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd? ATH: Aðeins er hægt að eyða sinni eigin athugasemd!')" type="submit" class="close">x</button>
+                    <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd?')" type="submit" class="close">x</button>
                 </form> 
                 }                 
                 <h3 class="panel-title"><strong>@item._userName</strong> @item._dateAdded</h3>     
