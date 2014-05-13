@@ -42,7 +42,7 @@ namespace Textaland.Controllers
 				TranslationRequestRepo requestRepo = new TranslationRequestRepo();
 
 				requestRepo.AddTranslationRequest(newRequest);
-				return RedirectToAction("TranslationRequests");
+                return RedirectToAction("TranslationRequests", new { num = 0 });
 			}
 			else {
 				ModelState.AddModelError("_language", "Fylla verður út í báða reiti");
@@ -62,7 +62,7 @@ namespace Textaland.Controllers
             ViewBag.Upvotes = trur.GetAllUpvotes();
 
             var requests = (from r in trr.GetAllTranslationRequests()
-							orderby r._numUpvotes
+							orderby r._numUpvotes descending
 							select r).Skip(num * 10).Take(10);
 			var countRequests = from r in trr.GetAllTranslationRequests()
 							orderby r._numUpvotes
