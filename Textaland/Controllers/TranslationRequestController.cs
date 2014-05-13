@@ -53,7 +53,7 @@ namespace Textaland.Controllers
 		}
 
 		//Get
-		public ActionResult TranslationRequests()
+		public ActionResult TranslationRequests(int num)
 		{
 
 			TranslationRequestRepo trr = new TranslationRequestRepo();
@@ -61,9 +61,19 @@ namespace Textaland.Controllers
 
             ViewBag.Upvotes = trur.GetAllUpvotes();
 
-            var requests = trr.GetAllTranslationRequests();
+            var requests = (from r in trr.GetAllTranslationRequests()
+							orderby r._numUpvotes descending
+							select r).Skip(num * 10).Take(10);
+			var countRequests = from r in trr.GetAllTranslationRequests()
+							orderby r._numUpvotes
+							select r;
 
-			return View(requests);
+
+
+			ViewBag.allRequests = requests;
+			ViewBag.countRequest = countRequests;
+
+			return View();
 		}
 
 		//This operation Adds a Vote to a the "tr" requests.
