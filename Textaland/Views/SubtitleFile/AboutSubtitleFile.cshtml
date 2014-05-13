@@ -23,7 +23,12 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-        <span class="label label-default">Einkunn: @Model._rating.ToString("#.##")</span>
+        @{if (Model._rating < 6) { 
+            <span class="label label-warning" style="font-size: 16px;">Einkunn: @Model._rating.ToString("#.#")</span>
+        }
+        else{
+            <span class="label label-success" style="font-size: 16px;">Einkunn: @Model._rating.ToString("#.#")</span>
+        }}
     </div>
 </div>
 
