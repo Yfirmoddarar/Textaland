@@ -1,4 +1,6 @@
-﻿@model Textaland.Models.SubtitleFile
+﻿@using Microsoft.AspNet.Identity;
+
+@model Textaland.Models.SubtitleFile
 
 @{
     ViewBag.Title = "AboutSubtitleFile";
@@ -50,7 +52,7 @@
                     <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd? ATH: Aðeins er hægt að eyða sinni eigin athugasemd!')" type="submit" class="close">x</button>
                 </form> 
                 }                 
-                <h3 class="panel-title">@User.Identity.Name @item._dateAdded</h3>     
+                <h3 class="panel-title">(notandanafn????) @item._dateAdded</h3>     
             </div>
             <div class="panel-body">
                 @item._text
