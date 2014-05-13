@@ -79,11 +79,17 @@
     <a href="/Translationrequest/NewTranslationRequest" class="btn btn-info">Senda inn nýja beiðni</a>
 </p>
 
-@{int count = @Enumerable.Count(ViewBag.countRequest);
+@{
+  
+    int count = @Enumerable.Count(ViewBag.countRequest);
+    int numPages;
 
-int numPages = count / 10 + 1;
+    if (count % 10 == 0)
+        numPages = count / 10;
+    else
+        numPages = count / 10 + 1;     
+    }
 
-}
 
 <ul class="pagination pagination-sm">
     <li class="disabled"><a href="#">«</a></li>
