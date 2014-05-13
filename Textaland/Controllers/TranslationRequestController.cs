@@ -42,7 +42,7 @@ namespace Textaland.Controllers
 				TranslationRequestRepo requestRepo = new TranslationRequestRepo();
 
 				requestRepo.AddTranslationRequest(newRequest);
-				return RedirectToAction("TranslationRequests");
+                return RedirectToAction("TranslationRequests", new { num = 0 });
 			}
 			else {
 				ModelState.AddModelError("_language", "Fylla verður út í báða reiti");
