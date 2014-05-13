@@ -12,16 +12,18 @@
     </center>
 </div>
 
+@Html.ValidationMessage("upVote")
+@Html.ValidationMessage("answerRequest")
 <table class="table table-hover table-striped table-bordered">
     <tr>
         <th>
             Tungumál
         </th>
         <th>
-            Beiðnir
+            Beiðni
         </th>
         <th>
-            Fjöldi beiðna
+            Fjöldi atkvæða
         </th>
         <th></th>
         <th></th>
@@ -42,7 +44,7 @@
            @using (Html.BeginForm("AddVote", "TranslationRequest", item, FormMethod.Post))
            {
                <center>
-                    <input type="submit" value="Kjósa" class="btn btn-info btn-sm" />
+                    <input type="submit" value="Kjósa" class="btn btn-warning btn-sm" />
                </center>
            }
         </td>
@@ -51,10 +53,11 @@
             {
                 <center>
                     <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')"
-                    type="submit" value="Svara beiðni" class="btn btn-info btn-sm" />
+                    type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
                 </center>
             }
         </td>
+        
     </tr>
  
 }
