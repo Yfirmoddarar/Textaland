@@ -24,7 +24,7 @@ namespace Textaland.Controllers
 			var mostPopularList = (from mp in subtitleFileRepo.GetAllSubtitles()
 								  where mp._inTranslation == false
 								  orderby mp._numOfDownloads descending
-								  select mp).Take(15);
+								  select mp).Take(10);
 
 			ViewBag.PopularList = mostPopularList;
 
@@ -32,7 +32,7 @@ namespace Textaland.Controllers
 			var newestList = (from mp in subtitleFileRepo.GetAllSubtitles()
 							 where mp._inTranslation == false
 							 orderby mp._dateAdded descending
-							 select mp).Take(15);
+							 select mp).Take(10);
 
 			ViewBag.NewestList = newestList;
 
@@ -40,7 +40,7 @@ namespace Textaland.Controllers
 			var ratingList = (from mp in subtitleFileRepo.GetAllSubtitles()
 							 where mp._inTranslation == false
 							 orderby mp._rating descending
-							 select mp).Take(15);
+							 select mp).Take(10);
 
 			ViewBag.RatingList = ratingList;
 
@@ -49,7 +49,7 @@ namespace Textaland.Controllers
 			var translationList = (from tl in subtitleFileRepo.GetAllSubtitles()
 								  where tl._inTranslation == true
 								  orderby tl._numOfTranslationParticipants descending
-								  select tl).Take(15);
+								  select tl).Take(10);
 
 			ViewBag.TranslationList = translationList;
 
@@ -57,7 +57,7 @@ namespace Textaland.Controllers
 			// add them to the ViewBag.
 			var requestList = (from rl in translationRequestRepo.GetAllTranslationRequests()
 							  orderby rl._numUpvotes descending
-							  select rl).Take(15);
+							  select rl).Take(10);
 
 			ViewBag.RequestList = requestList;
 
@@ -66,15 +66,11 @@ namespace Textaland.Controllers
 
         public ActionResult About()
         {
-             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 
