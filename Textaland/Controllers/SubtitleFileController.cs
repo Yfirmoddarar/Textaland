@@ -161,9 +161,13 @@ namespace Textaland.Controllers
 
 			SubtitleFileRepo myRepo = new SubtitleFileRepo();
 
-			var allSubs = myRepo.GetAllSubtitles().Skip(num * 10).Take(10);
+			var allSubs = (from c in myRepo.GetAllSubtitles()
+							where c._inTranslation == false
+							select c).Skip(num * 10).Take(10);
 
-			return View(allSubs);
+			ViewBag.allSubs = allSubs;
+
+			return View();
 		}
 
 
@@ -263,6 +267,7 @@ namespace Textaland.Controllers
 			if (getRatings.Count() == 0) {
 
 				newRating._userId = userID;
+				newRating._textFileId = s.Id;
 
 				rateRepo.AddRating(newRating);
 
