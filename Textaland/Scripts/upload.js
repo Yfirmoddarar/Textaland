@@ -14,3 +14,8 @@
         document.getElementById("uploadError").classList.add("hidden");
     }
 }
+
+function loading() {
+    document.getElementById("uploadForm").classList.add("hidden");
+    document.getElementById("loading").classList.remove("hidden");
+}

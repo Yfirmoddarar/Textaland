@@ -43,6 +43,7 @@ namespace Textaland.Controllers
 
 
         //Get
+        [Authorize]
         public ActionResult UploadFile() {
 
             //Selector info for type of video
@@ -65,6 +66,7 @@ namespace Textaland.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult UploadFile(UploadCollection uc) {
 
             //Check if file is empty, if not save and create new subtitle file
@@ -81,28 +83,33 @@ namespace Textaland.Controllers
 
                 SubtitleFileRepo sfr = new SubtitleFileRepo();
 
-                int newId = 1;
+                //int newId = 1;
 
-                //if the list isn't empty the new comment gets the ID according to 
-                //the number of files
-                if (sfr.GetAllSubtitles().Count() > 0) {
-                    newId = sfr.GetAllSubtitles().Max(x => x.Id) + 1;
-                }
-                sf.Id = newId;
+                ////if the list isn't empty the new comment gets the ID according to 
+                ////the number of files
+                //if (sfr.GetAllSubtitles().Count() > 0) {
+                //    newId = sfr.GetAllSubtitles().Max(x => x.Id) + 1;
+                //}
+                sf.Id = 0;
                 sf._dateAdded = DateTime.Now;
                 sf._userId = User.Identity.GetUserId();
-                if (ReadFile(uc._file, sf.Id)) {
+
                     sfr.AddSubtitle(sf);
-                    return RedirectToAction("FrontPage", "Home");
-                    // TODO redirect something!!!!
+
+                int newId = sf.Id;
+
+                if (ReadFile(uc._file, newId)) {
+                    return RedirectToAction("AboutSubtitleFile", "SubtitleFile", sf);
                 }
                 else {
                     SubtitleLineRepo slr = new SubtitleLineRepo();
 
-                    slr.RemoveLines(sf.Id);
+                    //Remove what was already uploaded, since file is of wrong format.
+
+                    sfr.RemoveSubtitle(newId);
+                    slr.RemoveLines(newId);
 
                     return RedirectToAction("FileError", "SubtitleFile");
-                    //TODO redirect to error reading file
                 }
             }
             else {
@@ -177,14 +184,19 @@ namespace Textaland.Controllers
         public ActionResult FileError() {
             return View();
         }
+
 		//Get
 		public ActionResult AllSubtitleFiles(int num) {
 
 			SubtitleFileRepo myRepo = new SubtitleFileRepo();
 
-			var allSubs = myRepo.GetAllSubtitles().Skip(num * 10).Take(10);
+			var allSubs = (from c in myRepo.GetAllSubtitles()
+							where c._inTranslation == false
+							select c).Skip(num * 10).Take(10);
 
-			return View(allSubs);
+			ViewBag.allSubs = allSubs;
+
+			return View();
 		}
 
 		//Operation that shows details about subtitle files
@@ -223,8 +235,8 @@ namespace Textaland.Controllers
 			if (Double.TryParse(rating, out newRating)) {
 
 				if (newRating < 0 || newRating > 10) {
-					ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0-10");
-				}
+						ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0-10");
+					}
 				else {
 					fileRepo.ChangeRating(s.Id, newRating);
 				}
