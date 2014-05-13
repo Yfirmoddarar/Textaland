@@ -285,6 +285,7 @@ namespace Textaland.Controllers
 			if (getRatings.Count() == 0) {
 
 				newRating._userId = userID;
+				newRating._textFileId = s.Id;
 
 				rateRepo.AddRating(newRating);
 
