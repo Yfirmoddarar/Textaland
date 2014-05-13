@@ -218,13 +218,22 @@ else
             </tr>
         }
         }
-        <tr>
-            <td>
-                <button onclick="location.href = '/TranslationRequest/TranslationRequests'" class="btn btn-info">
-                    Sjá allar þýðingar
-                </button>
-            </td>
+        @if (Enumerable.Count(ViewBag.TranslationList) <= 0) {
+            <tr>
+                <td>
+                    Því miður eru eru engar textaskrár í þýðingu.
+                </td>
+            </tr>
+        } else {
+            <tr>
+                <td>
+                    <button onclick="location.href = '/TranslationRequest/TranslationRequests'" class="btn btn-info">
+                        Sjá allar þýðingar
+                    </button>
+                </td>
         </tr>
+        }
+        
     </table>
 </div>
 
@@ -265,13 +274,22 @@ else
             </tr>
         }
         }
-        <tr>
-            <td>
-                <button onclick="location.href = '/TranslationRequest/TranslationRequests?num=0'" class="btn btn-info">
-                    Sjá allar beiðnir
-                </button>
-            </td>
-        </tr>
+        @if (Enumerable.Count(ViewBag.RequestList) <= 0) {
+            <tr>
+                <td>
+                    Því miður eru engar beiðnir til.
+                </td>
+            </tr>
+        } else {
+            <tr>
+                <td>
+                    <button onclick="location.href = '/TranslationRequest/TranslationRequests?num=0'" class="btn btn-info">
+                        Sjá allar beiðnir
+                    </button>
+                </td>
+            </tr>
+        }
+        
     </table>
 </div>
 }
