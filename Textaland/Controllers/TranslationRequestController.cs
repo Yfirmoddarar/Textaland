@@ -62,7 +62,7 @@ namespace Textaland.Controllers
             ViewBag.Upvotes = trur.GetAllUpvotes();
 
             var requests = (from r in trr.GetAllTranslationRequests()
-							orderby r._numUpvotes
+							orderby r._numUpvotes descending
 							select r).Skip(num * 10).Take(10);
 			var countRequests = from r in trr.GetAllTranslationRequests()
 							orderby r._numUpvotes
