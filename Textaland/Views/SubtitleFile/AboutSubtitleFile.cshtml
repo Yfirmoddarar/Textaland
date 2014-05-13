@@ -24,7 +24,7 @@
 <div class="row">
     <div class="col-md-6">
         @{if (Model._rating < 6) { 
-            <span class="label label-warning" style="font-size: 16px;">Einkunn: @Model._rating.ToString("#.#")</span>
+            <span class="label label-danger" style="font-size: 16px;">Einkunn: @Model._rating.ToString("#.#")</span>
         }
         else{
             <span class="label label-success" style="font-size: 16px;">Einkunn: @Model._rating.ToString("#.#")</span>
@@ -51,7 +51,7 @@
 }
 
 <div style="margin-top: 10px">
-    <a href="\SubtitleFile\Download?id=@Model.Id" class="btn btn-warning btn-lg">Download</a>
+    <a href="\SubtitleFile\Download?id=@Model.Id" class="btn btn-warning btn-lg">Niðurhala skrá</a>
 </div>
 
     <h3>Athugasemdir</h3> @Html.ValidationMessage("deleteComment")  
