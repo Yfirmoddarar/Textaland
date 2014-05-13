@@ -14,5 +14,6 @@ namespace Textaland.DataAccessLayer
 		public DbSet<SubtitleComment> SubtitleComments { get; set; }
 		public DbSet<TranslationRequest> TranslationRequests { get; set; }
 		public DbSet<TranslationRequestUpvote> TranslationRequestUpvotes { get; set; }
+		public DbSet<Rating> UserRatings { get; set; }
     }
 }

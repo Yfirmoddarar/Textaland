@@ -4,7 +4,7 @@
     ViewBag.Title = "AboutSubtitleFile";
 }
 
-<a href="\SubtitleFile\Download?id=@Model.Id">Download</a>
+
 
 <div>
     <div style="width:500px" class="btn-group btn-group-justified">
@@ -20,6 +20,8 @@
         <div class="btn btn-default disabled">@Model._rating.ToString("#.##") </div>
     </div>
 </div>
+
+<a href="\SubtitleFile\Download?id=@Model.Id" class="btn btn-warning btn-lg"  >Download</a>
 @{if (User.Identity.IsAuthenticated) { 
    
     using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post))
@@ -29,6 +31,7 @@
 
          <input class="btn btn-primary btn-sm" type="submit" value="Gefa einkunn" />
         @Html.ValidationMessage("rating")
+        @Html.ValidationMessage("existingRating")
     }
     }
 }

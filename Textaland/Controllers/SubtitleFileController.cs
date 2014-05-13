@@ -271,22 +271,49 @@ namespace Textaland.Controllers
 		{
 			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
 
+			RatingRepo rateRepo = new RatingRepo();
 
+			Rating newRating = new Rating();
 
-			double newRating;
+			var userID = User.Identity.GetUserId();
 
-			if (Double.TryParse(rating, out newRating)) {
+			var getRatings = from r in rateRepo.GetAllRatings()
+							 where r._userId == userID &&
+							 r._textFileId == s.Id
+							 select r;
 
-				if (newRating < 0 || newRating > 10) {
-					ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0-10");
+			if (getRatings.Count() == 0) {
+
+				newRating._userId = userID;
+
+				rateRepo.AddRating(newRating);
+
+				double giveRating;
+
+				if (Double.TryParse(rating, out giveRating))
+				{
+
+					if (giveRating < 0 || giveRating > 10)
+					{
+						ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0-10");
+					}
+					else
+					{
+						fileRepo.ChangeRating(s.Id, giveRating);
+					}
 				}
-				else {
-					fileRepo.ChangeRating(s.Id, newRating);
+				else
+				{
+					ModelState.AddModelError("rating", "Einkunnin má ekki innihalda bókstafi");
 				}
 			}
 			else {
-				ModelState.AddModelError("rating", "Einkunnin má ekki innihalda bókstafi");
+				ModelState.AddModelError("existingRating", "Aðeins má gefa skrá einkunn einu sinni");
 			}
+
+
+
+			
 			return AboutSubtitleFile(s.Id);
 		}
 

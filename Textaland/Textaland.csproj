@@ -189,6 +189,7 @@
     <Compile Include="Controllers\TranslationRequestController.cs" />
     <Compile Include="DataAccessLayer\AppDataContext.cs" />
     <Compile Include="DataAccessLayer\DownloadResult.cs" />
+    <Compile Include="DataAccessLayer\RatingRepo.cs" />
     <Compile Include="DataAccessLayer\SubtitleCommentRepo.cs" />
     <Compile Include="DataAccessLayer\SubtitleFileRepo.cs" />
     <Compile Include="DataAccessLayer\SubtitleLineRepo.cs" />
@@ -199,6 +200,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\UploadCollection.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\SubtitleComment.cs" />
