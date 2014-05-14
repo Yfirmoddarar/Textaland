@@ -1,0 +1,44 @@
+﻿@model Textaland.Models.SubtitleFileEditView
+
+@{
+    ViewBag.Title = "EditSubtitleFile";
+}
+
+<div class="jumbotron">
+    <h1 class="text-center">EditSubtitleFile</h1>
+</div>
+
+
+<div class="col-md-12">
+    <hr />
+    <h3>Name: @Model.fileName</h3>
+    <h3>Language From: @Model.languageFrom</h3>
+    <h3>Language To: @Model.languageTo</h3>
+    <hr />
+</div>
+
+<div class="form-horizontal">
+    @for (int i = 0; i < 10; i++) {
+        using (Html.BeginForm("EditLine", "SubtitleFile", FormMethod.Post)) {
+            <h3>@Model.subtitleLines[i]._lineNumber</h3>
+            <h3>@Model.subtitleLines[i]._time</h3>
+            <input type="number" name="fileId" value=@Model.subtitleLines[i]._textFileId class="hidden"/>
+            <input type="text" name="time" value="@Model.subtitleLines[i]._time" class="hidden" />
+            <input type="number" name="lineId" value="@Model.subtitleLines[i].Id" class="hidden" /><br />
+            <input type="text" name="line1" value="@Model.subtitleLines[i]._line1 " size="30" class="text-center"/><br />
+            <input type="text" name="line2" value="@Model.subtitleLines[i]._line2 " size="30" class="text-center" /><br />
+            <input type="text" name="line3" value="@Model.subtitleLines[i]._line3 " size="30" class="text-center" />
+            <input type="submit" name="@Model.subtitleLines[i]._lineNumber" value="Save" />
+        }
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a href="/Home/FrontPage" class="btn btn-primary" >Close</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

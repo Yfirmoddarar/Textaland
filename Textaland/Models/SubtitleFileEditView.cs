@@ -7,11 +7,11 @@ using System.Web;
 //WIP
 namespace Textaland.Models {
     public class SubtitleFileEditView {
-        public string _name { get; set; }
-        public string _languageFrom { get; set; }
-        public string _languageTo { get; set; }
-        public List<SubtitleLine> _subtitleLines { get; set; }
-        public List<SubtitleComment> _subtitleComments { get; set; }
+        public string fileName { get; set; }
+        public int fileId { get; set; }
+        public string languageFrom { get; set; }
+        public string languageTo { get; set; }
+        public List<SubtitleLine> subtitleLines { get; set; }
         //need more I think....
     }
 }

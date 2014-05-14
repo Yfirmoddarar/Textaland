@@ -67,6 +67,7 @@ namespace Textaland.DataAccessLayer
 		public void UpdateLine(SubtitleLine newLine) {
 			db.SubtitleLines.Find(newLine.Id)._line1 = newLine._line1;
 			db.SubtitleLines.Find(newLine.Id)._line2 = newLine._line2;
+            db.SubtitleLines.Find(newLine.Id)._line3 = newLine._line3;
 			db.SaveChanges();
 		}
 	}
