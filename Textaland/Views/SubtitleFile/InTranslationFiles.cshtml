@@ -1,5 +1,5 @@
 ﻿<center>
-    <h2>Skrár í þýðingu</h2>
+    <h1>SKRÁR Í ÞÝÐINGU</h1>
     <hr />
 </center>
 
@@ -49,3 +49,23 @@
 }
 
 </table>
+
+@{
+
+    int count = @Enumerable.Count(ViewBag.countRequest);
+    int numPages;
+
+    if (count % 10 == 0)
+        numPages = count / 10;
+    else
+        numPages = count / 10 + 1;
+}
+
+
+<ul class="pagination pagination-sm">
+    <li class="disabled"><a href="#">«</a></li>
+    @for (int i = 1; i <= numPages; i++)
+    {
+        <li>@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
+    }
+</ul>

@@ -177,8 +177,12 @@ namespace Textaland.Controllers
 			var allInTranslation = (from f in fileRepo.GetAllSubtitles()
 									where f._inTranslation == true
 									select f).Skip(num * 10).Take(10);
+			var countInTranslation = from f in fileRepo.GetAllSubtitles()
+									 where f._inTranslation == true
+									 select f;
 
 			ViewBag.InTranslation = allInTranslation;
+			ViewBag.numInTranslation = countInTranslation;
 
 			return View();
 		}

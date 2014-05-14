@@ -82,7 +82,7 @@
 
 @{
   
-    int count = @Enumerable.Count(ViewBag.countRequest);
+    int count = @Enumerable.Count(ViewBag.numInTranslation);
     int numPages;
 
     if (count % 10 == 0)
@@ -96,6 +96,6 @@
     <li class="disabled"><a href="#">«</a></li>
     @for (int i = 1; i <= numPages; i++)
     {
-        <li>@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
+        <li>@Html.ActionLink(@i.ToString("#"), "InTranslationFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
     }
 </ul>
