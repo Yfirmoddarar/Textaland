@@ -155,10 +155,15 @@ namespace Textaland.Controllers
 
 			SubtitleFileRepo myRepo = new SubtitleFileRepo();
 
+			//The list of files that are shown in the view.  Skip 'x' many files
+			//according to the number the actionresult receives, and then take 10 after
+			//the ones that are skipped
 			var allSubs = (from c in myRepo.GetAllSubtitles()
 							where c._inTranslation == false
 							select c).Skip(num * 10).Take(10);
 
+			//This is a list that is used for the pagination in the view. Basically just
+			//to count how many files there are
 			var subsCount = from c in myRepo.GetAllSubtitles()
 							where c._inTranslation == false
 							select c;
@@ -174,9 +179,15 @@ namespace Textaland.Controllers
 
 			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
 
+			//The list of files that are shown in the view.  Skip 'x' many files
+			//according to the number the actionresult receives, and then take 10 after
+			//the ones that are skipped
 			var allInTranslation = (from f in fileRepo.GetAllSubtitles()
 									where f._inTranslation == true
 									select f).Skip(num * 10).Take(10);
+
+			//This is a list that is used for the pagination in the view. Basically just
+			//to count how many files there are
 			var countInTranslation = from f in fileRepo.GetAllSubtitles()
 									 where f._inTranslation == true
 									 select f;
@@ -217,11 +228,14 @@ namespace Textaland.Controllers
 
 			var userID = User.Identity.GetUserId();
 
+			//Get all the ratings to see if the current user has already liked this file
 			var allRatings = from r in rateRepo.GetAllRatings()
 							 where r._userId == userID &&
 							 r._textFileId == s.Id
 							 select r;
 
+			//If the user hasn't liked the file the new rating is added to the database and
+			//the current rating of the file is changed according to the new rating
 			if (allRatings.Count() == 0) {
 
 				giveRating._textFileId = s.Id;
@@ -230,8 +244,11 @@ namespace Textaland.Controllers
 
 				double newRating;
 
+				//check if the rating conatins any non-numerical letter
 				if (Double.TryParse(rating, out newRating)) {
 
+					//if the rating is purely numerical we check if it is between 0 and 10
+					//If it isn't we print out an error message, otherwise we change the rating
 					if (newRating < 0 || newRating > 10) {
 						ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0-10");
 					}
@@ -239,6 +256,7 @@ namespace Textaland.Controllers
 						fileRepo.ChangeRating(s.Id, newRating);
 					}
 				}
+				//if the rating isn't numerical we print out an error message
 				else {
 					ModelState.AddModelError("rating", "Einkunnin má ekki innihalda bókstafi");
 				}
@@ -246,6 +264,8 @@ namespace Textaland.Controllers
 			else {
 				ModelState.AddModelError("existingRating", "Aðeins er hægt að gefa skrá einu sinni einkunn");
 			}
+
+			//finally we redirect back to the file view.
 			return RedirectToAction("AboutSubtitleFile", new { id = s.Id });
 		}
 
