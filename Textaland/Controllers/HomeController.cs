@@ -20,7 +20,7 @@ namespace Textaland.Controllers
 			// Here I sort the subtitles by number of downloads and add them to the
 			// ViewBag.
 			var mostPopularList = (from mp in subtitleFileRepo.GetAllSubtitles()
-								  where mp._inTranslation == false
+								  where mp._readyForDownload == true
 								  orderby mp._numOfDownloads descending
 								  select mp).Take(10);
 
@@ -28,7 +28,7 @@ namespace Textaland.Controllers
 
 			// Here I sort the subtitles by date and add them to the ViewBag.
 			var newestList = (from mp in subtitleFileRepo.GetAllSubtitles()
-							 where mp._inTranslation == false
+							  where mp._readyForDownload == true
 							 orderby mp._dateAdded descending
 							 select mp).Take(10);
 
@@ -36,7 +36,7 @@ namespace Textaland.Controllers
 
 			// Here I sort the subtitles by rating and add them to the ViewBag.
 			var ratingList = (from mp in subtitleFileRepo.GetAllSubtitles()
-							 where mp._inTranslation == false
+							  where mp._readyForDownload == true
 							 orderby mp._rating descending
 							 select mp).Take(10);
 
@@ -45,7 +45,7 @@ namespace Textaland.Controllers
 			// Here I get the subtitles that are in translation and order them by
 			// number of participants and add them to the ViewBag.
 			var translationList = (from tl in subtitleFileRepo.GetAllSubtitles()
-								  where tl._inTranslation == true
+								   where tl._readyForDownload == false
 								  orderby tl._numOfTranslationParticipants descending
 								  select tl).Take(10);
 
