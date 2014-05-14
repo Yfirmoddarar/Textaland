@@ -273,6 +273,7 @@
     <Content Include="Views\SubtitleFile\FileError.cshtml" />
     <Content Include="Views\SubtitleFile\DeleteComment.cshtml" />
     <Content Include="Views\Search\SearchResultForRequests.cshtml" />
+    <Content Include="Views\SubtitleFile\InTranslationFiles.cshtml" />
     <Content Include="Views\SubtitleFile\EditSubtitleFile.cshtml" />
   </ItemGroup>
   <ItemGroup>

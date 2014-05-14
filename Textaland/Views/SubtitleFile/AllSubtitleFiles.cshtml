@@ -89,9 +89,14 @@
     <a href="/SubtitleFile/UploadFile" class="btn btn-info">Hlaða upp nýrri skrá</a>
 </p>
 
-@{int count = @Enumerable.Count(ViewBag.allSubs);
+@{int count = @Enumerable.Count(ViewBag.numOfSubs);
 
-  int numPages = count / 10 + 1;
+  int numPages;
+
+  if (count % 10 == 0)
+      numPages = count / 10;
+  else
+      numPages = count / 10 + 1;
     
 }
   

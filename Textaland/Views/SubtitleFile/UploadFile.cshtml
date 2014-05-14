@@ -17,6 +17,7 @@
             @Html.LabelFor(model => model.fName, "Nafn", new { @class = "control-label col-md-2" })
             <div class="col-md-10 name">
                 @Html.EditorFor(model => model.fName, "fName", "fName")
+                <span type="button" class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Mælt er með því að nafn textaskráarinnar sé sú sama og torrent skráin fyrir viðkomandi myndefni" data-original-title=""></span>
                 @Html.ValidationMessageFor(model => model.fName)
             </div>
         </div>
@@ -25,6 +26,7 @@
             @Html.LabelFor(model => model.fDescription, "Lýsing", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.fDescription, new { @cols = "21", @rows = "4" })
+                <span type="button" class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="Mælt er með því að hafa textalýsingu ekki lengri en 200 karaktera" data-original-title=""></span>
                 @Html.ValidationMessageFor(model => model.fDescription)
             </div>
         </div>
@@ -81,3 +83,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/upload.js")
 }
+
+<script>
+    
+</script>

@@ -1,0 +1,77 @@
+﻿<center>
+    <h1>SKRÁR Í ÞÝÐINGU</h1>
+    <hr />
+</center>
+
+<table class="table">
+    <tr>
+        <th>
+            Nafn
+        </th>
+        <th>
+            Þýtt frá
+        </th>
+        <th>
+            Þýtt yfir í
+        </th>
+        <th>
+            Fjöldi þýðanda
+        </th>
+        <th>
+           Tegund
+        </th>
+        <th>
+            Sett inn
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in ViewBag.InTranslation) {
+    <tr>
+        <td>
+            @item._name
+        </td>
+        <td>
+            @item._languageFrom
+        </td>
+        <td>
+            @item._languageTo
+        </td>
+        <td>
+            @item._numOfTranslationParticipants
+        </td>
+        <td>
+            @item._type
+        </td>
+        <td>
+            @item._dateAdded
+        </td>
+        <td class="col-md-1" style="text-align: center">
+            <input onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')"
+                   type="submit" value="Taka þátt í þýðingu" class="btn btn-warning btn-sm" />
+        </td>
+
+    </tr>
+}
+
+</table>
+
+@{
+
+    int count = @Enumerable.Count(ViewBag.numInTranslation);
+    int numPages;
+
+    if (count % 10 == 0)
+        numPages = count / 10;
+    else
+        numPages = count / 10 + 1;
+}
+
+
+<ul class="pagination pagination-sm">
+    <li class="disabled"><a href="#">«</a></li>
+    @for (int i = 1; i <= numPages; i++)
+    {
+        <li>@Html.ActionLink(@i.ToString("#"), "InTranslationFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
+    }
+</ul>

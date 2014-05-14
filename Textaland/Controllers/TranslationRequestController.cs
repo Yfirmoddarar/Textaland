@@ -63,6 +63,10 @@ namespace Textaland.Controllers
 				num = 0;
 				ModelState.AddModelError("answerRequest", "Verður að vera innskráður notandi til þess að geta svarað beiðni");
 			}
+			else if (num == (-200)) {
+				num = 0;
+				ModelState.AddModelError("addVoteAgain", "Aðeins er hægt að kjósa hverja beiðni einu sinni");
+			}
 
             ViewBag.Upvotes = trur.GetAllUpvotes();
 
@@ -108,12 +112,14 @@ namespace Textaland.Controllers
 							  where u._userId == userId &&
 							  u._requestId == request.Id
 							  select u;
-				if (upvotes.Count() == 0)
-				{
+				if (upvotes.Count() == 0) {
 					upvote._requestId = request.Id;
 					upvote._userId = userId;
 					trr.upVote(upvote._requestId);
 					ur.AddUpvote(upvote);
+				}
+				else {
+					return RedirectToAction("TranslationRequests", new {num = -200});
 				}
 			}
 			else {
