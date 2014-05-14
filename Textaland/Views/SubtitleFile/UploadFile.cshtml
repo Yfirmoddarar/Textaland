@@ -1,17 +1,17 @@
 ﻿@model Textaland.Models.UploadCollection
 
-@{
-    ViewBag.Title = "UploadFile";
-}
+<div class="jumbotron" style="background: none">
+    <center>
+        <h1>HLAÐA UPP SKRÁ</h1>
+        <hr />
+    </center>
+</div>
 
-<h2>UploadFile</h2>
 <div id="uploadForm">
     @using (Html.BeginForm("UploadFile", "SubtitleFile", FormMethod.Post, new { enctype = "multipart/form-data" })) {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>FormCollection</h4>
-        <hr />
 
         <div class="form-group">
             @Html.LabelFor(model => model._name, "Nafn", new { @class = "control-label col-md-2" })
