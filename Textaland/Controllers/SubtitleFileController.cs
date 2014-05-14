@@ -45,11 +45,11 @@ namespace Textaland.Controllers
             if (uc._file != null && uc._file.ContentLength > 0) {
 
                 SubtitleFile sf = new SubtitleFile {
-                    _name = uc._name,
-                    _description = uc._description,
+                    _name = uc.fName,
+                    _description = uc.fDescription,
                     _hearingImpaired = uc._hardOfHearing,
-                    _type = uc._type,
-                    _languageFrom = uc._language		
+                    _type = uc.fType,
+                    _languageFrom = uc.fLanguage		
                 };
 
                 SubtitleFileRepo sfr = new SubtitleFileRepo();
@@ -64,7 +64,7 @@ namespace Textaland.Controllers
                 int newId = sf.Id;
 
                 if (ReadFile(uc._file, newId)) {
-                    return RedirectToAction("AboutSubtitleFile", "SubtitleFile", sf);
+                    return RedirectToAction("AboutSubtitleFile", "SubtitleFile", new { id = newId});
                 }
                 else {
                     SubtitleLineRepo slr = new SubtitleLineRepo();

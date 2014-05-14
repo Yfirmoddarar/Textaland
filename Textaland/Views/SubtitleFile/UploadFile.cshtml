@@ -14,34 +14,34 @@
     <div class="form-horizontal">
 
         <div class="form-group">
-            @Html.LabelFor(model => model._name, "Nafn", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model._name)
-                @Html.ValidationMessageFor(model => model._name)
+            @Html.LabelFor(model => model.fName, "Nafn", new { @class = "control-label col-md-2" })
+            <div class="col-md-10 name">
+                @Html.EditorFor(model => model.fName, "fName", "fName")
+                @Html.ValidationMessageFor(model => model.fName)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model._description, "Lýsing", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.fDescription, "Lýsing", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model._description, new { @cols = "21", @rows = "4" })
-                @Html.ValidationMessageFor(model => model._description)
+                @Html.TextAreaFor(model => model.fDescription, new { @cols = "21", @rows = "4" })
+                @Html.ValidationMessageFor(model => model.fDescription)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model._type, "Flokkur", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.fType, "Flokkur", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model._type, new SelectList(ViewBag.ListOfTypes, "Value", "Text", "Selected"))
-                @Html.ValidationMessageFor(model => model._type)
+                @Html.DropDownListFor(model => model.fType, new SelectList(ViewBag.ListOfTypes, "Value", "Text", "Selected"))
+                @Html.ValidationMessageFor(model => model.fType)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model._language, "Tungumál", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.fLanguage, "Tungumál", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model._language, new SelectList(ViewBag.ListOfLanguages, "Value", "Text", "Selected"))
-                @Html.ValidationMessageFor(model => model._language)
+                @Html.DropDownListFor(model => model.fLanguage, new SelectList(ViewBag.ListOfLanguages, "Value", "Text", "Selected"))
+                @Html.ValidationMessageFor(model => model.fLanguage)
             </div>
         </div>
 

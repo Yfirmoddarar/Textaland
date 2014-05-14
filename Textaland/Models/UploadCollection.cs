@@ -9,13 +9,13 @@ namespace Textaland.Models {
     public class UploadCollection {
         public int? Id { get; set; }
         [Required(ErrorMessage="Please enter name")]
-        public string _name { get; set; }
-        [Required(ErrorMessage = "Please enter description")]
-        public string _description { get; set; }
+        public string fName { get; set; }
+        [Required(ErrorMessage = "Please enter description"), StringLength(60, ErrorMessage="Description too long.")]
+        public string fDescription { get; set; }
         [Required(ErrorMessage = "Please select type")]
-        public string _type { get; set; }
+        public string fType { get; set; }
         [Required(ErrorMessage = "Please select language")]
-        public string _language { get; set; }
+        public string fLanguage { get; set; }
         public bool _hardOfHearing { get; set; }
         public HttpPostedFileBase _file { get; set; }
     }

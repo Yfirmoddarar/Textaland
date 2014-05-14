@@ -3,7 +3,6 @@
     var fileName = f.value;
     var fileExt = fileName.substr(fileName.lastIndexOf('.') + 1);
 
-
     //ifwrong extension show alert message and remove submit button
     if (fileExt != "srt") {
         document.getElementById("uploadError").classList.remove("hidden");
@@ -16,6 +15,12 @@
 }
 
 function loading() {
-    document.getElementById("uploadForm").classList.add("hidden");
-    document.getElementById("loading").classList.remove("hidden");
+    if ($("#fName").val() != "" &&
+        $("#fDescription").val() != "" &&
+        $("#fLanguage").val() != "" &&
+        $("#fType").val() != "") {
+
+        document.getElementById("uploadForm").classList.add("hidden");
+        document.getElementById("loading").classList.remove("hidden");
+    }
 }
