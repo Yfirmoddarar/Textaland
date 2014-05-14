@@ -10,7 +10,7 @@ namespace Textaland.Models {
         public int? Id { get; set; }
         [Required(ErrorMessage="Please enter name")]
         public string fName { get; set; }
-        [Required(ErrorMessage = "Please enter description"), StringLength(60, ErrorMessage="Description too long.")]
+        [Required(ErrorMessage = "Please enter description"), StringLength(140, ErrorMessage="Description too long.")]
         public string fDescription { get; set; }
         [Required(ErrorMessage = "Please select type")]
         public string fType { get; set; }

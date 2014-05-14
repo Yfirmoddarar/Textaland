@@ -365,7 +365,34 @@ namespace Textaland.Controllers
 
         //get
         public ActionResult EditSubtitleFile(int id) {
-            return View();
+            SubtitleFileEditView sfev = new SubtitleFileEditView();
+            SubtitleLineRepo slr = new SubtitleLineRepo();
+            SubtitleFileRepo sfr = new SubtitleFileRepo();
+
+            SubtitleFile sf = sfr.GetSubtitleFileById(id);
+            sfev.fileId = id;
+            sfev.fileName = sf._name;
+            sfev.languageFrom = sf._languageFrom;
+            sfev.languageTo = sf._languageTo;
+            sfev.subtitleLines = slr.GetLinesById(id).ToList();
+
+            return View(sfev);
+        }
+
+        [HttpPost]
+        public ActionResult EditLine(FormCollection fc) {
+            SubtitleLineRepo slr = new SubtitleLineRepo();
+            SubtitleLine sl = new SubtitleLine();
+
+            sl.Id = Convert.ToInt32(fc["lineId"]);
+            sl._line1 = fc["line1"];
+            sl._line2 = fc["line2"];
+            sl._line3 = fc["line3"];
+
+            slr.UpdateLine(sl);
+
+            return RedirectToAction("EditSubtitleFile", "SubtitleFile", new { id = fc["fileId"] });
+            //return RedirectToAction("UploadError", "SubtitleFile");
         }
 	}
 }
