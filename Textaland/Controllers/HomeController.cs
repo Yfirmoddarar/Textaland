@@ -9,10 +9,8 @@ using Textaland.Models;
 namespace Textaland.Controllers
 {
     [RequireHttps]
-    public class HomeController : Controller
-    {
-        public ActionResult FrontPage()
-        {
+    public class HomeController : Controller {
+        public ActionResult FrontPage() {
 			// Get the subtitles from repo.
 			SubtitleFileRepo subtitleFileRepo = new SubtitleFileRepo();
 
@@ -64,18 +62,15 @@ namespace Textaland.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
+        public ActionResult About() {
             return View();
         }
 
-        public ActionResult Contact()
-        {
+        public ActionResult Contact() {
             return View();
         }
 
-		public ActionResult FAQ()
-		{
+		public ActionResult FAQ() {
 			return View();
 		}
 
