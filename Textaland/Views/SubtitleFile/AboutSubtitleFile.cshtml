@@ -44,11 +44,11 @@
                 string myString = Model._rating.ToString("#.#");
                 if (Model._rating < 6) {
                     <td class="text-danger">
-                        @Html.Raw(myString)
+                       <strong> @Html.Raw(myString)</strong>
                     </td>
                 } else {
                     <td class="text-success">
-                        @Html.Raw(myString)
+                        <strong> @Html.Raw(myString)</strong>
                     </td>
                 }
             }
@@ -105,7 +105,7 @@
         </tr>
     </table>
     <center>
-        <a href="\SubtitleFile\Download?id=@Model.Id" class="btn btn-warning btn-lg">Niðurhala skrá</a>
+        <a href="\SubtitleFile\Download?id=@Model.Id" class="btn btn-warning btn-lg">Niðurhala skrá <span class="glyphicon glyphicon-download"></span></a>
     </center>
     <center>
         @{if (User.Identity.IsAuthenticated) {
@@ -115,8 +115,12 @@
                 @Html.TextBox("rating")
 
                 <input class="btn btn-info btn-sm" type="submit" value="Gefa einkunn" />
-                @Html.ValidationMessage("rating")
+                <br />
+            <strong>
+                @Html.ValidationMessage("wrongRating")
                 @Html.ValidationMessage("existingRating")
+                @Html.ValidationMessage("notNumerical")
+            </strong>
             }
         }
         }
@@ -135,7 +139,7 @@
                         <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd?')" type="submit" class="close" style="font-size:10pt">Eyða athugasemd</button>
                     </form>
                 }
-                <h3 class="panel-title"><strong>@item._userName</strong> @item._dateAdded</h3>
+                <h3 class="panel-title"><span class="glyphicon glyphicon-user"></span><strong> @item._userName</strong> @item._dateAdded</h3>
             </div>
             <div class="panel-body">
                 @item._text

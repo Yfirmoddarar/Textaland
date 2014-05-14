@@ -59,13 +59,14 @@ namespace Textaland.Controllers
 			TranslationRequestRepo trr = new TranslationRequestRepo();
             TranslationRequestUpvoteRepo trur = new TranslationRequestUpvoteRepo();
 
-			if (num == (-100)) {
-				num = 0;
-				ModelState.AddModelError("answerRequest", "Verður að vera innskráður notandi til þess að geta svarað beiðni");
+			if (TempData["loggedIn"] != null) {
+				ModelState.AddModelError("loggedIn", TempData["loggedIn"].ToString());
 			}
-			else if (num == (-200)) {
-				num = 0;
-				ModelState.AddModelError("addVoteAgain", "Aðeins er hægt að kjósa hverja beiðni einu sinni");
+			else if (TempData["loggdInUpVote"] != null) {
+				ModelState.AddModelError("loggedInUpVote", TempData["loggedInUpVote"].ToString());
+			}
+			else if (TempData["addVoteAgain"] != null) {
+				ModelState.AddModelError("addVoteAgain", TempData["addVoteAgain"].ToString());
 			}
 
             ViewBag.Upvotes = trur.GetAllUpvotes();
@@ -119,11 +120,11 @@ namespace Textaland.Controllers
 					ur.AddUpvote(upvote);
 				}
 				else {
-					return RedirectToAction("TranslationRequests", new {num = -200});
+					TempData["addVoteAgain"] = "Aðeins er hægt að kjósa hverja beiðni einu sinni";
 				}
 			}
 			else {
-				ModelState.AddModelError("upVote", "Verður að vera innskráður til þess að geta kosið beiðni");
+				TempData["loggedInUpVote"] = "Verður að vera innskráður til þess að geta kosið beiðni";
 			}
 			//Changes the number of upvotes in the TranslationRequest "tr".
 			//Returns the TranslationRequests view were "tr" has one more upvotes.
@@ -140,11 +141,12 @@ namespace Textaland.Controllers
 				TranslationRequestRepo trr = new TranslationRequestRepo();
 
 				trr.RemoveTranslationRequestById(tr);
-				return RedirectToAction("UploadFile", "SubtitleFile", new { area = "" });
 			}
 			else {
-				return RedirectToAction("TranslationRequests", new { num = (-100) });	
+				TempData["loggedIn"] = "Aðeins innskráðir notendur geta svarað beiðni";	
 			}
+
+			return RedirectToAction("UploadFile", "SubtitleFile", new { area = "" });
 			
 		}
 	}
