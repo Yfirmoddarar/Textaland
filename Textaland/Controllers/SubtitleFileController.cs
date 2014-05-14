@@ -159,6 +159,12 @@ namespace Textaland.Controllers
 							where c._inTranslation == false
 							select c).Skip(num * 10).Take(10);
 
+			var subsCount = from c in myRepo.GetAllSubtitles()
+							where c._inTranslation == false
+							select c;
+
+			ViewBag.numOfSubs = subsCount;
+
 			ViewBag.allSubs = allSubs;
 
 			return View();
