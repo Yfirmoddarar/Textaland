@@ -24,3 +24,5 @@ function loading() {
         document.getElementById("loading").classList.remove("hidden");
     }
 }
+
+$("[data-toggle=tooltip").tooltip();

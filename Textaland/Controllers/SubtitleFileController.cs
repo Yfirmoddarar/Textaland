@@ -170,6 +170,19 @@ namespace Textaland.Controllers
 			return View();
 		}
 
+		public ActionResult InTranslationFiles(int num) {
+
+			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
+
+			var allInTranslation = (from f in fileRepo.GetAllSubtitles()
+									where f._inTranslation == true
+									select f).Skip(num * 10).Take(10);
+
+			ViewBag.InTranslation = allInTranslation;
+
+			return View();
+		}
+
 		//Operation that shows details about subtitle files
 		
 		public ActionResult AboutSubtitleFile(int id){

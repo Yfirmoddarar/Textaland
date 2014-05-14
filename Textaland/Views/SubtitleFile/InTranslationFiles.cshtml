@@ -1,0 +1,51 @@
+﻿<center>
+    <h2>Skrár í þýðingu</h2>
+    <hr />
+</center>
+
+<table class="table">
+    <tr>
+        <th>
+            Nafn
+        </th>
+        <th>
+            Þýtt frá
+        </th>
+        <th>
+            Þýtt yfir í
+        </th>
+        <th>
+            Fjöldi þýðanda
+        </th>
+        <th>
+           Tegund
+        </th>
+        <th>
+            Sett inn
+        </th>
+    </tr>
+
+@foreach (var item in ViewBag.InTranslation) {
+    <tr>
+        <td>
+            @item._name
+        </td>
+        <td>
+            @item._languageFrom
+        </td>
+        <td>
+            @item._languageTo
+        </td>
+        <td>
+            @item._numOfTranslationParticipants
+        </td>
+        <td>
+            @item._type
+        </td>
+        <td>
+            @item._dateAdded
+        </td>
+    </tr>
+}
+
+</table>
