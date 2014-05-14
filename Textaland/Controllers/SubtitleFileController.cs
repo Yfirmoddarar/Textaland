@@ -192,8 +192,7 @@ namespace Textaland.Controllers
 			//"file" vill be the SubtitleFile that has the ID the same as "id".
 			var file = sfr.GetSubtitleFileById(id);
 
-			if(file == null)
-			{
+			if(file == null) {
 				return HttpNotFound();
 			}
 			//Getting all the comments that hafa a specific subtitleFile id.
@@ -205,8 +204,7 @@ namespace Textaland.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult GiveRating(SubtitleFile s, string rating)
-		{
+		public ActionResult GiveRating(SubtitleFile s, string rating) {
 			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
 
 			RatingRepo rateRepo = new RatingRepo();
@@ -220,8 +218,7 @@ namespace Textaland.Controllers
 							 r._textFileId == s.Id
 							 select r;
 
-			if (allRatings.Count() == 0)
-			{
+			if (allRatings.Count() == 0) {
 
 				giveRating._textFileId = s.Id;
 				giveRating._userId = userID;
@@ -229,20 +226,16 @@ namespace Textaland.Controllers
 
 				double newRating;
 
-				if (Double.TryParse(rating, out newRating))
-				{
+				if (Double.TryParse(rating, out newRating)) {
 
-					if (newRating < 0 || newRating > 10)
-					{
+					if (newRating < 0 || newRating > 10) {
 						ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0-10");
 					}
-					else
-					{
+					else {
 						fileRepo.ChangeRating(s.Id, newRating);
 					}
 				}
-				else
-				{
+				else {
 					ModelState.AddModelError("rating", "Einkunnin má ekki innihalda bókstafi");
 				}
 			}
@@ -254,8 +247,7 @@ namespace Textaland.Controllers
 
 		//This function adds a new comment to a specific text file.
 		[HttpPost]
-		public ActionResult AddComment(SubtitleFile s, string addText)
-		{
+		public ActionResult AddComment(SubtitleFile s, string addText) {
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
 			SubtitleComment newComment = new SubtitleComment();
