@@ -16,11 +16,23 @@ namespace Textaland.Controllers
 		{
 			SubtitleFileRepo sfr = new SubtitleFileRepo(); 
 
-			var searchResult = from s in sfr.GetAllSubtitles()
+			/*var searchResult = from s in sfr.GetAllSubtitles()
 							   where s._name.ToLower().Contains(formdata["leit"].ToLower())
 							   select s;
 
+			return View(searchResult);*/
+
+			string sentence = formdata["leit"].ToLower();
+			string[] words = sentence.Split(new char[] { ' ' });
+
+			var searchResult = from s in sfr.GetAllSubtitles()
+							   let w = s._name.Split(new char[] { '.', '?', '!', ' ', ';', ':', ',','-' }, StringSplitOptions.RemoveEmptyEntries)
+							   where w.Distinct().Intersect(words).Count() == words.Count() || s._name.ToLower().Contains(sentence)
+							   select s;
+
 			return View(searchResult);
+
+			
 		}
 
 		[HttpPost]
