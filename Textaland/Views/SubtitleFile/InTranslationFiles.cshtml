@@ -47,11 +47,8 @@
             @item._dateAdded
         </td>
         <td class="col-md-1" style="text-align: center">
-            @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
-            {
-                <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')"
-                       type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
-            }
+            <input onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')"
+                   type="submit" value="Taka þátt í þýðingu" class="btn btn-warning btn-sm" />
         </td>
 
     </tr>
