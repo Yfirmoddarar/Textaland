@@ -59,6 +59,15 @@ namespace Textaland.DataAccessLayer
 			}
             db.SaveChanges();
 		}
+
+        public void copyLines(int id, int oldId) {
+            foreach (var item in GetLinesById(oldId)) {
+                SubtitleLine newLine = item;
+                newLine._textFileId = id;
+                db.SubtitleLines.Add(newLine);
+                db.SaveChanges();
+            }
+        }
 		
 
 		// This function will update the lines of the subtitleline with the

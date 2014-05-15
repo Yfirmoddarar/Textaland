@@ -355,26 +355,67 @@ namespace Textaland.Controllers
             }
         }
 
-        //get
-        public ActionResult EditSubtitleFile(int id) {
-            SubtitleFileEditView sfev = new SubtitleFileEditView();
-            SubtitleLineRepo slr = new SubtitleLineRepo();
+        public ActionResult TranslateFile(int id) {
             SubtitleFileRepo sfr = new SubtitleFileRepo();
-
+            SubtitleLineRepo slr = new SubtitleLineRepo();
             SubtitleFile sf = sfr.GetSubtitleFileById(id);
-            sfev.fileId = id;
-            sfev.fileName = sf._name;
-            sfev.languageFrom = sf._languageFrom;
-            sfev.languageTo = sf._languageTo;
-            sfev.subtitleLines = slr.GetLinesById(id).ToList();
 
-            return View(sfev);
+            SubtitleFile sfTranslation = sf;
+            if (sf._languageFrom == "ENG") {
+                sfTranslation._languageTo = "ISL";
+            } else {
+                sfTranslation._languageTo = "ENG";
+            }
+
+            sfTranslation._userId = User.Identity.GetUserId();
+            sfTranslation._readyForDownload = false;
+            sfTranslation._dateAdded = DateTime.Now;
+            sfr.AddSubtitle(sfTranslation);
+
+            slr.copyLines(sfTranslation.Id, sf.Id);
+
+            return RedirectToAction("EditSubtitleFile", new { id = sfTranslation.Id });
+        }
+
+
+        //get
+        [Authorize]
+        public ActionResult EditSubtitleFile(int id) {
+            SubtitleFileRepo sfr = new SubtitleFileRepo();
+            SubtitleFile sf = sfr.GetSubtitleFileById(id);
+
+            if (!(sf._inTranslation) || DateTime.Now > sf._dateAdded.AddMinutes(10)) {
+                SubtitleFileEditView sfev = new SubtitleFileEditView();
+                SubtitleLineRepo slr = new SubtitleLineRepo();
+
+                sfr.setTime(sf.Id);
+                sfr.setInTranslation(true, sf.Id);
+                
+                sfev.fileId = id;
+                sfev.fileName = sf._name;
+                sfev.languageFrom = sf._languageFrom;
+                sfev.languageTo = sf._languageTo;
+                sfev.subtitleLines = slr.GetLinesById(id).ToList();
+
+                return View(sfev);     
+            }
+            return RedirectToAction("FrontPage", "Home");
+        }
+
+        public ActionResult CloseFile(int id) {
+            SubtitleFileRepo sfr = new SubtitleFileRepo();
+            sfr.setInTranslation(false, id);
+            return RedirectToAction("FrontPage", "Home");
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult EditLine(FormCollection fc) {
+            SubtitleFileRepo sfr = new SubtitleFileRepo();
+            SubtitleFile sf = sfr.GetSubtitleFileById(Convert.ToInt32(fc["fileId"]));
             SubtitleLineRepo slr = new SubtitleLineRepo();
             SubtitleLine sl = new SubtitleLine();
+            sfr.setInTranslation(false, sf.Id);
 
             sl.Id = Convert.ToInt32(fc["lineId"]);
             sl._line1 = fc["line1"];
