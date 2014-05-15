@@ -253,6 +253,8 @@ else
             </th>
             <th class="col-md-1">
             </th>
+            <th class="col-md-1">
+            </th>
         </tr>
         @{
         foreach (Textaland.Models.TranslationRequest item in ViewBag.RequestList) {
@@ -265,6 +267,15 @@ else
                 </td>
                 <td class="col-md-2">
                     @item._numUpvotes
+                </td>
+                <td class="col-md-1" style="text-align: center">
+                    @using (Html.BeginForm("AddVote", "TranslationRequest", item, FormMethod.Post))
+                    {
+                        <center>
+                            <input type="submit" value="Like" class="btn btn-warning btn-sm" />
+                            @TempData["frontPageUpload"] = "fesfes";
+                        </center>
+                    }
                 </td>
                 <td class="col-md-1" style="text-align: center">
                     @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
