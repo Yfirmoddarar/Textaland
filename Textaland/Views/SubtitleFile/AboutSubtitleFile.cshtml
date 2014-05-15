@@ -8,161 +8,169 @@
         <hr />
     </center>
 </div>
-
-<div class="col-md-3"></div>
-<div class="col-md-6" style="margin-bottom: 30px">
-    <table class = "table table-striped table-hover table-bordered">
-        <tr>
-            <td class="col-md-1">
-                Nafn:
-            </td>
-            <td class="col-md-5">
-                @Html.DisplayFor(model => model._name)
-            </td>
-        </tr>
-        <tr>
-            <td class="col-md-1">
-                Lýsing: 
-            </td>
-            <td class="col-md-5">
-                @Html.DisplayFor(model => model._description)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Tungumál:
-            </td>
-            <td>
-                @Html.DisplayFor(model => model._languageFrom)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Einkunn:
-            </td>
-            @{
-                string myString = Model._rating.ToString("#.#");
-                if (Model._rating < 6) {
-                    <td class="text-danger">
-                       <strong> @Html.Raw(myString)</strong>
-                    </td>
-                } else {
-                    <td class="text-success">
-                        <strong> @Html.Raw(myString)</strong>
-                    </td>
-                }
-            }
-        </tr>
-        <tr>
-            <td>
-                Kvikmynd/Þáttur:
-            </td>
-            <td>
-                @Html.DisplayFor(model => model._type)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Sótt: 
-            </td>
-            <td>
-                @Html.DisplayFor(model => model._numOfDownloads)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Sent inn af:
-            </td>
-            <td>
-                @Html.DisplayFor(model => model._userName)
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Sent inn: 
-            </td>
-            <td>
+<div id="main">
+    <div class="col-md-3"></div>
+    <div class="col-md-6" style="margin-bottom: 30px">
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <td class="col-md-1">
+                    Nafn:
+                </td>
+                <td class="col-md-5">
+                    @Html.DisplayFor(model => model._name)
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-1">
+                    Lýsing:
+                </td>
+                <td class="col-md-5">
+                    @Html.DisplayFor(model => model._description)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Tungumál:
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model._languageFrom)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Einkunn:
+                </td>
                 @{
-                    string date = Model._dateAdded.ToShortDateString();
-                    @Html.Raw(date)
+                    string myString = Model._rating.ToString("#.#");
+                    if (Model._rating < 6) {
+                        <td class="text-danger">
+                            <strong> @Html.Raw(myString)</strong>
+                        </td>
+                    }
+                    else {
+                        <td class="text-success">
+                            <strong> @Html.Raw(myString)</strong>
+                        </td>
+                    }
                 }
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Fyrir heyrnaskerta:
-            </td>
-            @{
-            if (@Model._hearingImpaired == true){
-                <td>@Html.Raw("Já")</td>
-            } else {
-                <td>@Html.Raw("Nei")</td>
-            }
-            }
-        </tr>
-        <tr>
-            
-        </tr>
-    </table>
-    <center>
-        <a href="\SubtitleFile\Download?id=@Model.Id" class="btn btn-warning btn-lg">Niðurhala skrá <span class="glyphicon glyphicon-download"></span></a>
-    </center>
-    <center>
-        @{if (User.Identity.IsAuthenticated) {
-            using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post)) {
-                <h4>Gefðu þessari textaskrá einkunn (0 - 10)</h4>
-                @Html.TextBox("rating")
-
-                <input class="btn btn-info btn-sm" type="submit" value="Gefa einkunn" />
-                <br />
-            <strong>
-                @Html.ValidationMessage("wrongRating")
-                @Html.ValidationMessage("existingRating")
-                @Html.ValidationMessage("notNumerical")
-            </strong>
-            }
-            if(Model._languageFrom == "ENG") {
-                <a href="/SubtitleFile/TranslateFile?id=@Model.Id" class="btn btn-warning" style="margin-top: 10px">Þýða skrá yfir á íslensku</a>     
-            } else {
-                <a href="/SubtitleFile/TranslateFile?id=@Model.Id" class="btn btn-warning" style="margin-top: 10px">Þýða skrá yfir á ensku</a>
-            }
-            
-          }
-}
-    </center>
-
-    <h3>Athugasemdir</h3> @Html.ValidationMessage("deleteComment")
-
-    @{foreach (var item in ViewBag.AllComments) {
-
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                @if (User.Identity.IsAuthenticated && item._userId == @User.Identity.GetUserId()) {
-                    <form method="post" action="@Url.Action("DeleteComment", "SubtitleFile", new {commentID = item.Id})">
-                        <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd?')" type="submit" class="close" style="font-size:10pt">Eyða athugasemd</button>
-                    </form>
+            </tr>
+            <tr>
+                <td>
+                    Kvikmynd/Þáttur:
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model._type)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Sótt:
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model._numOfDownloads)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Sent inn af:
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model._userName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Sent inn:
+                </td>
+                <td>
+                    @{
+                        string date = Model._dateAdded.ToShortDateString();
+                        @Html.Raw(date)
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Fyrir heyrnaskerta:
+                </td>
+                @{
+                    if (@Model._hearingImpaired == true) {
+                        <td>@Html.Raw("Já")</td>
+                    }
+                    else {
+                        <td>@Html.Raw("Nei")</td>
+                    }
                 }
-                <h3 class="panel-title"><span class="glyphicon glyphicon-user"></span><strong> @item._userName</strong> @item._dateAdded</h3>
-            </div>
-            <div class="panel-body">
-                @item._text
-            </div>
-        </div>
-    }
-    }
+            </tr>
+            <tr></tr>
+        </table>
+        <center>
+            <a href="\SubtitleFile\Download?id=@Model.Id" class="btn btn-warning btn-lg">Niðurhala skrá <span class="glyphicon glyphicon-download"></span></a>
+        </center>
+        <center>
+            @{if (User.Identity.IsAuthenticated) {
+                using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post)) {
+                    <h4>Gefðu þessari textaskrá einkunn (0 - 10)</h4>
+                    @Html.TextBox("rating")
 
-    @{if (User.Identity.IsAuthenticated) {
-        using (Html.BeginForm("AddComment", "SubtitleFile", @Model, FormMethod.Post))
-        {
-            <center>
-                @Html.TextArea("addText", "", new { style = "height: 100px; width: 1000px" })
-            </center>
-            
-            <center>
-                <input class="btn btn-info btn-sm" type="submit" value="Senda inn athugasemd" onclick="downPage()" />
-                <strong>@Html.ValidationMessage("addText")</strong>
-            </center>
-            
+                    <input class="btn btn-info btn-sm" type="submit" value="Gefa einkunn" />
+                    <br />
+                    <strong>
+                        @Html.ValidationMessage("wrongRating")
+                        @Html.ValidationMessage("existingRating")
+                        @Html.ValidationMessage("notNumerical")
+                    </strong>
+                }
+                if (Model._languageFrom == "ENG") {
+                    <a href="/SubtitleFile/TranslateFile?id=@Model.Id" onclick="loading()" class="btn btn-warning" style="margin-top: 10px">Þýða skrá yfir á íslensku</a>
+                }
+                else {
+                    <a href="/SubtitleFile/TranslateFile?id=@Model.Id" onclick="loading()" class="btn btn-warning" style="margin-top: 10px">Þýða skrá yfir á ensku</a>
+                }
+
+            }
+            }
+        </center>
+        <h3>Athugasemdir</h3> @Html.ValidationMessage("deleteComment")
+        @{foreach (var item in ViewBag.AllComments) {
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    @if (User.Identity.IsAuthenticated && item._userId == @User.Identity.GetUserId()) {
+                        <form method="post" action="@Url.Action("DeleteComment", "SubtitleFile", new {commentID = item.Id})">
+                            <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd?')" type="submit" class="close" style="font-size:10pt">Eyða athugasemd</button>
+                        </form>
+                    }
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-user"></span><strong> @item._userName</strong> @item._dateAdded</h3>
+                </div>
+                <div class="panel-body">
+                    @item._text
+                </div>
+            </div>
         }
-    }}
+        }
+        @{if (User.Identity.IsAuthenticated) {
+            using (Html.BeginForm("AddComment", "SubtitleFile", @Model, FormMethod.Post)) {
+                <center>
+                    @Html.TextArea("addText", "", new { style = "height: 100px; width: 1000px" })
+                </center>
+
+                <center>
+                    <input class="btn btn-info btn-sm" type="submit" value="Senda inn athugasemd" onclick="downPage()" />
+                    <strong>@Html.ValidationMessage("addText")</strong>
+                </center>
+
+            }
+        }}
+    </div>
 </div>
+
+<div id="loading" class="col-md-12 hidden">
+    <h3 class="text-center">Vinsamlegast bíðið</h3>
+    <img class="center-block" src="data:image/gif;base64,R0lGODlhNgA3APMAAP///wBxlnizxxyAoQ54m9jo7lSfuNzr8MTd5kiYs4q9zgAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAANgA3AAAEzBDISau9OOvNu/9gKI5kaZ4lkhBEgqCnws6EApMITb93uOqsRC8EpA1Bxdnx8wMKl51ckXcsGFiGAkamsy0LA9pAe1EFqRbBYCAYXXUGk4DWJhZN4dlAlMSLRW80cSVzM3UgB3ksAwcnamwkB28GjVCWl5iZmpucnZ4cj4eWoRqFLKJHpgSoFIoEe5ausBeyl7UYqqw9uaVrukOkn8LDxMXGx8ibwY6+JLxydCO3JdMg1dJ/Is+E0SPLcs3Jnt/F28XXw+jC5uXh4u89EQAh+QQJCgAAACwAAAAANgA3AAAEzhDISau9OOvNu/9gKI5kaZ5oqhYGQRiFWhaD6w6xLLa2a+iiXg8YEtqIIF7vh/QcarbB4YJIuBKIpuTAM0wtCqNiJBgMBCaE0ZUFCXpoknWdCEFvpfURdCcM8noEIW82cSNzRnWDZoYjamttWhphQmOSHFVXkZecnZ6foKFujJdlZxqELo1AqQSrFH1/TbEZtLM9shetrzK7qKSSpryixMXGx8jJyifCKc1kcMzRIrYl1Xy4J9cfvibdIs/MwMue4cffxtvE6qLoxubk8ScRACH5BAkKAAAALAAAAAA2ADcAAATOEMhJq7046827/2AojmRpnmiqrqwwDAJbCkRNxLI42MSQ6zzfD0Sz4YYfFwyZKxhqhgJJeSQVdraBNFSsVUVPHsEAzJrEtnJNSELXRN2bKcwjw19f0QG7PjA7B2EGfn+FhoeIiYoSCAk1CQiLFQpoChlUQwhuBJEWcXkpjm4JF3w9P5tvFqZsLKkEF58/omiksXiZm52SlGKWkhONj7vAxcbHyMkTmCjMcDygRNAjrCfVaqcm11zTJrIjzt64yojhxd/G28XqwOjG5uTxJhEAIfkECQoAAAAsAAAAADYANwAABM0QyEmrvTjrzbv/YCiOZGmeaKqurDAMAlsKRE3EsjjYxJDrPN8PRLPhhh8XDMk0KY/OF5TIm4qKNWtnZxOWuDUvCNw7kcXJ6gl7Iz1T76Z8Tq/b7/i8qmCoGQoacT8FZ4AXbFopfTwEBhhnQ4w2j0GRkgQYiEOLPI6ZUkgHZwd6EweLBqSlq6ytricICTUJCKwKkgojgiMIlwS1VEYlspcJIZAkvjXHlcnKIZokxJLG0KAlvZfAebeMuUi7FbGz2z/Rq8jozavn7Nev8CsRACH5BAkKAAAALAAAAAA2ADcAAATLEMhJq7046827/2AojmRpnmiqrqwwDAJbCkRNxLI42MSQ6zzfD0Sz4YYfFwzJNCmPzheUyJuKijVrZ2cTlrg1LwjcO5HFyeoJeyM9U++mfE6v2+/4PD6O5F/YWiqAGWdIhRiHP4kWg0ONGH4/kXqUlZaXmJlMBQY1BgVuUicFZ6AhjyOdPAQGQF0mqzauYbCxBFdqJao8rVeiGQgJNQkIFwdnB0MKsQrGqgbJPwi2BMV5wrYJetQ129x62LHaedO21nnLq82VwcPnIhEAIfkECQoAAAAsAAAAADYANwAABMwQyEmrvTjrzbv/YCiOZGmeaKqurDAMAlsKRE3EsjjYxJDrPN8PRLPhhh8XDMk0KY/OF5TIm4qKNWtnZxOWuDUvCNw7kcXJ6gl7Iz1T76Z8Tq/b7/g8Po7kX9haKoAZZ0iFGIc/iRaDQ40Yfj+RepSVlpeYAAgJNQkIlgo8NQqUCKI2nzNSIpynBAkzaiCuNl9BIbQ1tl0hraewbrIfpq6pbqsioaKkFwUGNQYFSJudxhUFZ9KUz6IGlbTfrpXcPN6UB2cHlgfcBuqZKBEAIfkECQoAAAAsAAAAADYANwAABMwQyEmrvTjrzbv/YCiOZGmeaKqurDAMAlsKRE3EsjjYxJDrPN8PRLPhhh8XDMk0KY/OF5TIm4qKNWtnZxOWuDUvCNw7kcXJ6gl7Iz1T76Z8Tq/b7yJEopZA4CsKPDUKfxIIgjZ+P3EWe4gECYtqFo82P2cXlTWXQReOiJE5bFqHj4qiUhmBgoSFho59rrKztLVMBQY1BgWzBWe8UUsiuYIGTpMglSaYIcpfnSHEPMYzyB8HZwdrqSMHxAbath2MsqO0zLLorua05OLvJxEAIfkECQoAAAAsAAAAADYANwAABMwQyEmrvTjrzbv/YCiOZGmeaKqurDAMAlsKRE3EsjjYxJDrPN8PRLPhfohELYHQuGBDgIJXU0Q5CKqtOXsdP0otITHjfTtiW2lnE37StXUwFNaSScXaGZvm4r0jU1RWV1hhTIWJiouMjVcFBjUGBY4WBWw1A5RDT3sTkVQGnGYYaUOYPaVip3MXoDyiP3k3GAeoAwdRnRoHoAa5lcHCw8TFxscduyjKIrOeRKRAbSe3I9Um1yHOJ9sjzCbfyInhwt3E2cPo5dHF5OLvJREAOwAAAAAAAAAAAA==" alt="loading image" />
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/textaland.js")
+}

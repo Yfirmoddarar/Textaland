@@ -162,13 +162,13 @@ namespace Textaland.Controllers
 			//according to the number the actionresult receives, and then take 10 after
 			//the ones that are skipped
 			var allSubs = (from c in myRepo.GetAllSubtitles()
-							where c._inTranslation == false
+							where c._readyForDownload == true
 							select c).Skip(num * 10).Take(10);
 
 			//This is a list that is used for the pagination in the view. Basically just
 			//to count how many files there are
 			var subsCount = from c in myRepo.GetAllSubtitles()
-							where c._inTranslation == false
+                            where c._readyForDownload == true
 							select c;
 
 			ViewBag.numOfSubs = subsCount;
@@ -435,6 +435,7 @@ namespace Textaland.Controllers
             sfTranslation._userId = User.Identity.GetUserId();
             sfTranslation._readyForDownload = false;
             sfTranslation._dateAdded = DateTime.Now;
+            sfTranslation._originalId = id;
         
             sfr.AddSubtitle(sfTranslation);
 
@@ -465,6 +466,7 @@ namespace Textaland.Controllers
                     sfev.languageFrom = sf._languageFrom;
                     sfev.languageTo = sf._languageTo;
                     sfev.subtitleLines = slr.GetLinesById(id).ToList();
+                    sfev.originalLines = slr.GetLinesById(sf._originalId).ToList();
 
                     ViewBag.pageNum = num;
                     int numberOfPages = (slr.GetLinesById(id).Count() / 10);
@@ -472,7 +474,8 @@ namespace Textaland.Controllers
 
                     return View(sfev);
                 }
-            } 
+            }
+            ModelState.AddModelError("FileInUse", "Skráin er í notkun.");
             return RedirectToAction("FrontPage", "Home");
         }
 
