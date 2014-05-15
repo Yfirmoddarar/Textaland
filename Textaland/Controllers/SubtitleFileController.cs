@@ -197,7 +197,7 @@ namespace Textaland.Controllers
                                      where f._readyForDownload == false
 									 select f;
 
-			ViewBag.pageNumber = num;
+			TempData["pageNum"] = num;
 			ViewBag.InTranslation = allInTranslation;
 			ViewBag.numInTranslation = countInTranslation;
 
