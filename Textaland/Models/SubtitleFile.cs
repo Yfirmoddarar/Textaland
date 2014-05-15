@@ -27,6 +27,7 @@ namespace Textaland.Models
 		public bool _inTranslation { get; set; }
 		public bool _hearingImpaired { get; set; }
 		public string _userName { get; set; }
+        public string _lastTranslatorId { get; set; }
 
 		// Constructor.
 

@@ -352,7 +352,7 @@ namespace Textaland.Controllers
             SubtitleFileRepo sfr = new SubtitleFileRepo();
             SubtitleFile sf = sfr.GetSubtitleFileById(id);
             if (sf._userId == User.Identity.GetUserId()) {
-                sfr.setInTranslation(false, id);
+                sfr.setInTranslation(false, id, User.Identity.GetUserId());
                 sfr.setDownload(true, id);
                 sfr.setLanguage(sf._languageTo, id);
             }
@@ -454,12 +454,12 @@ namespace Textaland.Controllers
             SubtitleFile sf = sfr.GetSubtitleFileById(id);
 
             if (sf != null) {
-                if (!(sf._inTranslation) || DateTime.Now > sf._dateAdded.AddMinutes(5)) {
+                if (!(sf._inTranslation) || DateTime.Now > sf._dateAdded.AddMinutes(5) || User.Identity.GetUserId() == sf._lastTranslatorId) {
                     SubtitleFileEditView sfev = new SubtitleFileEditView();
                     SubtitleLineRepo slr = new SubtitleLineRepo();
 
                     sfr.setTime(sf.Id);
-                    sfr.setInTranslation(true, sf.Id);
+                    sfr.setInTranslation(true, sf.Id, User.Identity.GetUserId());
 
                     sfev.fileId = id;
                     sfev.fileName = sf._name;
@@ -481,13 +481,13 @@ namespace Textaland.Controllers
 
         public ActionResult ChangePage(int id, int num) {
             SubtitleFileRepo sfr = new SubtitleFileRepo();
-            sfr.setInTranslation(false, id);
+            sfr.setInTranslation(false, id, User.Identity.GetUserId());
             return RedirectToAction("EditSubtitleFile", new { id = id, num = num });
         }
 
         public ActionResult CloseFile(int id) {
             SubtitleFileRepo sfr = new SubtitleFileRepo();
-            sfr.setInTranslation(false, id);
+            sfr.setInTranslation(false, id, User.Identity.GetUserId());
             return RedirectToAction("FrontPage", "Home");
         }
 
@@ -498,7 +498,7 @@ namespace Textaland.Controllers
             SubtitleFile sf = sfr.GetSubtitleFileById(Convert.ToInt32(fc["fileId"]));
             SubtitleLineRepo slr = new SubtitleLineRepo();
             SubtitleLine sl = new SubtitleLine();
-            sfr.setInTranslation(false, sf.Id);
+            sfr.setInTranslation(false, sf.Id, User.Identity.GetUserId());
 
             sl.Id = Convert.ToInt32(fc["lineId"]);
             sl._line1 = fc["line1"];

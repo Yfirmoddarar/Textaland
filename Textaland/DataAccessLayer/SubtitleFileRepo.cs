@@ -61,8 +61,9 @@ namespace Textaland.DataAccessLayer
             db.SaveChanges();
         }
 
-        public void setInTranslation(bool t, int id) {
+        public void setInTranslation(bool t, int id, string userId) {
             db.SubtitleFiles.Find(id)._inTranslation = t;
+            db.SubtitleFiles.Find(id)._lastTranslatorId = userId;
             db.SaveChanges();
         }
 
@@ -83,6 +84,5 @@ namespace Textaland.DataAccessLayer
             db.SubtitleFiles.Find(id)._rating = 0;
             db.SaveChanges();    
         }
-
 	}
 }
