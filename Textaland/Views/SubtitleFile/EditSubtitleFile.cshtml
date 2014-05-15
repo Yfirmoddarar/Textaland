@@ -23,6 +23,8 @@
     </div>
 </center>
 
+<strong>@Html.ValidationMessage("TimeLimit")</strong>
+
 <div class="form-horizontal">
     @for (int i = 0; i < 10; i++) {
         using (Html.BeginForm("EditLine", "SubtitleFile", FormMethod.Post)) {

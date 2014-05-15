@@ -497,19 +497,23 @@ namespace Textaland.Controllers
         public ActionResult EditLine(FormCollection fc) {
             SubtitleFileRepo sfr = new SubtitleFileRepo();
             SubtitleFile sf = sfr.GetSubtitleFileById(Convert.ToInt32(fc["fileId"]));
-            SubtitleLineRepo slr = new SubtitleLineRepo();
-            SubtitleLine sl = new SubtitleLine();
-            sfr.setInTranslation(false, sf.Id, User.Identity.GetUserId());
 
-            sl.Id = Convert.ToInt32(fc["lineId"]);
-            sl._line1 = fc["line1"];
-            sl._line2 = fc["line2"];
-            sl._line3 = fc["line3"];
+            if (sf._lastTranslatorId == User.Identity.GetUserId()) {
+                SubtitleLineRepo slr = new SubtitleLineRepo();
+                SubtitleLine sl = new SubtitleLine();
+                sfr.setInTranslation(false, sf.Id, User.Identity.GetUserId());
 
-            slr.UpdateLine(sl);
+                sl.Id = Convert.ToInt32(fc["lineId"]);
+                sl._line1 = fc["line1"];
+                sl._line2 = fc["line2"];
+                sl._line3 = fc["line3"];
 
-            return RedirectToAction("EditSubtitleFile", "SubtitleFile", new { id = fc["fileId"], num = 0 });
-            //return RedirectToAction("UploadError", "SubtitleFile");
+                slr.UpdateLine(sl);
+            }
+            else {
+                ModelState.AddModelError("TimeLimit", "Breyting fór ekki í gegn, tók of langan tíma!");
+            }
+            return RedirectToAction("EditSubtitleFile", "SubtitleFile", new { id = fc["fileId"], num = 0 });    
         }
 	}
 }
