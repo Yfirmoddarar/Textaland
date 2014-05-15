@@ -278,6 +278,7 @@
     <Content Include="Views\SubtitleFile\EditSubtitleFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\downloads\" />
     <Folder Include="App_Data\uploads\" />
   </ItemGroup>
   <ItemGroup>
