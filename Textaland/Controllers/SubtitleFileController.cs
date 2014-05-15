@@ -170,6 +170,8 @@ namespace Textaland.Controllers
 
 			ViewBag.numOfSubs = subsCount;
 
+			TempData["pageNumber"] = num;
+
 			ViewBag.allSubs = allSubs;
 
 			return View();

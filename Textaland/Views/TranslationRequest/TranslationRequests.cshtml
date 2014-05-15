@@ -89,12 +89,24 @@
                 numPages = count / 10;
             else
                 numPages = count / 10 + 1;
+
+            int pageNumber = Convert.ToInt32(TempData["requestPageNumber"].ToString());
         }
 
 
         <ul class="pagination pagination-sm">
-            <li class="disabled"><a href="#">«</a></li>
+            @if (pageNumber != 0) { 
+                <li>@Html.ActionLink("<<", "TranslationRequests", "TranslationRequest", new { num = pageNumber - 1 }, null)</li>
+            }
             @for (int i = 1; i <= numPages; i++) {
-                <li>@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
+                if (i - 1 == pageNumber) { 
+                    <li class="active" >@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
+                }
+                else {
+                    <li>@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
+                }
+            }
+            @if (pageNumber != numPages - 1) {
+                 <li>@Html.ActionLink(">>", "TranslationRequests", "TranslationRequest", new { num = pageNumber + 1 }, null)</li>
             }
         </ul>

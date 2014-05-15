@@ -46,7 +46,7 @@
             <a href="/SubtitleFile/AboutSubtitleFile?id=@item.Id">@item._name</a>
         </td>
         <td>
-            @item._languageTo
+            @item._languageFrom
         </td>
         <td>
             @item._type
@@ -95,13 +95,24 @@
       numPages = count / 10;
   else
       numPages = count / 10 + 1;
-    
+      
+   int pageNumber = Convert.ToInt32(TempData["pageNumber"].ToString());
 }
   
 <ul class="pagination pagination-sm">
-    <li class="disabled"><a href="#">«</a></li>
-    @for (int i = 1; i <= numPages; i++) { 
-        <li>@Html.ActionLink(@i.ToString("#"), "AllSubtitleFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
+    @if (pageNumber != 0) { 
+        <li>@Html.ActionLink("<<", "AllSubtitleFiles", "SubtitleFile", new { num = pageNumber - 1 }, null)</li>
+    }
+    @for (int i = 1; i <= numPages; i++) {
+        if (i - 1 == pageNumber) { 
+            <li class="active">@Html.ActionLink(@i.ToString("#"), "AllSubtitleFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
+        }
+        else {
+            <li>@Html.ActionLink(@i.ToString("#"), "AllSubtitleFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
+        }
+    }
+    @if (pageNumber != numPages - 1) {
+        <li>@Html.ActionLink(">>", "AllSubtitleFiles", "SubtitleFile", new { num = pageNumber + 1 }, null)</li>
     }
     </ul>
 
