@@ -4,18 +4,25 @@
     ViewBag.Title = "EditSubtitleFile";
 }
 
-<div class="jumbotron">
-    <h1 class="text-center">EditSubtitleFile</h1>
+<div class="jumbotron" style="background: none">
+    <center>
+        <h1>ÞÝÐA TEXTASKRÁ</h1>
+        <hr />
+    </center>
 </div>
 
+<center>
+    <div class="col-md-12" style="background: none">
+        <hr />
+        <h3>Nafn: @Model.fileName</h3>
+        <hr />
+        <h3>Þýdd frá: @Model.languageFrom</h3>
+        <hr />
+        <h3>Þýdd yfir í: @Model.languageTo</h3>
+        <hr />
+    </div>
 
-<div class="col-md-12">
-    <hr />
-    <h3>Name: @Model.fileName</h3>
-    <h3>Language From: @Model.languageFrom</h3>
-    <h3>Language To: @Model.languageTo</h3>
-    <hr />
-</div>
+</center>
 
 <div class="form-horizontal">
     @for (int i = 0; i < 10; i++) {
@@ -27,17 +34,27 @@
             <input type="text" name="line1" value="@Model.subtitleLines[i + ViewBag.pageNum]._line1 " size="30" class="text-center"/><br />
             <input type="text" name="line2" value="@Model.subtitleLines[i + ViewBag.pageNum]._line2 " size="30" class="text-center" /><br />
             <input type="text" name="line3" value="@Model.subtitleLines[i + ViewBag.pageNum]._line3 " size="30" class="text-center" />
-            <input type="submit" name="@Model.subtitleLines[i]._lineNumber" value="Save" class="btn btn-success btn-sm" />
+            <input type="submit" name="@Model.subtitleLines[i]._lineNumber" value="Vista" class="btn btn-success btn-sm" />
         }
     }
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <a href="/SubtitleFile/CloseFile?id=@Model.fileId" class="btn btn-primary" >Close</a>
-            <a href="/SubtitleFile/FinishFile?id=@Model.fileId" class="btn bg-warning btn-sm" >Finish Translation!</a>
-            @Html.ValidationMessage("FinishError")
-            <a href="/SubtitleFile/DeleteFile?id=@Model.fileId" class="btn btn-danger btn-sm">Delete!</a>
-            @Html.ValidationMessage("DeleteError")
+    <div class="form-horizontal" style="margin-top: 30px">
+        <div class="col-md-4 well" style="background: none">
+            <center>
+                <a href="/SubtitleFile/CloseFile?id=@Model.fileId" class="btn btn-info">Hættur að þýða</a>
+            </center>
+        </div>
+        <div class="col-md-4 well" style="background: none">
+            <center>
+                <a href="/SubtitleFile/FinishFile?id=@Model.fileId" class="btn btn-warning">Klára þýðingu</a>
+                @Html.ValidationMessage("FinishError")
+            </center>
+        </div>
+        <div class="col-md-4 well" style="background: none">
+            <center>
+                <a href="/SubtitleFile/DeleteFile?id=@Model.fileId" class="btn btn-danger">Eyða þýðingu</a>
+                @Html.ValidationMessage("DeleteError")
+            </center>
         </div>
     </div>
 </div>
