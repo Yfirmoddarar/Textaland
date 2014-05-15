@@ -17,15 +17,33 @@ namespace Textaland.Migrations
         protected override void Seed(Textaland.DataAccessLayer.AppDataContext context)
         {
 			
-			/*var seedData = new List<SubtitleFile> {
-				new SubtitleFile{ _name="Avatar", _description="wblaba blatt folk?"}
-			};
+        //    var seedData = new List<SubtitleLine> {
+        //        new SubtitleLine{ Id = 1,
+        //            _line1 = "One",
+        //            _line2 = "TWO",
+        //            _line3 = "",
+        //            _lineNumber = 1,
+        //            _textFileId = 1,
+        //            _time="timestring"},
+        //        new SubtitleLine{ Id = 2,
+        //            _line1 = "One",
+        //            _line2 = "TWO",
+        //            _line3 = "",
+        //            _lineNumber = 2,
+        //            _textFileId = 1,
+        //            _time="timestring"},
+        //        new SubtitleLine{ Id = 3,
+        //            _line1 = "One",
+        //            _line2 = "TWO",
+        //            _line3 = "",
+        //            _lineNumber = 3,
+        //            _textFileId = 1,
+        //            _time="timestring"}
+        //    };
 			
-			 
-
-			seedData.ForEach(d => context.SubtitleFiles.Add(d));
-			context.SaveChanges();
-			 */
+        //    seedData.ForEach(d => context.SubtitleLines.Add(d));
+        //    context.SaveChanges();
+			
 
 			/*
 			var seedData = new List<SubtitleComment> {

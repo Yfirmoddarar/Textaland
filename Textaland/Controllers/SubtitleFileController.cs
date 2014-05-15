@@ -439,7 +439,7 @@ namespace Textaland.Controllers
             SubtitleFile sf = sfr.GetSubtitleFileById(id);
 
             if (sf != null) {
-                if (!(sf._inTranslation) || DateTime.Now > sf._dateAdded.AddSeconds(20)) {
+                if (!(sf._inTranslation) || DateTime.Now > sf._dateAdded.AddMinutes(5)) {
                     SubtitleFileEditView sfev = new SubtitleFileEditView();
                     SubtitleLineRepo slr = new SubtitleLineRepo();
 
