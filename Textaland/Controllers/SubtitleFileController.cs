@@ -453,12 +453,19 @@ namespace Textaland.Controllers
                     sfev.subtitleLines = slr.GetLinesById(id).ToList();
 
                     ViewBag.pageNum = num;
-                    //ViewBag.numberOfPages = ();
+                    int numberOfPages = (slr.GetLinesById(id).Count() / 10);
+                    ViewBag.numPages = numberOfPages;
 
                     return View(sfev);
                 }
             } 
             return RedirectToAction("FrontPage", "Home");
+        }
+
+        public ActionResult ChangePage(int id, int num) {
+            SubtitleFileRepo sfr = new SubtitleFileRepo();
+            sfr.setInTranslation(false, id);
+            return RedirectToAction("EditSubtitleFile", new { id = id, num = num });
         }
 
         public ActionResult CloseFile(int id) {

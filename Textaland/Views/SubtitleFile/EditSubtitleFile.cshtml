@@ -17,31 +17,52 @@
     <hr />
 </div>
 
-<div class="form-horizontal">
-    @for (int i = 0; i < 10; i++) {
-        using (Html.BeginForm("EditLine", "SubtitleFile", FormMethod.Post)) {
-            <h3>@Model.subtitleLines[i + ViewBag.pageNum]._lineNumber</h3>
-            <h3>@Model.subtitleLines[i + ViewBag.pageNum]._time</h3>
-            <input type="number" name="fileId" value=@Model.subtitleLines[i + ViewBag.pageNum]._textFileId class="hidden"/>
-            <input type="number" name="lineId" value="@Model.subtitleLines[i + ViewBag.pageNum].Id" class="hidden" /><br />
-            <input type="text" name="line1" value="@Model.subtitleLines[i + ViewBag.pageNum]._line1 " size="30" class="text-center"/><br />
-            <input type="text" name="line2" value="@Model.subtitleLines[i + ViewBag.pageNum]._line2 " size="30" class="text-center" /><br />
-            <input type="text" name="line3" value="@Model.subtitleLines[i + ViewBag.pageNum]._line3 " size="30" class="text-center" />
-            <input type="submit" name="@Model.subtitleLines[i]._lineNumber" value="Save" class="btn btn-success btn-sm" />
+<ul class="pagination pagination-sm">
+    @if (ViewBag.pageNum != 0) {
+        <li><a href="/SubtitleFile/ChangePage?id=@Model.fileId&num=@(ViewBag.pageNum)">«</a></li>
+    }
+    @for (int i = 0; i <= ViewBag.numPages; i++) {
+        if (i == ViewBag.pageNum) {
+            <li class="active">
+                <a href="/SubtitleFile/ChangePage?id=@Model.fileId&num=@i">@i</a>
+            </li>
+        }
+        else {
+            <li>
+                <a href="/SubtitleFile/ChangePage?id=@Model.fileId&num=@i">@i</a>
+            </li>
         }
     }
+    @if (ViewBag.pageNum < ViewBag.numPages) {
+        <li><a href="/SubtitleFile/ChangePage?id=@Model.fileId&num=@(ViewBag.pageNum+1)">»</a></li>
+    }
+</ul>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <a href="/SubtitleFile/CloseFile?id=@Model.fileId" class="btn btn-primary" >Close</a>
-            <a href="/SubtitleFile/FinishFile?id=@Model.fileId" class="btn bg-warning btn-sm" >Finish Translation!</a>
-            @Html.ValidationMessage("FinishError")
-            <a href="/SubtitleFile/DeleteFile?id=@Model.fileId" class="btn btn-danger btn-sm">Delete!</a>
-            @Html.ValidationMessage("DeleteError")
+    <div class="form-horizontal">
+        @for (int i = 0; i < 10; i++) {
+            using (Html.BeginForm("EditLine", "SubtitleFile", FormMethod.Post)) {
+                <h3>@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._lineNumber</h3>
+                <h3>@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._time</h3>
+                <input type="number" name="fileId" value=@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._textFileId class="hidden" />
+                <input type="number" name="lineId" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)].Id" class="hidden" /><br />
+                <input type="text" name="line1" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._line1 " size="30" class="text-center" /><br />
+                <input type="text" name="line2" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._line2 " size="30" class="text-center" /><br />
+                <input type="text" name="line3" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._line3 " size="30" class="text-center" />
+                <input type="submit" name="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._lineNumber" value="Save" class="btn btn-success btn-sm" />
+            }
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="/SubtitleFile/CloseFile?id=@Model.fileId" class="btn btn-primary">Close</a>
+                <a href="/SubtitleFile/FinishFile?id=@Model.fileId" class="btn bg-warning btn-sm">Finish Translation!</a>
+                @Html.ValidationMessage("FinishError")
+                <a href="/SubtitleFile/DeleteFile?id=@Model.fileId" class="btn btn-danger btn-sm">Delete!</a>
+                @Html.ValidationMessage("DeleteError")
+            </div>
         </div>
     </div>
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
