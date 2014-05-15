@@ -57,5 +57,21 @@ namespace Textaland.DataAccessLayer
                 }
             }
         }
+
+        public void setTime(int id) {
+            db.SubtitleFiles.Find(id)._dateAdded = DateTime.Now;
+            db.SaveChanges();
+        }
+
+        public void setInTranslation(bool t, int id) {
+            db.SubtitleFiles.Find(id)._inTranslation = t;
+            db.SaveChanges();
+        }
+
+        public void setDownload(bool t, int id) {
+            db.SubtitleFiles.Find(id)._readyForDownload = t;
+            db.SaveChanges();
+        }
+
 	}
 }
