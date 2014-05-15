@@ -8,95 +8,93 @@
 <div class="form-group" style="margin-bottom: 30px">
     <label class="control-label" for="searchInput"></label>
     <center>
-        @using (Html.BeginForm("SearchResultForRequests", "Search", FormMethod.Post))
-        {
+        @using (Html.BeginForm("SearchResultForRequests", "Search", FormMethod.Post)) {
             <input type="text" name="leit2" id="leit2" value="Leitaðu að beiðni hér" 
                    style="text-align: center" onfocus="value=''" />
             <button class="btn btn-info btn-sm" title="Leita" type="submit">Leita</button>
         }
     </center>
 </div>
-<strong>
-    @Html.ValidationMessage("loggedInUpVote")
-    @Html.ValidationMessage("addVoteAgain")
-    @Html.ValidationMessage("loggedIn")
-</strong>
-<table class="table table-hover table-striped table-bordered">
-    <tr>
-        <th>
-            Tungumál
-        </th>
-        <th>
-            Beiðni
-        </th>
-        <th>
-            Fjöldi atkvæða
-        </th>
-        <th></th>
-        <th></th>
-    </tr>
+<center>
+    <strong>
+        @Html.ValidationMessage("loggedInUpVote")
+        @Html.ValidationMessage("addVoteAgain", String.Empty, new { @class = "form-group has-error" })
+        @Html.ValidationMessage("loggedIn")
+    </strong>
+</center>
+        <table class="table table-hover table-striped table-bordered">
+            <tr>
+                <th>
+                    Tungumál
+                </th>
+                <th>
+                    Beiðni
+                </th>
+                <th>
+                    Fjöldi atkvæða
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
 
-@foreach (Textaland.Models.TranslationRequest item in ViewBag.allRequests) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item._language)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item._numUpvotes)
-        </td>
-        <td>
-           @using (Html.BeginForm("AddVote", "TranslationRequest", item, FormMethod.Post))
-           {
-               <center>
-                    <input type="submit" value="Kjósa" class="btn btn-warning btn-sm" />
-               </center>
-           }
-        </td>
-        <td>
-            @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
-            {
-                if (User.Identity.IsAuthenticated) { 
-                <center>
-                    <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')"
-                    type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
-                </center>
-                }
-                else {
-                    <center>
-                    <input type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
-                </center>
-                }
+            @foreach (Textaland.Models.TranslationRequest item in ViewBag.allRequests) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item._language)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item._name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item._numUpvotes)
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("AddVote", "TranslationRequest", item, FormMethod.Post)) {
+                            <center>
+                                <input type="submit" value="Kjósa" class="btn btn-warning btn-sm" />
+                            </center>
+                        }
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post)) {
+                            if (User.Identity.IsAuthenticated) {
+                                <center>
+                                    <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')"
+                                           type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
+                                </center>
+                            }
+                            else {
+                                <center>
+                                    <input type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
+                                </center>
+                            }
+                        }
+                    </td>
+
+                </tr>
+
             }
-        </td>
-        
-    </tr>
- 
-}
-</table>
+        </table>
 
-<p>
-    <a href="/Translationrequest/NewTranslationRequest" class="btn btn-info">Senda inn nýja beiðni</a>
-</p>
+        <p>
+            <a href="/Translationrequest/NewTranslationRequest" class="btn btn-info">Senda inn nýja beiðni</a>
+        </p>
 
-@{
-  
-    int count = @Enumerable.Count(ViewBag.countRequest);
-    int numPages;
+        @{
 
-    if (count % 10 == 0)
-        numPages = count / 10;
-    else
-        numPages = count / 10 + 1;     
-    }
+            int count = @Enumerable.Count(ViewBag.countRequest);
+            int numPages;
+
+            if (count % 10 == 0)
+                numPages = count / 10;
+            else
+                numPages = count / 10 + 1;
+        }
 
 
-<ul class="pagination pagination-sm">
-    <li class="disabled"><a href="#">«</a></li>
-    @for (int i = 1; i <= numPages; i++)
-    {
-        <li>@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
-    }
-</ul>
+        <ul class="pagination pagination-sm">
+            <li class="disabled"><a href="#">«</a></li>
+            @for (int i = 1; i <= numPages; i++) {
+                <li>@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
+            }
+        </ul>

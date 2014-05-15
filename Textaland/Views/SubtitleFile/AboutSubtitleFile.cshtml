@@ -109,8 +109,7 @@
     </center>
     <center>
         @{if (User.Identity.IsAuthenticated) {
-            using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post))
-            {
+            using (Html.BeginForm("GiveRating", "SubtitleFile", @Model, FormMethod.Post)) {
                 <h4>Gefðu þessari textaskrá einkunn (0 - 10)</h4>
                 @Html.TextBox("rating")
 
@@ -128,13 +127,11 @@
 
     <h3>Athugasemdir</h3> @Html.ValidationMessage("deleteComment")
 
-    @{foreach (var item in ViewBag.AllComments)
-    {
+    @{foreach (var item in ViewBag.AllComments) {
 
         <div class="panel panel-info">
             <div class="panel-heading">
-                @if (User.Identity.IsAuthenticated && item._userId == @User.Identity.GetUserId())
-                {
+                @if (User.Identity.IsAuthenticated && item._userId == @User.Identity.GetUserId()) {
                     <form method="post" action="@Url.Action("DeleteComment", "SubtitleFile", new {commentID = item.Id})">
                         <button onclick="return confirm('Ertu viss um að þú viljir eyða þessari athugasemd?')" type="submit" class="close" style="font-size:10pt">Eyða athugasemd</button>
                     </form>
@@ -157,8 +154,9 @@
             
             <center>
                 <input class="btn btn-info btn-sm" type="submit" value="Senda inn athugasemd" onclick="downPage()" />
+                <strong>@Html.ValidationMessage("addText");</strong>
             </center>
-            @Html.ValidationMessage("addText");
+            
         }
     }}
 </div>
