@@ -82,6 +82,7 @@ namespace Textaland.Controllers
             }
         }
 
+        [Authorize]
         public bool ReadFile(HttpPostedFileBase file, int id) {
             try {
                 using (StreamReader sr = new StreamReader(file.InputStream, System.Text.Encoding.UTF8, true)) {
@@ -170,6 +171,8 @@ namespace Textaland.Controllers
 
 			ViewBag.numOfSubs = subsCount;
 
+			TempData["pageNumber"] = num;
+
 			ViewBag.allSubs = allSubs;
 
 			return View();
@@ -183,13 +186,13 @@ namespace Textaland.Controllers
 			//according to the number the actionresult receives, and then take 10 after
 			//the ones that are skipped
 			var allInTranslation = (from f in fileRepo.GetAllSubtitles()
-									where f._inTranslation == true
+									where f._readyForDownload == false
 									select f).Skip(num * 10).Take(10);
 
 			//This is a list that is used for the pagination in the view. Basically just
 			//to count how many files there are
 			var countInTranslation = from f in fileRepo.GetAllSubtitles()
-									 where f._inTranslation == true
+                                     where f._readyForDownload == false
 									 select f;
 
 			ViewBag.InTranslation = allInTranslation;
@@ -213,6 +216,9 @@ namespace Textaland.Controllers
 			else if (TempData["wrongRating"] != null) {
 				ModelState.AddModelError("wrongRating", TempData["wrongRating"].ToString());
 			}
+			else if (TempData["addText"] != null) {
+				ModelState.AddModelError("addText", TempData["addText"].ToString());
+			}
 			//"file" vill be the SubtitleFile that has the ID the same as "id".
 			var file = sfr.GetSubtitleFileById(id);
 
@@ -228,6 +234,7 @@ namespace Textaland.Controllers
 		}
 
 		[HttpPost]
+        [Authorize]
 		public ActionResult GiveRating(SubtitleFile s, string rating) {
 			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
 
@@ -279,6 +286,7 @@ namespace Textaland.Controllers
 
 		//This function adds a new comment to a specific text file.
 		[HttpPost]
+        [Authorize]
 		public ActionResult AddComment(SubtitleFile s, string addText) {
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
@@ -294,12 +302,13 @@ namespace Textaland.Controllers
 			commentRepo.AddComment(newComment);
 			}
 			else {
-				ModelState.AddModelError("addText", "Vinsamlegast sláðu inn athugasemd");
+				TempData["addText"] = "Athugasemdin var tóm. Vinsamlegast sláðu inn aftur.";
 			}
 			return RedirectToAction("AboutSubtitleFile", new { id = s.Id });
 		}
 
 		[HttpPost]
+        [Authorize]
 		public ActionResult DeleteComment(int commentID) {
 
 			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
@@ -324,11 +333,44 @@ namespace Textaland.Controllers
             return path;
         }
 
+        [Authorize]
+        public ActionResult FinishFile(int id) {
+            SubtitleFileRepo sfr = new SubtitleFileRepo();
+            SubtitleFile sf = sfr.GetSubtitleFileById(id);
+            if (sf._userId == User.Identity.GetUserId()) {
+                sfr.setInTranslation(false, id);
+                sfr.setDownload(true, id);
+                sfr.setLanguage(sf._languageTo, id);
+            }
+            else {
+                ModelState.AddModelError("FinishError", "Only original uploader can delete the file.");
+                return RedirectToAction("EditSubtitleFile", new { id = id, num = 0 });
+            }
+            return RedirectToAction("AboutSubtitleFile", new { id = id });
+        }
+
+        [Authorize]
+        public ActionResult DeleteFile(int id) {
+            SubtitleFileRepo sfr = new SubtitleFileRepo();
+            SubtitleFile sf = sfr.GetSubtitleFileById(id);
+            if (sf._userId == User.Identity.GetUserId()) {
+                SubtitleLineRepo slr = new SubtitleLineRepo();
+                slr.RemoveLines(id);
+                sfr.RemoveSubtitle(id);
+            }
+            else {
+                ModelState.AddModelError("DeleteError", "Only original uploader can delete the file.");
+            }
+            return RedirectToAction("AllSubtitleFiles", new { num = 0 });
+        }
+
         public ActionResult Download(int id) {
 
             WriteToFile(id);
 
             SubtitleFileRepo sfr = new SubtitleFileRepo();
+
+            sfr.wasDownloaded(id);
 
             string FileName = sfr.GetSubtitleFileById(id)._name.Replace(" ", "");
             FileName += ".srt";
@@ -363,26 +405,76 @@ namespace Textaland.Controllers
             }
         }
 
-        //get
-        public ActionResult EditSubtitleFile(int id) {
-            SubtitleFileEditView sfev = new SubtitleFileEditView();
-            SubtitleLineRepo slr = new SubtitleLineRepo();
+        [Authorize]
+        public ActionResult TranslateFile(int id) {
             SubtitleFileRepo sfr = new SubtitleFileRepo();
-
+            SubtitleLineRepo slr = new SubtitleLineRepo();
             SubtitleFile sf = sfr.GetSubtitleFileById(id);
-            sfev.fileId = id;
-            sfev.fileName = sf._name;
-            sfev.languageFrom = sf._languageFrom;
-            sfev.languageTo = sf._languageTo;
-            sfev.subtitleLines = slr.GetLinesById(id).ToList();
 
-            return View(sfev);
+            SubtitleFile sfTranslation = sf;
+            if (sf._languageFrom == "ENG") {
+                sfTranslation._languageTo = "ISL";
+            } else {
+                sfTranslation._languageTo = "ENG";
+            }
+
+            sfTranslation._userId = User.Identity.GetUserId();
+            sfTranslation._readyForDownload = false;
+            sfTranslation._dateAdded = DateTime.Now;
+        
+            sfr.AddSubtitle(sfTranslation);
+
+            sfr.setCounters(sfTranslation.Id);
+
+            slr.copyLines(sfTranslation.Id, id);
+
+            return RedirectToAction("EditSubtitleFile", new { id = sfTranslation.Id, num = 0 });
+        }
+
+
+        //get
+        [Authorize]
+        public ActionResult EditSubtitleFile(int id, int num) {
+            SubtitleFileRepo sfr = new SubtitleFileRepo();
+            SubtitleFile sf = sfr.GetSubtitleFileById(id);
+
+            if (sf != null) {
+                if (!(sf._inTranslation) || DateTime.Now > sf._dateAdded.AddSeconds(20)) {
+                    SubtitleFileEditView sfev = new SubtitleFileEditView();
+                    SubtitleLineRepo slr = new SubtitleLineRepo();
+
+                    sfr.setTime(sf.Id);
+                    sfr.setInTranslation(true, sf.Id);
+
+                    sfev.fileId = id;
+                    sfev.fileName = sf._name;
+                    sfev.languageFrom = sf._languageFrom;
+                    sfev.languageTo = sf._languageTo;
+                    sfev.subtitleLines = slr.GetLinesById(id).ToList();
+
+                    ViewBag.pageNum = num;
+                    //ViewBag.numberOfPages = ();
+
+                    return View(sfev);
+                }
+            } 
+            return RedirectToAction("FrontPage", "Home");
+        }
+
+        public ActionResult CloseFile(int id) {
+            SubtitleFileRepo sfr = new SubtitleFileRepo();
+            sfr.setInTranslation(false, id);
+            return RedirectToAction("FrontPage", "Home");
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult EditLine(FormCollection fc) {
+            SubtitleFileRepo sfr = new SubtitleFileRepo();
+            SubtitleFile sf = sfr.GetSubtitleFileById(Convert.ToInt32(fc["fileId"]));
             SubtitleLineRepo slr = new SubtitleLineRepo();
             SubtitleLine sl = new SubtitleLine();
+            sfr.setInTranslation(false, sf.Id);
 
             sl.Id = Convert.ToInt32(fc["lineId"]);
             sl._line1 = fc["line1"];
@@ -391,7 +483,7 @@ namespace Textaland.Controllers
 
             slr.UpdateLine(sl);
 
-            return RedirectToAction("EditSubtitleFile", "SubtitleFile", new { id = fc["fileId"] });
+            return RedirectToAction("EditSubtitleFile", "SubtitleFile", new { id = fc["fileId"], num = 0 });
             //return RedirectToAction("UploadError", "SubtitleFile");
         }
 	}

@@ -1,49 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Textaland.Models.ExternalLoginConfirmationViewModel" Collapsed="true">
-    <Position X="3.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
-      <FileName>Models\AccountViewModels.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Textaland.Models.ManageUserViewModel" Collapsed="true">
-    <Position X="7.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAEAAAAAAAAAAAAAAIAA=</HashCode>
-      <FileName>Models\AccountViewModels.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Textaland.Models.LoginViewModel" Collapsed="true">
-    <Position X="5.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQAAAAAgAAA=</HashCode>
-      <FileName>Models\AccountViewModels.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Textaland.Models.RegisterViewModel" Collapsed="true">
-    <Position X="3.75" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQAAAAAAIAA=</HashCode>
-      <FileName>Models\AccountViewModels.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Textaland.Models.UserAccount" Collapsed="true">
-    <Position X="3.75" Y="2.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\IdentityModels.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Textaland.Models.ApplicationDbContext" Collapsed="true">
-    <Position X="8.75" Y="0.5" Width="1.5" />
+    <Position X="4" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\IdentityModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Textaland.Models.Rating" Collapsed="true">
-    <Position X="9" Y="1.5" Width="1.5" />
+    <Position X="2.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAgAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Models\Rating.cs</FileName>
@@ -57,7 +22,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Textaland.Models.SubtitleFile" Collapsed="true">
-    <Position X="7.25" Y="1.5" Width="1.5" />
+    <Position X="0.5" Y="4.25" Width="3" />
     <TypeIdentifier>
       <HashCode>AgACIAAAAAAggCQkAAgAAAAAAAgAAIGYAAIAAAEAEIA=</HashCode>
       <FileName>Models\SubtitleFile.cs</FileName>
@@ -70,15 +35,15 @@
       <FileName>Models\SubtitleLine.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Textaland.Models.TranslationRequest">
-    <Position X="3.75" Y="4" Width="3" />
+  <Class Name="Textaland.Models.TranslationRequest" Collapsed="true">
+    <Position X="0.5" Y="2" Width="3" />
     <TypeIdentifier>
       <HashCode>AAACYAAAAAAAAAAAAAAAAAAAAAgAAAAIAEAAAAAAAAA=</HashCode>
       <FileName>Models\TranslationRequest.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Textaland.Models.TranslationRequestUpvote" Collapsed="true">
-    <Position X="7.25" Y="2.5" Width="1.5" />
+    <Position X="0.5" Y="3" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAEAIAAAAAAAAAAA=</HashCode>
       <FileName>Models\TranslationRequestUpvote.cs</FileName>
