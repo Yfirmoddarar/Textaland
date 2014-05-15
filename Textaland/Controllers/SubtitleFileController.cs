@@ -476,7 +476,7 @@ namespace Textaland.Controllers
                     return View(sfev);
                 }
             }
-            ModelState.AddModelError("FileInUse", "Skráin er í notkun.");
+            TempData["Error"] = true;
             return RedirectToAction("FrontPage", "Home");
         }
 
