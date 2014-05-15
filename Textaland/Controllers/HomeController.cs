@@ -17,6 +17,10 @@ namespace Textaland.Controllers
 			// Get the translation request from the repo.
 			TranslationRequestRepo translationRequestRepo = new TranslationRequestRepo();
 
+            if (TempData["Error"] != null) {
+                ModelState.AddModelError("FileInUse", "Því miður er skráin í notkun.");
+            }
+
 			// Here I sort the subtitles by number of downloads and add them to the
 			// ViewBag.
 			var mostPopularList = (from mp in subtitleFileRepo.GetAllSubtitles()
