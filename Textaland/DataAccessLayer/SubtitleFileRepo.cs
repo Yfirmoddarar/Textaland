@@ -43,7 +43,6 @@ namespace Textaland.DataAccessLayer
 			req.ChangeRating(rating);
 			db.SaveChanges();
 		}
-
         
         //this operation removes the subtitle file that matches the given ID
         public void RemoveSubtitle(int removeId)
@@ -53,9 +52,14 @@ namespace Textaland.DataAccessLayer
                 if (item.Id == removeId)
                 {
                     db.SubtitleFiles.Remove(item);
-                    db.SaveChanges();
                 }
             }
+            db.SaveChanges();
+        }
+
+        public void wasDownloaded(int id) {
+            db.SubtitleFiles.Find(id)._numOfDownloads++;
+            db.SaveChanges();
         }
 
         public void setTime(int id) {
@@ -71,6 +75,19 @@ namespace Textaland.DataAccessLayer
         public void setDownload(bool t, int id) {
             db.SubtitleFiles.Find(id)._readyForDownload = t;
             db.SaveChanges();
+        }
+
+        public void setLanguage(string lan, int id) {
+            db.SubtitleFiles.Find(id)._languageFrom = lan;
+            db.SubtitleFiles.Find(id)._languageTo = "";
+            db.SaveChanges();
+        }
+
+        public void setCounters(int id) {
+            db.SubtitleFiles.Find(id)._numOfDownloads = 0;
+            db.SubtitleFiles.Find(id)._numOfTimesRated = 0;
+            db.SubtitleFiles.Find(id)._rating = 0;
+            db.SaveChanges();    
         }
 
 	}

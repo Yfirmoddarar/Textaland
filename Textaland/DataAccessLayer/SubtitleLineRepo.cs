@@ -65,8 +65,8 @@ namespace Textaland.DataAccessLayer
                 SubtitleLine newLine = item;
                 newLine._textFileId = id;
                 db.SubtitleLines.Add(newLine);
-                db.SaveChanges();
             }
+            db.SaveChanges();
         }
 		
 

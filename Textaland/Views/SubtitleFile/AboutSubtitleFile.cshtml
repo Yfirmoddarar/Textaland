@@ -122,8 +122,9 @@
                 @Html.ValidationMessage("notNumerical")
             </strong>
             }
-        }
-        }
+            <a href="/SubtitleFile/TranslateFile?id=@Model.Id" class="btn btn-warning">Translate File!</a>
+          }
+}
     </center>
 
     <h3>Athugasemdir</h3> @Html.ValidationMessage("deleteComment")
