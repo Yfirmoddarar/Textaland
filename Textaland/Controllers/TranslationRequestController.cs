@@ -75,7 +75,7 @@ namespace Textaland.Controllers
 							orderby r._numUpvotes
 							select r;
 
-
+			TempData["requestPageNumber"] = num;
 			ViewBag.allRequests = requests;
 			ViewBag.countRequest = countRequests;
 

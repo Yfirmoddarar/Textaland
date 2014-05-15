@@ -171,6 +171,8 @@ namespace Textaland.Controllers
 
 			ViewBag.numOfSubs = subsCount;
 
+			TempData["pageNumber"] = num;
+
 			ViewBag.allSubs = allSubs;
 
 			return View();
@@ -213,6 +215,9 @@ namespace Textaland.Controllers
 			}
 			else if (TempData["wrongRating"] != null) {
 				ModelState.AddModelError("wrongRating", TempData["wrongRating"].ToString());
+			}
+			else if (TempData["addText"] != null) {
+				ModelState.AddModelError("addText", TempData["addText"].ToString());
 			}
 			//"file" vill be the SubtitleFile that has the ID the same as "id".
 			var file = sfr.GetSubtitleFileById(id);
@@ -297,7 +302,7 @@ namespace Textaland.Controllers
 			commentRepo.AddComment(newComment);
 			}
 			else {
-				ModelState.AddModelError("addText", "Vinsamlegast sláðu inn athugasemd");
+				TempData["addText"] = "Athugasemdin var tóm. Vinsamlegast sláðu inn aftur.";
 			}
 			return RedirectToAction("AboutSubtitleFile", new { id = s.Id });
 		}

@@ -6,14 +6,13 @@ using Textaland.Models;
 
 namespace Textaland.DataAccessLayer
 {
-	public class SubtitleFileRepo{
+	public class SubtitleFileRepo {
         // Initialize the db.
         AppDataContext db = new AppDataContext();
 
         // Function that will get all lines in the list _subtitleLines
         // and order them in ascending order by their id.
-        public IEnumerable<SubtitleFile> GetAllSubtitles()
-        {
+        public IEnumerable<SubtitleFile> GetAllSubtitles() {
             var allFiles = from f in db.SubtitleFiles
                            orderby f._rating descending
                            select f;
@@ -22,8 +21,7 @@ namespace Textaland.DataAccessLayer
 
         // This function will go through my list '_subtitleLines'
         // and return the lines that matches with the given 'id'.
-        public SubtitleFile GetSubtitleFileById(int id)
-        {
+        public SubtitleFile GetSubtitleFileById(int id) {
             var subtitleFilesById = (from f in db.SubtitleFiles
                                     where f.Id == id
                                     select f).SingleOrDefault();
@@ -31,8 +29,7 @@ namespace Textaland.DataAccessLayer
         }
 
         //this operation adds a new Subtitle file to the existing List
-        public void AddSubtitle(SubtitleFile _newSubtitleFile)
-        {          
+        public void AddSubtitle(SubtitleFile _newSubtitleFile) {          
             db.SubtitleFiles.Add(_newSubtitleFile);
             db.SaveChanges();
         }
@@ -45,12 +42,9 @@ namespace Textaland.DataAccessLayer
 		}
         
         //this operation removes the subtitle file that matches the given ID
-        public void RemoveSubtitle(int removeId)
-        {
-            foreach (var item in db.SubtitleFiles)
-            {
-                if (item.Id == removeId)
-                {
+        public void RemoveSubtitle(int removeId) {
+            foreach (var item in db.SubtitleFiles) {
+                if (item.Id == removeId) {
                     db.SubtitleFiles.Remove(item);
                 }
             }

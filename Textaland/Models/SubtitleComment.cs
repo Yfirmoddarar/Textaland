@@ -5,8 +5,7 @@ using System.Web;
 
 namespace Textaland.Models
 {
-	public class SubtitleComment
-	{
+	public class SubtitleComment {
 		// Attributes
 		public int Id { get; set; }
 		public int _textFileId { get; set; }

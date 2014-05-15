@@ -70,8 +70,7 @@
 
 <ul class="pagination pagination-sm">
     <li class="disabled"><a href="#">«</a></li>
-    @for (int i = 1; i <= numPages; i++)
-    {
+    @for (int i = 1; i <= numPages; i++) {
         <li>@Html.ActionLink(@i.ToString("#"), "InTranslationFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
     }
 </ul>

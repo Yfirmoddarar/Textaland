@@ -151,7 +151,7 @@
                     </td>
                     <td class="col-md-1">
                         @{
-                            if (item._rating == 0) {
+                            if (item._numOfTimesRated == 0) {
                             @Html.Raw("Engin einkunn")
                         } else {
                             @item._rating.ToString("#.##")
