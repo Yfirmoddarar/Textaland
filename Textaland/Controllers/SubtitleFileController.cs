@@ -93,7 +93,8 @@ namespace Textaland.Controllers
                         SubtitleLine sl = new SubtitleLine();
 
                         try {
-                            int lId = Convert.ToInt32(sr.ReadLine());
+                            string line = sr.ReadLine();
+                            int lId = Convert.ToInt32(line);
                             sl._lineNumber = lId;
                         }
                         catch (Exception e) {
@@ -125,6 +126,7 @@ namespace Textaland.Controllers
                     
                                 if (lText3 != "") {
                                     sl._line3 = lText3;
+                                    string emptyLine = sr.ReadLine();
                                 }
                             }
                         }
@@ -325,10 +327,10 @@ namespace Textaland.Controllers
 
             SubtitleFileRepo sfr = new SubtitleFileRepo();
 
-            string path = Server.MapPath(Url.Content("~/App_Data/uploads/"));
+            string path = Server.MapPath(Url.Content("~/App_Data/downloads/"));
 
             path += sfr.GetSubtitleFileById(id)._name.Replace(" ", "");
-            path += ".srt";
+            path += (id + ".srt");
 
             return path;
         }
@@ -373,9 +375,9 @@ namespace Textaland.Controllers
             sfr.wasDownloaded(id);
 
             string FileName = sfr.GetSubtitleFileById(id)._name.Replace(" ", "");
-            FileName += ".srt";
+            FileName += (id + ".srt");
 
-            string path = "~/App_Data/uploads/" + FileName;
+            string path = "~/App_Data/downloads/" + FileName;
 
             return new DownloadResult { VirtualPath = path, FileDownloadName = FileName };
         }
