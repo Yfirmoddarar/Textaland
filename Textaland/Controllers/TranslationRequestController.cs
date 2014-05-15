@@ -9,19 +9,24 @@ using Microsoft.AspNet.Identity;
 
 namespace Textaland.Controllers
 {
-	public class TranslationRequestController : Controller
-	{
+	public class TranslationRequestController : Controller {
+
+		TranslationRequest request = new TranslationRequest();
+
+		TranslationRequestRepo requestRepo = new TranslationRequestRepo();
+
+		TranslationRequestUpvote requestUpvote = new TranslationRequestUpvote();
+
+		TranslationRequestUpvoteRepo requestUpvoteRepo  = new TranslationRequestUpvoteRepo();
 		//
 		// GET: /TranslationRequest/
-		public ActionResult Index()
-		{
+		public ActionResult Index() {
 			return View();
 		}
 
 		//Get
         [Authorize]
-		public ActionResult NewTranslationRequest()
-		{
+		public ActionResult NewTranslationRequest() {
 
             List<SelectListItem> languages = new List<SelectListItem>();
             languages.Add(new SelectListItem { Text = "select" });
@@ -35,48 +40,40 @@ namespace Textaland.Controllers
 
 		[HttpPost]
         [Authorize]
-		public ActionResult NewTranslationRequest(FormCollection formData) 
-		{
+		public ActionResult NewTranslationRequest(FormCollection formData) {
 			String strName = formData["_name"];
 			String strLanguage = formData["_language"];
 
-			TranslationRequest newRequest = new TranslationRequest();
+			request._name = strName;
+			request._language = strLanguage;
+            request._userId = User.Identity.GetUserId();
 
-			newRequest._name = strName;
-			newRequest._language = strLanguage;
-            newRequest._userId = User.Identity.GetUserId();
 
-			TranslationRequestRepo requestRepo = new TranslationRequestRepo();
-
-			requestRepo.AddTranslationRequest(newRequest);
+			requestRepo.AddTranslationRequest(request);
             return RedirectToAction("TranslationRequests", new { num = 0 });		
 		}
 
 		//Get
-		public ActionResult TranslationRequests(int num)
-		{
+		public ActionResult TranslationRequests(int num) {
 
-			TranslationRequestRepo trr = new TranslationRequestRepo();
-            TranslationRequestUpvoteRepo trur = new TranslationRequestUpvoteRepo();
-
-			if (num == (-100)) {
-				num = 0;
-				ModelState.AddModelError("answerRequest", "Verður að vera innskráður notandi til þess að geta svarað beiðni");
+			if (TempData["loggedIn"] != null) {
+				ModelState.AddModelError("loggedIn", TempData["loggedIn"].ToString());
 			}
-			else if (num == (-200)) {
-				num = 0;
-				ModelState.AddModelError("addVoteAgain", "Aðeins er hægt að kjósa hverja beiðni einu sinni");
+			else if (TempData["loggdInUpVote"] != null) {
+				ModelState.AddModelError("loggedInUpVote", TempData["loggedInUpVote"].ToString());
+			}
+			else if (TempData["addVoteAgain"] != null) {
+				ModelState.AddModelError("addVoteAgain", TempData["addVoteAgain"].ToString());
 			}
 
-            ViewBag.Upvotes = trur.GetAllUpvotes();
+            ViewBag.Upvotes = requestUpvoteRepo.GetAllUpvotes();
 
-            var requests = (from r in trr.GetAllTranslationRequests()
+            var requests = (from r in requestRepo.GetAllTranslationRequests()
 							orderby r._numUpvotes descending
 							select r).Skip(num * 10).Take(10);
-			var countRequests = from r in trr.GetAllTranslationRequests()
+			var countRequests = from r in requestRepo.GetAllTranslationRequests()
 							orderby r._numUpvotes
 							select r;
-
 
 
 			ViewBag.allRequests = requests;
@@ -88,14 +85,11 @@ namespace Textaland.Controllers
 		//This operation Adds a Vote to a the "tr" requests.
 		[HttpPost]
 		[Authorize]
-		public ActionResult AddVote(TranslationRequest request)
-		{
+		public ActionResult AddVote(TranslationRequest request) {
             var userId = User.Identity.GetUserId();
 			//taka við TranslationRequest Id búa til upvote út frá því. gefa því Id þ.e.a.s kalla á add fallið
 			//í TranslationRequestUpvote og búa þannig nýtt vote.
-            TranslationRequestRepo trr = new TranslationRequestRepo();
-			TranslationRequestUpvote upvote = new TranslationRequestUpvote();
-			TranslationRequestUpvoteRepo ur = new TranslationRequestUpvoteRepo();
+
 			//Takes all upvotes from the TranslationRequest whith "id".
 			//var userIdUpvotes = upvoteRepo.GetUpvoteById(id);
 			//Checks if there exists an upvote with the same userId as the new vote.
@@ -105,25 +99,24 @@ namespace Textaland.Controllers
 				}
 			}*/
 
-			if (User.Identity.IsAuthenticated)
-			{
+			if (User.Identity.IsAuthenticated) {
 
-				var upvotes = from u in ur.GetAllUpvotes()
+				var upvotes = from u in requestUpvoteRepo.GetAllUpvotes()
 							  where u._userId == userId &&
 							  u._requestId == request.Id
 							  select u;
 				if (upvotes.Count() == 0) {
-					upvote._requestId = request.Id;
-					upvote._userId = userId;
-					trr.upVote(upvote._requestId);
-					ur.AddUpvote(upvote);
+					requestUpvote._requestId = request.Id;
+					requestUpvote._userId = userId;
+					requestRepo.upVote(requestUpvote._requestId);
+					requestUpvoteRepo.AddUpvote(requestUpvote);
 				}
 				else {
-					return RedirectToAction("TranslationRequests", new {num = -200});
+					TempData["addVoteAgain"] = "Aðeins er hægt að kjósa hverja beiðni einu sinni";
 				}
 			}
 			else {
-				ModelState.AddModelError("upVote", "Verður að vera innskráður til þess að geta kosið beiðni");
+				TempData["loggedInUpVote"] = "Verður að vera innskráður til þess að geta kosið beiðni";
 			}
 			//Changes the number of upvotes in the TranslationRequest "tr".
 			//Returns the TranslationRequests view were "tr" has one more upvotes.
@@ -133,18 +126,15 @@ namespace Textaland.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult AnswerRequest(TranslationRequest tr)
-		{
-			if (User.Identity.IsAuthenticated)
-			{
-				TranslationRequestRepo trr = new TranslationRequestRepo();
-
-				trr.RemoveTranslationRequestById(tr);
-				return RedirectToAction("UploadFile", "SubtitleFile", new { area = "" });
+		public ActionResult AnswerRequest(TranslationRequest tr) {
+			if (User.Identity.IsAuthenticated) {
+				requestRepo.RemoveTranslationRequestById(tr);
 			}
 			else {
-				return RedirectToAction("TranslationRequests", new { num = (-100) });	
+				TempData["loggedIn"] = "Aðeins innskráðir notendur geta svarað beiðni";	
 			}
+
+			return RedirectToAction("UploadFile", "SubtitleFile", new { area = "" });
 			
 		}
 	}

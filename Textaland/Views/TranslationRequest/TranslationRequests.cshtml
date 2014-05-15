@@ -16,10 +16,11 @@
         }
     </center>
 </div>
-
-@Html.ValidationMessage("upVote")
-@Html.ValidationMessage("addVoteAgain")
-@Html.ValidationMessage("answerRequest")
+<strong>
+    @Html.ValidationMessage("loggedInUpVote")
+    @Html.ValidationMessage("addVoteAgain")
+    @Html.ValidationMessage("loggedIn")
+</strong>
 <table class="table table-hover table-striped table-bordered">
     <tr>
         <th>

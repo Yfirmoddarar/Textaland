@@ -204,6 +204,15 @@ namespace Textaland.Controllers
 			
 			SubtitleFileRepo sfr = new SubtitleFileRepo();
 
+			if (TempData["existingRating"] != null) {
+				ModelState.AddModelError("existingRating", TempData["existingRating"].ToString());
+			}
+			else if (TempData["notNumerical"] != null) {
+				ModelState.AddModelError("notNumerical", TempData["notNumerical"].ToString());
+			}
+			else if (TempData["wrongRating"] != null) {
+				ModelState.AddModelError("wrongRating", TempData["wrongRating"].ToString());
+			}
 			//"file" vill be the SubtitleFile that has the ID the same as "id".
 			var file = sfr.GetSubtitleFileById(id);
 
@@ -238,10 +247,6 @@ namespace Textaland.Controllers
 			//the current rating of the file is changed according to the new rating
 			if (allRatings.Count() == 0) {
 
-				giveRating._textFileId = s.Id;
-				giveRating._userId = userID;
-				rateRepo.AddRating(giveRating);
-
 				double newRating;
 
 				//check if the rating conatins any non-numerical letter
@@ -250,22 +255,25 @@ namespace Textaland.Controllers
 					//if the rating is purely numerical we check if it is between 0 and 10
 					//If it isn't we print out an error message, otherwise we change the rating
 					if (newRating < 0 || newRating > 10) {
-						ModelState.AddModelError("rating", "Vinsamlegast sláðu inn tölu á milli 0-10");
+						TempData["wrongRating"] = "Vinsamlegast sláðu inn tölu á milli 0-10";
 					}
 					else {
+						giveRating._textFileId = s.Id;
+						giveRating._userId = userID;
+						rateRepo.AddRating(giveRating);
 						fileRepo.ChangeRating(s.Id, newRating);
 					}
 				}
 				//if the rating isn't numerical we print out an error message
 				else {
-					ModelState.AddModelError("rating", "Einkunnin má ekki innihalda bókstafi");
+					TempData["notNumerical"] = "Einkunnin má ekki innihalda bókstafi";
 				}
 			}
 			else {
-				ModelState.AddModelError("existingRating", "Aðeins er hægt að gefa skrá einu sinni einkunn");
+				TempData["existingRating"] = "Aðeins er hægt að gefa skrá einu sinni einkunn";
 			}
 
-			//finally we redirect back to the file view.
+			//finally we redirect back to the file
 			return RedirectToAction("AboutSubtitleFile", new { id = s.Id });
 		}
 
