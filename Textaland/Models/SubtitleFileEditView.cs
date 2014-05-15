@@ -12,6 +12,7 @@ namespace Textaland.Models {
         public string languageFrom { get; set; }
         public string languageTo { get; set; }
         public List<SubtitleLine> subtitleLines { get; set; }
+        public List<SubtitleLine> originalLines { get; set; }
         //need more I think....
     }
 }

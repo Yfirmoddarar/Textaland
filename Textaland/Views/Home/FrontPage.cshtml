@@ -186,6 +186,7 @@ else
 
 <div class="col-md-6">
     <table class="table table-striped table-hover table-bordered">
+        @Html.ValidationMessage("FileInUse")
         <tr class="info">
             <th class="col-md-2">
                 Þýðingar í gangi
@@ -215,8 +216,6 @@ else
                     <a href="/SubtitleFile/EditSubtitleFile?id=@item.Id&num=0"
                        onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')" 
                        class="btn btn-warning btn-sm">Taka þátt í þýðingu</a>
-                    @*<input onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')" 
-                           type="submit" value="Taka þátt í þýðingu" class="btn btn-warning btn-sm" />*@
                 </td>
             </tr>
         }

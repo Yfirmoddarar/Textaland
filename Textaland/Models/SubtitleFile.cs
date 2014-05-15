@@ -12,6 +12,7 @@ namespace Textaland.Models
 
 		public int Id { get; set; }
 		public string _userId { get; set; }
+        public int _originalId { get; set; }
 		public int _numOfTranslationParticipants { get; set; }
 		public int _numOfDownloads { get; set; }
 		public int _numOfTimesRated { get; set; }
@@ -20,7 +21,6 @@ namespace Textaland.Models
 		public string _type { get; set; }
     	public string _languageFrom { get; set; }
 		public string _languageTo { get; set; }
-        [Required(ErrorMessage = "Please add a description")]
 		public string _description { get; set; }
 		public DateTime _dateAdded { get; set; }
 		public bool _readyForDownload { get; set; }

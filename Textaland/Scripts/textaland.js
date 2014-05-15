@@ -20,7 +20,7 @@ function loading() {
         $("#fLanguage").val() != "" &&
         $("#fType").val() != "") {
 
-        document.getElementById("uploadForm").classList.add("hidden");
+        document.getElementById("main").classList.add("hidden");
         document.getElementById("loading").classList.remove("hidden");
     }
 }
