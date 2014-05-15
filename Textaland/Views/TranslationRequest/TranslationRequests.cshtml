@@ -106,7 +106,7 @@
                     <li>@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
                 }
             }
-            @if (pageNumber != numPages - 1) {
+            @if (pageNumber != numPages - 1 && numPages != 0) {
                  <li>@Html.ActionLink(">>", "TranslationRequests", "TranslationRequest", new { num = pageNumber + 1 }, null)</li>
             }
         </ul>

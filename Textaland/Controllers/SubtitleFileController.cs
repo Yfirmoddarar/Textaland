@@ -207,15 +207,21 @@ namespace Textaland.Controllers
 			
 			SubtitleFileRepo sfr = new SubtitleFileRepo();
 
+			//We print out error messages for the following errors..
+
+			//if User tries to vote twice
 			if (TempData["existingRating"] != null) {
 				ModelState.AddModelError("existingRating", TempData["existingRating"].ToString());
 			}
+			//if the user entered letters in the rating
 			else if (TempData["notNumerical"] != null) {
 				ModelState.AddModelError("notNumerical", TempData["notNumerical"].ToString());
 			}
+			//if the user types in a number outside of 0 - 10
 			else if (TempData["wrongRating"] != null) {
 				ModelState.AddModelError("wrongRating", TempData["wrongRating"].ToString());
 			}
+			//if the user types in a empty comment
 			else if (TempData["addText"] != null) {
 				ModelState.AddModelError("addText", TempData["addText"].ToString());
 			}
@@ -293,10 +299,16 @@ namespace Textaland.Controllers
 			SubtitleComment newComment = new SubtitleComment();
 
 			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
+
 			if (!String.IsNullOrEmpty(addText)) {
+
+			//the new comment gets all the right attributes and is then added to the database
 			newComment._text = addText;
+
 			newComment._textFileId = s.Id;
+
 			newComment._userName = User.Identity.GetUserName();
+
 			newComment._userId = User.Identity.GetUserId();
 
 			commentRepo.AddComment(newComment);
