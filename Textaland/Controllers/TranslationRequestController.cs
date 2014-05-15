@@ -134,8 +134,7 @@ namespace Textaland.Controllers
 				TempData["loggedIn"] = "Aðeins innskráðir notendur geta svarað beiðni";	
 			}
 
-			return RedirectToAction("UploadFile", "SubtitleFile", new { area = "" });
-			
+			return RedirectToAction("UploadFile", "SubtitleFile", new { area = "" });		
 		}
 	}
 
