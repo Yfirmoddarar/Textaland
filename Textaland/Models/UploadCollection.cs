@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Textaland.Models {
     public class UploadCollection {
         public int? Id { get; set; }
-        [Required(ErrorMessage = "Please enter name"), StringLength(30, ErrorMessage = "Name too long.")]
+        [Required(ErrorMessage = "Please enter name"), StringLength(50, ErrorMessage = "Name too long.")]
         public string fName { get; set; }
         [Required(ErrorMessage = "Please enter description"), StringLength(140, ErrorMessage="Description too long.")]
         public string fDescription { get; set; }

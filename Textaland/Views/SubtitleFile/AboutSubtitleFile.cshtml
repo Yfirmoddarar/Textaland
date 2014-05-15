@@ -33,7 +33,7 @@
                 Tungumál:
             </td>
             <td>
-                @Html.DisplayFor(model => model._languageTo)
+                @Html.DisplayFor(model => model._languageFrom)
             </td>
         </tr>
         <tr>
@@ -121,7 +121,12 @@
                 @Html.ValidationMessage("notNumerical")
             </strong>
             }
-            <a href="/SubtitleFile/TranslateFile?id=@Model.Id" class="btn btn-warning">Þýða skrá</a>
+            if(Model._languageFrom == "ENG") {
+                <a href="/SubtitleFile/TranslateFile?id=@Model.Id" class="btn btn-warning" style="margin-top: 10px">Þýða skrá yfir á íslensku</a>     
+            } else {
+                <a href="/SubtitleFile/TranslateFile?id=@Model.Id" class="btn btn-warning" style="margin-top: 10px">Þýða skrá yfir á ensku</a>
+            }
+            
           }
 }
     </center>
