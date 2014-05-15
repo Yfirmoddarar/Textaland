@@ -13,36 +13,14 @@
 
 <center>
     <div class="col-md-12" style="background: none">
-        <hr />
+    <hr />
         <h3>Nafn: @Model.fileName</h3>
-        <hr />
+    <hr />
         <h3>Þýdd frá: @Model.languageFrom</h3>
         <hr />
         <h3>Þýdd yfir í: @Model.languageTo</h3>
         <hr />
-    </div>
-</center>
-
-<ul class="pagination pagination-sm">
-    @if (ViewBag.pageNum != 0) {
-        <li><a href="/SubtitleFile/ChangePage?id=@Model.fileId&num=@(ViewBag.pageNum)">«</a></li>
-    }
-    @for (int i = 0; i <= ViewBag.numPages; i++) {
-        if (i == ViewBag.pageNum) {
-            <li class="active">
-                <a href="/SubtitleFile/ChangePage?id=@Model.fileId&num=@i">@i</a>
-            </li>
-        }
-        else {
-            <li>
-                <a href="/SubtitleFile/ChangePage?id=@Model.fileId&num=@i">@i</a>
-            </li>
-        }
-    }
-    @if (ViewBag.pageNum < ViewBag.numPages) {
-        <li><a href="/SubtitleFile/ChangePage?id=@Model.fileId&num=@(ViewBag.pageNum+1)">»</a></li>
-    }
-</ul>
+</div>
 
 <div class="form-horizontal">
     @for (int i = 0; i < 10; i++) {
@@ -54,9 +32,30 @@
                 <input type="text" name="line1" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._line1 " size="30" class="text-center" /><br />
                 <input type="text" name="line2" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._line2 " size="30" class="text-center" /><br />
                 <input type="text" name="line3" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._line3 " size="30" class="text-center" />
-                <input type="submit" name="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._lineNumber" value="Vista" class="btn btn-success btn-sm" />
+                <input type="submit" name="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._lineNumber" value="Save" class="btn btn-success btn-sm" />
         }
     }
+
+    <ul class="pagination pagination-sm">
+        @if (ViewBag.pageNum != 0) {
+            <li><a href="/SubtitleFile/ChangePage?id=@Model.fileId&num=@(ViewBag.pageNum)">«</a></li>
+        }
+        @for (int i = 0; i <= ViewBag.numPages; i++) {
+            if (i == ViewBag.pageNum) {
+                <li class="active">
+                    <a href="/SubtitleFile/ChangePage?id=@Model.fileId&num=@i">@i</a>
+                </li>
+            }
+            else {
+                <li>
+                    <a href="/SubtitleFile/ChangePage?id=@Model.fileId&num=@i">@i</a>
+                </li>
+            }
+        }
+        @if (ViewBag.pageNum < ViewBag.numPages) {
+            <li><a href="/SubtitleFile/ChangePage?id=@Model.fileId&num=@(ViewBag.pageNum+1)">»</a></li>
+        }
+    </ul>
 
     <div class="form-horizontal" style="margin-top: 30px">
         <div class="col-md-4 well" style="background: none">
@@ -67,13 +66,13 @@
         <div class="col-md-4 well" style="background: none">
             <center>
                 <a href="/SubtitleFile/FinishFile?id=@Model.fileId" class="btn btn-warning">Klára þýðingu</a>
-                @Html.ValidationMessage("FinishError")
+            @Html.ValidationMessage("FinishError")
             </center>
         </div>
         <div class="col-md-4 well" style="background: none">
             <center>
                 <a href="/SubtitleFile/DeleteFile?id=@Model.fileId" class="btn btn-danger">Eyða þýðingu</a>
-                @Html.ValidationMessage("DeleteError")
+            @Html.ValidationMessage("DeleteError")
             </center>
         </div>
     </div>
