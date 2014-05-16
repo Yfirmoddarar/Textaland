@@ -11,6 +11,6 @@ namespace Textaland.Interface {
         IEnumerable<TranslationRequest> GetTranslationRequestById(int id);
         void AddTranslationRequest(TranslationRequest newTranslationRequest);
         void upVote(int id);
-        void RemoveTranslationRequestById(TranslationRequest tr);
+        void RemoveTranslationRequestById(int id);
     }
 }

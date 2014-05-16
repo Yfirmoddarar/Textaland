@@ -261,11 +261,8 @@ else
                     }
                 </td>
                 <td style="text-align: center">
-                    @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
-                    {
-                        <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')" 
-                               type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
-                    }
+                    <a class="btn btn-warning btn-sm" href="/TranslationRequest/AnswerRequest?id=@item.Id"
+                       onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')">Svara beiðni</a>
                 </td>
             </tr>
         }
