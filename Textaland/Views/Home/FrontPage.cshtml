@@ -191,10 +191,10 @@ else
             <th class="col-md-2">
                 Þýðingar í gangi
             </th>
-            <th class="col-md-1">
+            <th class="col-md-2">
                 Tungumál
             </th>
-            <th class="col-md-1">
+            <th class="col-md-2">
             </th>
         </tr>
         @{
@@ -203,10 +203,10 @@ else
                 <td class="col-md-2">
                     @item._name
                 </td>
-                <td class="col-md-1">
+                <td class="col-md-2">
                     @item._languageTo
                 </td>
-                <td class="col-md-1" style="text-align: center">
+                <td class="col-md-2" style="text-align: center">
                     <a href="/SubtitleFile/EditSubtitleFile?id=@item.Id&num=0"
                        @*onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')"*@ 
                        class="btn btn-warning btn-sm">Taka þátt í þýðingu</a>
@@ -214,40 +214,35 @@ else
             </tr>
         }
         }
-        @if (Enumerable.Count(ViewBag.TranslationList) <= 0) {
-            <tr>
-                <td>
-                    Því miður eru eru engar textaskrár í þýðingu.
-                </td>
-            </tr>
-        } else {
-            <tr>
-                <td>
+        
+    </table>
+    @if (Enumerable.Count(ViewBag.TranslationList) <= 0)
+    {
+        <p>Því miður eru engar textaskrár í þýðingu</p>
+    }
+    else
+    {
                     <button onclick="location.href = '/SubtitleFile/InTranslationFiles?num=0'" class="btn btn-info">
                         Sjá allar þýðingar
                     </button>
-                </td>
-        </tr>
         }
-        
-    </table>
 </div>
 
-<div class="col-md-6">
-    <table class="table table-striped table-hover table-bordered">
+<div class="col-xs-6" style="overflow:auto">
+    <table class="table table-striped table-hover table-bordered" style="overflow:auto">
         <tr class="info">
-            <th class="col-md-2">
+            <th class="col-xs-5">
                 Beiðni
             </th>
-            <th class="col-md-1">
+            <th class="col-xs-5">
                 Tungumál
             </th>
-            <th class="col-md-2">
+            <th class="col-xs-5">
                 Fjöldi atkvæða
             </th>
-            <th class="col-md-1">
+            <th class="col-xs-5">
             </th>
-            <th class="col-md-1">
+            <th class="col-md-5">
             </th>
         </tr>
         @{
@@ -256,13 +251,13 @@ else
                 <td>
                     @item._name
                 </td>
-                <td class="col-md-1">
+                <td>
                     @item._language
                 </td>
-                <td class="col-md-2">
+                <td>
                     @item._numUpvotes
                 </td>
-                <td class="col-md-1" style="text-align: center">
+                <td style="text-align: center">
                     @using (Html.BeginForm("AddVote", "TranslationRequest", item, FormMethod.Post))
                     {
                         <center>
@@ -270,7 +265,7 @@ else
                         </center>
                     }
                 </td>
-                <td class="col-md-1" style="text-align: center">
+                <td style="text-align: center">
                     @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post))
                     {
                         <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')" 
@@ -280,7 +275,7 @@ else
             </tr>
         }
         }
-        @if (Enumerable.Count(ViewBag.RequestList) <= 0) {
+        @*@if (Enumerable.Count(ViewBag.RequestList) <= 0) {
             <tr>
                 <td>
                     Því miður eru engar beiðnir til.
@@ -289,14 +284,24 @@ else
         } else {
             <tr>
                 <td>
-                    <button onclick="location.href = '/TranslationRequest/TranslationRequests?num=0'" class="btn btn-info">
+                    <button onclick="location.href = '/TranslationRequest/TranslationRequests?num=0'" class="btn btn-info btn-sm">
                         Sjá allar beiðnir
                     </button>
                 </td>
             </tr>
-        }
+        }*@
         
     </table>
+    @if (Enumerable.Count(ViewBag.RequestList) <= 0)
+    {
+        <p>Því miður eru engar beiðnir til</p>
+    }
+    else
+    {
+        <button onclick="location.href = '/TranslationRequest/TranslationRequests?num=0'" class="btn btn-info btn-sm" >
+            Sjá allar beiðnir
+        </button>
+    }
 </div>
 }
 

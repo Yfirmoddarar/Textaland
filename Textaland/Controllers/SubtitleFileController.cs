@@ -106,7 +106,7 @@ namespace Textaland.Controllers
         public bool ReadFile(HttpPostedFileBase file, int id) {
             try {
                 using (StreamReader sr = new StreamReader(file.InputStream, System.Text.Encoding.UTF8, true)) {
-                    
+
                     while (!(sr.EndOfStream)) {
                         SubtitleLine sl = new SubtitleLine();
 
@@ -227,19 +227,37 @@ namespace Textaland.Controllers
 			//if User tries to vote twice
 			if (TempData["existingRating"] != null) {
 				ModelState.AddModelError("existingRating", TempData["existingRating"].ToString());
+				ViewBag.wrongRating = "Mistókst að gefa einkunn. Sjá má villuna neðar á síðunni.";
 			}
 			//if the user entered letters in the rating
 			else if (TempData["notNumerical"] != null) {
 				ModelState.AddModelError("notNumerical", TempData["notNumerical"].ToString());
+				ViewBag.wrongRating = "Mistókst að gefa einkunn. Sjá má villuna neðar á síðunni.";
 			}
 			//if the user types in a number outside of 0 - 10
 			else if (TempData["wrongRating"] != null) {
 				ModelState.AddModelError("wrongRating", TempData["wrongRating"].ToString());
+				ViewBag.wrongRating = "Mistókst að gefa einkunn. Sjá má villuna neðar á síðunni.";
 			}
 			//if the user types in a empty comment
 			else if (TempData["addText"] != null) {
 				ModelState.AddModelError("addText", TempData["addText"].ToString());
 			}
+
+			//the following success messages are shown when..
+
+			//user adds a comment
+			if (TempData["successMessage"] != null) {
+				ViewBag.addComment = TempData["successMessage"].ToString();
+			}
+			else if(TempData["addRating"] != null) {
+				ViewBag.addRating = TempData["addRating"].ToString();
+			}
+			else if (TempData["commentDeleted"] != null) {
+				ViewBag.deleteComment = TempData["commentDeleted"].ToString();
+			}
+		
+
 			//"file" vill be the SubtitleFile that has the ID the same as "id".
 			var file = _sfr.GetSubtitleFileById(id);
 
@@ -284,8 +302,10 @@ namespace Textaland.Controllers
 					else {
 						giveRating._textFileId = s.Id;
 						giveRating._userId = userID;
-						_srr.AddRating(giveRating);
-						_sfr.ChangeRating(s.Id, newRating);
+						rateRepo.AddRating(giveRating);
+						fileRepo.ChangeRating(s.Id, newRating);
+
+						TempData["addRating"] = "Þú gafst þessari skrá " + rating + " í einkunn";
 					}
 				}
 				//if the rating isn't numerical we print out an error message
@@ -318,7 +338,9 @@ namespace Textaland.Controllers
 
 			newComment._userId = User.Identity.GetUserId();
 
-			_scr.AddComment(newComment);
+			commentRepo.AddComment(newComment);
+
+			TempData["successMessage"] = "Athugasemdinni þinni var bætt við!";
 			}
 			else {
 				TempData["addText"] = "Athugasemdin var tóm. Vinsamlegast sláðu inn aftur.";
@@ -333,6 +355,8 @@ namespace Textaland.Controllers
 			SubtitleComment comment = _scr.GetSingleCommentById(commentID);
 
 			_scr.RemoveComment(comment);
+
+			TempData["commentDeleted"] = "Athugasemdinni þinni var eytt";
 
 			return RedirectToAction("AboutSubtitleFile", new { id = comment._textFileId});
 		}

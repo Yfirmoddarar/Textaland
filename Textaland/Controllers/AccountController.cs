@@ -43,6 +43,7 @@ namespace Textaland.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
@@ -118,13 +119,13 @@ namespace Textaland.Controllers
         // GET: /Account/Manage
         public ActionResult Manage(ManageMessageId? message)
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Þér tókst að breyta lykilorði."
-                : message == ManageMessageId.SetPasswordSuccess ? "Þú hefur fengið nýtt lykilorð"
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "Villa hefur komið upp."
-                : "";
-            ViewBag.HasLocalPassword = HasPassword();
+			ViewBag.StatusMessage =
+				message == ManageMessageId.ChangePasswordSuccess ? "Þér tókst að breyta lykilorði."
+				: message == ManageMessageId.SetPasswordSuccess ? "Þú hefur fengið nýtt lykilorð"
+				: message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+				: message == ManageMessageId.Error ? "Villa hefur komið upp."
+				: "";
+			ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }

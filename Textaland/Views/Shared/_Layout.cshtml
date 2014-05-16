@@ -23,7 +23,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Heim", "FrontPage", "Home")</li>
                     <li>@Html.ActionLink("Um okkur", "About", "Home")</li>
-                    <li>@Html.ActionLink("Textaskrár", "AllSubtitleFiles", "SubtitleFile", new { num = 0 }, null)</li>
+                    <li>@Html.ActionLink("Tilbúnar textaskrár", "AllSubtitleFiles", "SubtitleFile", new { num = 0 }, null)</li>
                     @if (User.Identity.IsAuthenticated) { 
                     <li>@Html.ActionLink("Þýðingar í gangi", "InTranslationFiles", "SubtitleFile", new { num = 0 }, null)</li>
                     }
