@@ -215,16 +215,14 @@ else
         }
         
     </table>
-    @if (Enumerable.Count(ViewBag.TranslationList) <= 0)
-    {
+    @if (Enumerable.Count(ViewBag.TranslationList) <= 0) {
         <p>Því miður eru engar textaskrár í þýðingu</p>
     }
-    else
-    {
-                    <button onclick="location.href = '/SubtitleFile/InTranslationFiles?num=0'" class="btn btn-info">
-                        Sjá allar þýðingar
-                    </button>
-        }
+    else {
+        <button onclick="location.href = '/SubtitleFile/InTranslationFiles?num=0'" class="btn btn-info" style="margin-bottom: 30px">
+            Sjá allar þýðingar
+        </button>
+    }
 </div>
 
 <div class="col-xs-6" style="overflow:auto">
@@ -270,13 +268,10 @@ else
         }
         }
     </table>
-    @if (Enumerable.Count(ViewBag.RequestList) <= 0)
-    {
+    @if (Enumerable.Count(ViewBag.RequestList) <= 0) {
         <p>Því miður eru engar beiðnir til</p>
-    }
-    else
-    {
-        <button onclick="location.href = '/TranslationRequest/TranslationRequests?num=0'" class="btn btn-info btn-sm" >
+    } else {
+        <button onclick="location.href = '/TranslationRequest/TranslationRequests?num=0'" class="btn btn-info" style="margin-bottom: 30px">
             Sjá allar beiðnir
         </button>
     }

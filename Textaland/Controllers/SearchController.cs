@@ -35,7 +35,10 @@ namespace Textaland.Controllers
 			//Just get the subtitles that contains every string in "words"
 			var searchResult = (from s in _sfr.GetAllSubtitles() select s);
 			foreach (var w in words) {
-				searchResult = (from s in searchResult where s._name.ToLower().Contains(w) select s );
+				searchResult = (from s in searchResult
+								where s._name.ToLower().Contains(w) 
+								where s._readyForDownload == true
+								select s );
 			}
 
 			return View(searchResult);
