@@ -17,8 +17,7 @@
 </div>
 <center>
     
-    @if (ViewBag.voteSuccess != null)
-    {
+    @if (ViewBag.voteSuccess != null) {
         <div class="alert alert-dismissable alert-success">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>@ViewBag.voteSuccess</strong>
@@ -98,14 +97,15 @@
 
         @{
 
-            int count = @Enumerable.Count(ViewBag.countRequest);
+            int count = Enumerable.Count(ViewBag.countRequest);
             int numPages;
 
-            if (count % 10 == 0)
+            if (count % 10 == 0) {
                 numPages = count / 10;
-            else
+            }
+            else {
                 numPages = count / 10 + 1;
-
+            }
             int pageNumber = Convert.ToInt32(TempData["requestPageNumber"].ToString());
         }
 

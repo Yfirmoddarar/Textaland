@@ -23,8 +23,7 @@
         <th></th>
     </tr>
 
-    @foreach (Textaland.Models.SubtitleFile item in ViewBag.InTranslation)
-    {
+    @foreach (Textaland.Models.SubtitleFile item in ViewBag.InTranslation) {
     <tr>
         <td>
             @item._name
@@ -43,7 +42,6 @@
         </td>
         <td class="col-md-1" style="text-align: center">
                 <a href="/SubtitleFile/EditSubtitleFile?id=@item.Id&num=0"
-                   @*onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')"*@
                    class="btn btn-warning btn-sm">Taka þátt í þýðingu</a>
         </td>
     </tr>
@@ -52,14 +50,15 @@
 
 @{
 
-    int count = @Enumerable.Count(ViewBag.numInTranslation);
+    int count = Enumerable.Count(ViewBag.numInTranslation);
     int numPages;
 
-    if (count % 10 == 0)
+    if (count % 10 == 0) {
         numPages = count / 10;
-    else
+    }
+    else {
         numPages = count / 10 + 1;
-
+    }
     int pageNumber = Convert.ToInt32(TempData["pageNum"].ToString());
 }
 
@@ -70,7 +69,7 @@
     }
     @for (int i = 1; i <= numPages; i++) {
         if (i - 1 == pageNumber) { 
-        <li class="active">@Html.ActionLink(@i.ToString("#"), "InTranslationFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
+            <li class="active">@Html.ActionLink(@i.ToString("#"), "InTranslationFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
         }
         else {
            <li>@Html.ActionLink(@i.ToString("#"), "InTranslationFiles", "SubtitleFile", new { num = i - 1 }, null)</li> 

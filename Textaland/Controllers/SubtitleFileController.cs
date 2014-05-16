@@ -125,10 +125,10 @@ namespace Textaland.Controllers
 
                         if (lTime != "") {
                             sl._time = lTime;
-            }
-            else {
+                        }
+                        else {
                             return false;
-            }
+                        }
 
                         string lText1 = sr.ReadLine();
 

@@ -60,10 +60,10 @@
         </td> 
         <td>
             @{
-                    if (item._numOfTimesRated == 0) {
+                if (item._numOfTimesRated == 0) {
                     @Html.Raw("Engin einkunn")
                 } else {
-                @item._rating.ToString("#.##")
+                    @item._rating.ToString("#.##")
                 }   
             }
         </td>
@@ -91,16 +91,17 @@
     <a href="/SubtitleFile/UploadFile" class="btn btn-info">Hlaða upp nýrri skrá</a>
 </p>
 
-@{int count = @Enumerable.Count(ViewBag.numOfSubs);
+@{int count = Enumerable.Count(ViewBag.numOfSubs);
 
   int numPages;
 
-  if (count % 10 == 0)
+  if (count % 10 == 0) {
       numPages = count / 10;
-  else
+  } 
+  else{ 
       numPages = count / 10 + 1;
-    
-   int pageNumber = Convert.ToInt32(TempData["pageNumber"].ToString());
+  }
+  int pageNumber = Convert.ToInt32(TempData["pageNumber"].ToString());
 }
   
 <ul class="pagination pagination-sm">
@@ -113,7 +114,7 @@
         }
         else {
         <li>@Html.ActionLink(@i.ToString("#"), "AllSubtitleFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
-    }
+        }
     }
     @if (pageNumber != numPages - 1) {
         <li>@Html.ActionLink(">>", "AllSubtitleFiles", "SubtitleFile", new { num = pageNumber + 1 }, null)</li>
