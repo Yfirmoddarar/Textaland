@@ -215,14 +215,17 @@ namespace Textaland.Controllers
 			//if User tries to vote twice
 			if (TempData["existingRating"] != null) {
 				ModelState.AddModelError("existingRating", TempData["existingRating"].ToString());
+				ViewBag.wrongRating = "Mistókst að gefa einkunn. Sjá má villuna neðar á síðunni.";
 			}
 			//if the user entered letters in the rating
 			else if (TempData["notNumerical"] != null) {
 				ModelState.AddModelError("notNumerical", TempData["notNumerical"].ToString());
+				ViewBag.wrongRating = "Mistókst að gefa einkunn. Sjá má villuna neðar á síðunni.";
 			}
 			//if the user types in a number outside of 0 - 10
 			else if (TempData["wrongRating"] != null) {
 				ModelState.AddModelError("wrongRating", TempData["wrongRating"].ToString());
+				ViewBag.wrongRating = "Mistókst að gefa einkunn. Sjá má villuna neðar á síðunni.";
 			}
 			//if the user types in a empty comment
 			else if (TempData["addText"] != null) {
@@ -237,6 +240,9 @@ namespace Textaland.Controllers
 			}
 			else if(TempData["addRating"] != null) {
 				ViewBag.addRating = TempData["addRating"].ToString();
+			}
+			else if (TempData["commentDeleted"] != null) {
+				ViewBag.deleteComment = TempData["commentDeleted"].ToString();
 			}
 		
 
@@ -347,6 +353,8 @@ namespace Textaland.Controllers
 			SubtitleComment comment = commentRepo.GetSingleCommentById(commentID);
 
 			commentRepo.RemoveComment(comment);
+
+			TempData["commentDeleted"] = "Athugasemdinni þinni var eytt";
 
 			return RedirectToAction("AboutSubtitleFile", new { id = comment._textFileId});
 		}
