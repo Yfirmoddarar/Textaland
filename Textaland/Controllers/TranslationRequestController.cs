@@ -121,8 +121,8 @@ namespace Textaland.Controllers
 				if (upvotes.Count() == 0) {
 					requestUpvote._requestId = request.Id;
 					requestUpvote._userId = userId;
-					requestRepo.upVote(requestUpvote._requestId);
-					requestUpvoteRepo.AddUpvote(requestUpvote);
+					_requestRepo.upVote(requestUpvote._requestId);
+					_requestUpvoteRepo.AddUpvote(requestUpvote);
 					TempData["upVoteSuccess"] = "Þú bættir við atkvæði á beiðni fyrir " + request._name;
 				}
 				else {

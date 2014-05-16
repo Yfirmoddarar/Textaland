@@ -302,8 +302,8 @@ namespace Textaland.Controllers
 					else {
 						giveRating._textFileId = s.Id;
 						giveRating._userId = userID;
-						rateRepo.AddRating(giveRating);
-						fileRepo.ChangeRating(s.Id, newRating);
+						_srr.AddRating(giveRating);
+						_sfr.ChangeRating(s.Id, newRating);
 
 						TempData["addRating"] = "Þú gafst þessari skrá " + rating + " í einkunn";
 					}
@@ -338,7 +338,7 @@ namespace Textaland.Controllers
 
 			newComment._userId = User.Identity.GetUserId();
 
-			commentRepo.AddComment(newComment);
+			_scr.AddComment(newComment);
 
 			TempData["successMessage"] = "Athugasemdinni þinni var bætt við!";
 			}
