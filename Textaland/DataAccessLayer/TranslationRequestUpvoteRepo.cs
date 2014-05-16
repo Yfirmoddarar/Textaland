@@ -2,11 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Textaland.Interface;
 using Textaland.Models;
 
 namespace Textaland.DataAccessLayer
 {
-	public class TranslationRequestUpvoteRepo {
+    public class TranslationRequestUpvoteRepo : ITranslationRequestUpvoteRepo {
+
+        private static TranslationRequestUpvoteRepo instance;
+
+        public static TranslationRequestUpvoteRepo Instance {
+            get {
+                if (instance == null) {
+                    instance = new TranslationRequestUpvoteRepo();
+                }
+                return instance;
+            }
+        }
 
         AppDataContext db = new AppDataContext();
 
@@ -42,17 +54,5 @@ namespace Textaland.DataAccessLayer
             db.TranslationRequestUpvotes.Add(newUpvote);
             db.SaveChanges();
 		}
-
-        /*
-		public void RemoveUpvote(int id) {
-			foreach (var item in _translationRequestUpvotes) {
-				if (item._id == id) {
-					_translationRequestUpvotes.Remove(item);
-					break;
-				}
-			}
-		}
-        */
-
 	}
 }

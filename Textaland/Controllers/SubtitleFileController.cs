@@ -7,11 +7,34 @@ using System.Web.Mvc;
 using Textaland.DataAccessLayer;
 using Textaland.Models;
 using Microsoft.AspNet.Identity;
+using Textaland.Interface;
 
 
 namespace Textaland.Controllers
 {
     public class SubtitleFileController : Controller {
+
+        private readonly ISubtitleFileRepo _sfr;
+        private readonly ISubtitleLineRepo _slr; 
+        private readonly ISubtitleCommentRepo _scr;
+        private readonly IRatingRepo _srr;
+
+        public SubtitleFileController() {
+            _sfr = SubtitleFileRepo.Instance;
+            _slr = SubtitleLineRepo.Instance;
+            _scr = SubtitleCommentRepo.Instance;
+            _srr = RatingRepo.Instance;
+        }
+
+        public SubtitleFileController(ISubtitleFileRepo sfr,
+            ISubtitleLineRepo slr, ISubtitleCommentRepo scr,
+            IRatingRepo srr) {
+                _sfr = sfr;
+                _slr = slr;
+                _scr = scr;
+                _srr = srr;
+        }
+
 
         //Get
         [Authorize]
@@ -52,14 +75,12 @@ namespace Textaland.Controllers
                     _languageFrom = uc.fLanguage		
                 };
 
-                SubtitleFileRepo sfr = new SubtitleFileRepo();
-
                 sf.Id = 0;
                 sf._dateAdded = DateTime.Now;
 				sf._userName = User.Identity.GetUserName();
                 sf._userId = User.Identity.GetUserId();
 
-                    sfr.AddSubtitle(sf);
+                    _sfr.AddSubtitle(sf);
 
                 int newId = sf.Id;
 
@@ -67,12 +88,11 @@ namespace Textaland.Controllers
                     return RedirectToAction("AboutSubtitleFile", "SubtitleFile", new { id = newId});
                 }
                 else {
-                    SubtitleLineRepo slr = new SubtitleLineRepo();
 
                     //Remove what was already uploaded, since file is of wrong format.
 
-                    sfr.RemoveSubtitle(newId);
-                    slr.RemoveLines(newId);
+                    _sfr.RemoveSubtitle(newId);
+                    _slr.RemoveLines(newId);
 
                     return RedirectToAction("FileError", "SubtitleFile");
                 }
@@ -87,8 +107,6 @@ namespace Textaland.Controllers
             try {
                 using (StreamReader sr = new StreamReader(file.InputStream, System.Text.Encoding.UTF8, true)) {
 
-                    SubtitleLineRepo slr = new SubtitleLineRepo();
-                    
                     while (!(sr.EndOfStream)) {
                         SubtitleLine sl = new SubtitleLine();
 
@@ -132,7 +150,7 @@ namespace Textaland.Controllers
                         }
                         
                         sl._textFileId = id;
-                        slr.AddLine(sl);
+                        _slr.AddLine(sl);
 
                     }
                 }
@@ -156,18 +174,16 @@ namespace Textaland.Controllers
 		//Get
 		public ActionResult AllSubtitleFiles(int num) {
 
-			SubtitleFileRepo myRepo = new SubtitleFileRepo();
-
 			//The list of files that are shown in the view.  Skip 'x' many files
 			//according to the number the actionresult receives, and then take 10 after
 			//the ones that are skipped
-			var allSubs = (from c in myRepo.GetAllSubtitles()
+			var allSubs = (from c in _sfr.GetAllSubtitles()
 							where c._readyForDownload == true
 							select c).Skip(num * 10).Take(10);
 
 			//This is a list that is used for the pagination in the view. Basically just
 			//to count how many files there are
-			var subsCount = from c in myRepo.GetAllSubtitles()
+			var subsCount = from c in _sfr.GetAllSubtitles()
                             where c._readyForDownload == true
 							select c;
 
@@ -182,18 +198,16 @@ namespace Textaland.Controllers
 
 		public ActionResult InTranslationFiles(int num) {
 
-			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
-
 			//The list of files that are shown in the view.  Skip 'x' many files
 			//according to the number the actionresult receives, and then take 10 after
 			//the ones that are skipped
-			var allInTranslation = (from f in fileRepo.GetAllSubtitles()
+			var allInTranslation = (from f in _sfr.GetAllSubtitles()
 									where f._readyForDownload == false
 									select f).Skip(num * 10).Take(10);
 
 			//This is a list that is used for the pagination in the view. Basically just
 			//to count how many files there are
-			var countInTranslation = from f in fileRepo.GetAllSubtitles()
+			var countInTranslation = from f in _sfr.GetAllSubtitles()
                                      where f._readyForDownload == false
 									 select f;
 
@@ -208,8 +222,6 @@ namespace Textaland.Controllers
 		
 		public ActionResult AboutSubtitleFile(int id){
 			
-			SubtitleFileRepo sfr = new SubtitleFileRepo();
-
 			//We print out error messages for the following errors..
 
 			//if User tries to vote twice
@@ -247,15 +259,14 @@ namespace Textaland.Controllers
 		
 
 			//"file" vill be the SubtitleFile that has the ID the same as "id".
-			var file = sfr.GetSubtitleFileById(id);
+			var file = _sfr.GetSubtitleFileById(id);
 
 			if(file == null) {
 				return HttpNotFound();
 			}
 			//Getting all the comments that hafa a specific subtitleFile id.
-			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
 
-            ViewBag.AllComments = commentRepo.GetCommentsById(id);
+            ViewBag.AllComments = _scr.GetCommentsById(id);
 			
 			return View(file);
 		}
@@ -263,16 +274,13 @@ namespace Textaland.Controllers
 		[HttpPost]
         [Authorize]
 		public ActionResult GiveRating(SubtitleFile s, string rating) {
-			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
-
-			RatingRepo rateRepo = new RatingRepo();
 
 			Rating giveRating = new Rating();
 
 			var userID = User.Identity.GetUserId();
 
 			//Get all the ratings to see if the current user has already liked this file
-			var allRatings = from r in rateRepo.GetAllRatings()
+			var allRatings = from r in _srr.GetAllRatings()
 							 where r._userId == userID &&
 							 r._textFileId == s.Id
 							 select r;
@@ -294,8 +302,8 @@ namespace Textaland.Controllers
 					else {
 						giveRating._textFileId = s.Id;
 						giveRating._userId = userID;
-						rateRepo.AddRating(giveRating);
-						fileRepo.ChangeRating(s.Id, newRating);
+						_srr.AddRating(giveRating);
+						_sfr.ChangeRating(s.Id, newRating);
 
 						TempData["addRating"] = "Þú gafst þessari skrá " + rating + " í einkunn";
 					}
@@ -317,11 +325,7 @@ namespace Textaland.Controllers
 		[HttpPost]
         [Authorize]
 		public ActionResult AddComment(SubtitleFile s, string addText) {
-			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
-
 			SubtitleComment newComment = new SubtitleComment();
-
-			SubtitleFileRepo fileRepo = new SubtitleFileRepo();
 
 			if (!String.IsNullOrEmpty(addText)) {
 
@@ -334,7 +338,7 @@ namespace Textaland.Controllers
 
 			newComment._userId = User.Identity.GetUserId();
 
-			commentRepo.AddComment(newComment);
+			_scr.AddComment(newComment);
 
 			TempData["successMessage"] = "Athugasemdinni þinni var bætt við!";
 			}
@@ -348,11 +352,9 @@ namespace Textaland.Controllers
         [Authorize]
 		public ActionResult DeleteComment(int commentID) {
 
-			SubtitleCommentRepo commentRepo = new SubtitleCommentRepo();
+			SubtitleComment comment = _scr.GetSingleCommentById(commentID);
 
-			SubtitleComment comment = commentRepo.GetSingleCommentById(commentID);
-
-			commentRepo.RemoveComment(comment);
+			_scr.RemoveComment(comment);
 
 			TempData["commentDeleted"] = "Athugasemdinni þinni var eytt";
 
@@ -362,11 +364,9 @@ namespace Textaland.Controllers
         //Generate a filelocatio path for writing and downloading
         public string GeneratePath(int id) {
 
-            SubtitleFileRepo sfr = new SubtitleFileRepo();
-
             string path = Server.MapPath(Url.Content("~/App_Data/downloads/"));
 
-            path += sfr.GetSubtitleFileById(id)._name.Replace(" ", "");
+            path += _sfr.GetSubtitleFileById(id)._name.Replace(" ", "");
             path += (id + ".srt");
 
             return path;
@@ -374,12 +374,11 @@ namespace Textaland.Controllers
 
         [Authorize]
         public ActionResult FinishFile(int id) {
-            SubtitleFileRepo sfr = new SubtitleFileRepo();
-            SubtitleFile sf = sfr.GetSubtitleFileById(id);
+            SubtitleFile sf = _sfr.GetSubtitleFileById(id);
             if (sf._userId == User.Identity.GetUserId()) {
-                sfr.setInTranslation(false, id, User.Identity.GetUserId());
-                sfr.setDownload(true, id);
-                sfr.setLanguage(sf._languageTo, id);
+                _sfr.setInTranslation(false, id, User.Identity.GetUserId());
+                _sfr.setDownload(true, id);
+                _sfr.setLanguage(sf._languageTo, id);
             }
             else {
                 ModelState.AddModelError("FinishError", "Only original uploader can delete the file.");
@@ -390,12 +389,10 @@ namespace Textaland.Controllers
 
         [Authorize]
         public ActionResult DeleteFile(int id) {
-            SubtitleFileRepo sfr = new SubtitleFileRepo();
-            SubtitleFile sf = sfr.GetSubtitleFileById(id);
+            SubtitleFile sf = _sfr.GetSubtitleFileById(id);
             if (sf._userId == User.Identity.GetUserId()) {
-                SubtitleLineRepo slr = new SubtitleLineRepo();
-                slr.RemoveLines(id);
-                sfr.RemoveSubtitle(id);
+                _slr.RemoveLines(id);
+                _sfr.RemoveSubtitle(id);
             }
             else {
                 ModelState.AddModelError("DeleteError", "Only original uploader can delete the file.");
@@ -407,11 +404,9 @@ namespace Textaland.Controllers
 
             WriteToFile(id);
 
-            SubtitleFileRepo sfr = new SubtitleFileRepo();
+            _sfr.wasDownloaded(id);
 
-            sfr.wasDownloaded(id);
-
-            string FileName = sfr.GetSubtitleFileById(id)._name.Replace(" ", "");
+            string FileName = _sfr.GetSubtitleFileById(id)._name.Replace(" ", "");
             FileName += (id + ".srt");
 
             string path = "~/App_Data/downloads/" + FileName;
@@ -420,14 +415,11 @@ namespace Textaland.Controllers
         }
 
         public void WriteToFile(int id) {
-            SubtitleLineRepo slr = new SubtitleLineRepo();
-
-
             FileInfo newfile = new FileInfo(GeneratePath(id));
 
             if (!newfile.Exists) {
                 using (StreamWriter sw = newfile.CreateText()) {
-                    foreach (var line in slr.GetLinesById(id)) {
+                    foreach (var line in _slr.GetLinesById(id)) {
                         sw.WriteLine(line._lineNumber);
                         sw.WriteLine(line._time);
                         sw.WriteLine(line._line1);
@@ -446,9 +438,7 @@ namespace Textaland.Controllers
 
         [Authorize]
         public ActionResult TranslateFile(int id) {
-            SubtitleFileRepo sfr = new SubtitleFileRepo();
-            SubtitleLineRepo slr = new SubtitleLineRepo();
-            SubtitleFile sf = sfr.GetSubtitleFileById(id);
+            SubtitleFile sf = _sfr.GetSubtitleFileById(id);
 
             SubtitleFile sfTranslation = sf;
             if (sf._languageFrom == "ENG") {
@@ -462,11 +452,11 @@ namespace Textaland.Controllers
             sfTranslation._dateAdded = DateTime.Now;
             sfTranslation._originalId = id;
         
-            sfr.AddSubtitle(sfTranslation);
+            _sfr.AddSubtitle(sfTranslation);
 
-            sfr.setCounters(sfTranslation.Id);
+            _sfr.setCounters(sfTranslation.Id);
 
-            slr.copyLines(sfTranslation.Id, id);
+            _slr.copyLines(sfTranslation.Id, id);
 
             return RedirectToAction("EditSubtitleFile", new { id = sfTranslation.Id, num = 0 });
         }
@@ -475,26 +465,24 @@ namespace Textaland.Controllers
         //get
         [Authorize]
         public ActionResult EditSubtitleFile(int id, int num) {
-            SubtitleFileRepo sfr = new SubtitleFileRepo();
-            SubtitleFile sf = sfr.GetSubtitleFileById(id);
+            SubtitleFile sf = _sfr.GetSubtitleFileById(id);
 
             if (sf != null) {
                 if (!(sf._inTranslation) || DateTime.Now > sf._dateAdded.AddMinutes(5) || User.Identity.GetUserId() == sf._lastTranslatorId) {
                     SubtitleFileEditView sfev = new SubtitleFileEditView();
-                    SubtitleLineRepo slr = new SubtitleLineRepo();
 
-                    sfr.setTime(sf.Id);
-                    sfr.setInTranslation(true, sf.Id, User.Identity.GetUserId());
+                    _sfr.setTime(sf.Id);
+                    _sfr.setInTranslation(true, sf.Id, User.Identity.GetUserId());
 
                     sfev.fileId = id;
                     sfev.fileName = sf._name;
                     sfev.languageFrom = sf._languageFrom;
                     sfev.languageTo = sf._languageTo;
-                    sfev.subtitleLines = slr.GetLinesById(id).ToList();
-                    sfev.originalLines = slr.GetLinesById(sf._originalId).ToList();
+                    sfev.subtitleLines = _slr.GetLinesById(id).ToList();
+                    sfev.originalLines = _slr.GetLinesById(sf._originalId).ToList();
 
                     ViewBag.pageNum = num;
-                    int numberOfPages = (slr.GetLinesById(id).Count() / 10);
+                    int numberOfPages = (_slr.GetLinesById(id).Count() / 10);
                     ViewBag.numPages = numberOfPages;
 
                     return View(sfev);
@@ -505,34 +493,30 @@ namespace Textaland.Controllers
         }
 
         public ActionResult ChangePage(int id, int num) {
-            SubtitleFileRepo sfr = new SubtitleFileRepo();
-            sfr.setInTranslation(false, id, User.Identity.GetUserId());
+            _sfr.setInTranslation(false, id, User.Identity.GetUserId());
             return RedirectToAction("EditSubtitleFile", new { id = id, num = num });
         }
 
         public ActionResult CloseFile(int id) {
-            SubtitleFileRepo sfr = new SubtitleFileRepo();
-            sfr.setInTranslation(false, id, User.Identity.GetUserId());
+            _sfr.setInTranslation(false, id, User.Identity.GetUserId());
             return RedirectToAction("FrontPage", "Home");
         }
 
         [HttpPost]
         [Authorize]
         public ActionResult EditLine(FormCollection fc) {
-            SubtitleFileRepo sfr = new SubtitleFileRepo();
-            SubtitleFile sf = sfr.GetSubtitleFileById(Convert.ToInt32(fc["fileId"]));
+            SubtitleFile sf = _sfr.GetSubtitleFileById(Convert.ToInt32(fc["fileId"]));
 
             if (sf._lastTranslatorId == User.Identity.GetUserId()) {
-                SubtitleLineRepo slr = new SubtitleLineRepo();
                 SubtitleLine sl = new SubtitleLine();
-                sfr.setInTranslation(false, sf.Id, User.Identity.GetUserId());
+                _sfr.setInTranslation(false, sf.Id, User.Identity.GetUserId());
 
                 sl.Id = Convert.ToInt32(fc["lineId"]);
                 sl._line1 = fc["line1"];
                 sl._line2 = fc["line2"];
                 sl._line3 = fc["line3"];
 
-                slr.UpdateLine(sl);
+                _slr.UpdateLine(sl);
             }
             return RedirectToAction("EditSubtitleFile", "SubtitleFile", new { id = fc["fileId"], num = 0 });    
         }

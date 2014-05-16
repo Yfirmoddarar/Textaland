@@ -5,24 +5,33 @@ using System.Web;
 using System.Web.Mvc;
 using Textaland.Models;
 using Textaland.DataAccessLayer;
+using Textaland.Interface;
 using Microsoft.AspNet.Identity;
 
 namespace Textaland.Controllers
 {
 	public class TranslationRequestController : Controller {
 
+        private readonly ITranslationRequestRepo _requestRepo;
+        private readonly ITranslationRequestUpvoteRepo _requestUpvoteRepo;
+
+        public TranslationRequestController(ITranslationRequestRepo requestRepo, 
+            ITranslationRequestUpvoteRepo requestUpvoteRepo) {
+                _requestRepo = requestRepo;
+                _requestUpvoteRepo = requestUpvoteRepo;
+                request._userId = "TestId";
+        }
+
+        public TranslationRequestController() {
+            _requestRepo = TranslationRequestRepo.Instance;
+            _requestUpvoteRepo = TranslationRequestUpvoteRepo.Instance;
+            request._userId = User.Identity.GetUserId();
+        }
+
 		TranslationRequest request = new TranslationRequest();
 
-		TranslationRequestRepo requestRepo = new TranslationRequestRepo();
 
 		TranslationRequestUpvote requestUpvote = new TranslationRequestUpvote();
-
-		TranslationRequestUpvoteRepo requestUpvoteRepo  = new TranslationRequestUpvoteRepo();
-		//
-		// GET: /TranslationRequest/
-		public ActionResult Index() {
-			return View();
-		}
 
 		//Get
         [Authorize]
@@ -46,10 +55,9 @@ namespace Textaland.Controllers
 
 			request._name = strName;
 			request._language = strLanguage;
-            request._userId = User.Identity.GetUserId();
 
 
-			requestRepo.AddTranslationRequest(request);
+			_requestRepo.AddTranslationRequest(request);
             return RedirectToAction("TranslationRequests", new { num = 0 });		
 		}
 
@@ -71,12 +79,12 @@ namespace Textaland.Controllers
 				ViewBag.voteSuccess = TempData["upVoteSuccess"].ToString();
 			}
 
-            ViewBag.Upvotes = requestUpvoteRepo.GetAllUpvotes();
+            ViewBag.Upvotes = _requestUpvoteRepo.GetAllUpvotes();
 
-            var requests = (from r in requestRepo.GetAllTranslationRequests()
+            var requests = (from r in _requestRepo.GetAllTranslationRequests()
 							orderby r._numUpvotes descending
 							select r).Skip(num * 10).Take(10);
-			var countRequests = from r in requestRepo.GetAllTranslationRequests()
+			var countRequests = from r in _requestRepo.GetAllTranslationRequests()
 							orderby r._numUpvotes
 							select r;
 
@@ -106,15 +114,15 @@ namespace Textaland.Controllers
 
 			if (User.Identity.IsAuthenticated) {
 
-				var upvotes = from u in requestUpvoteRepo.GetAllUpvotes()
+				var upvotes = from u in _requestUpvoteRepo.GetAllUpvotes()
 							  where u._userId == userId &&
 							  u._requestId == request.Id
 							  select u;
 				if (upvotes.Count() == 0) {
 					requestUpvote._requestId = request.Id;
 					requestUpvote._userId = userId;
-					requestRepo.upVote(requestUpvote._requestId);
-					requestUpvoteRepo.AddUpvote(requestUpvote);
+					_requestRepo.upVote(requestUpvote._requestId);
+					_requestUpvoteRepo.AddUpvote(requestUpvote);
 					TempData["upVoteSuccess"] = "Þú bættir við atkvæði á beiðni fyrir " + request._name;
 				}
 				else {
@@ -136,7 +144,7 @@ namespace Textaland.Controllers
 		[HttpPost]
 		public ActionResult AnswerRequest(TranslationRequest tr) {
 			if (User.Identity.IsAuthenticated) {
-				requestRepo.RemoveTranslationRequestById(tr);
+				_requestRepo.RemoveTranslationRequestById(tr);
 			}
 			else {
 				TempData["loggedIn"] = "Aðeins innskráðir notendur geta framkvæmt þessa aðgerð";

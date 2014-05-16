@@ -198,6 +198,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interface\IRatingRepo.cs" />
+    <Compile Include="Interface\ISubtitleCommentRepo.cs" />
+    <Compile Include="Interface\ISubtitleFileRepo.cs" />
+    <Compile Include="Interface\ISubtitleLineRepo.cs" />
+    <Compile Include="Interface\ITranslationRequestRepo.cs" />
+    <Compile Include="Interface\ITranslationRequestUpvoteRepo.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Rating.cs" />

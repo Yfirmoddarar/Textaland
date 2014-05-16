@@ -4,6 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+/*
+ * The DownloadResult class is courtesy of Phil Haack
+ * at http://haacked.com/. makes selecting and downloading
+ * file from the controller simpler.
+ */
+
 namespace Textaland.DataAccessLayer {
     public class DownloadResult : ActionResult {
 

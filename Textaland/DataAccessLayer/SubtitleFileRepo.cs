@@ -3,10 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Textaland.Models;
+using Textaland.Interface;
 
 namespace Textaland.DataAccessLayer
 {
-	public class SubtitleFileRepo {
+    public class SubtitleFileRepo : ISubtitleFileRepo {
+
+        private static SubtitleFileRepo instance;
+
+        public static SubtitleFileRepo Instance {
+            get {
+                if (instance == null) {
+                    instance = new SubtitleFileRepo();
+                }
+                return instance;
+            }
+        }
+
         // Initialize the db.
         AppDataContext db = new AppDataContext();
 
