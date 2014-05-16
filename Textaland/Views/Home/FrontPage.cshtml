@@ -191,10 +191,10 @@ else
             <th class="col-md-2">
                 Þýðingar í gangi
             </th>
-            <th class="col-md-1">
+            <th class="col-md-2">
                 Tungumál
             </th>
-            <th class="col-md-1">
+            <th class="col-md-2">
             </th>
         </tr>
         @{
@@ -203,10 +203,10 @@ else
                 <td class="col-md-2">
                     @item._name
                 </td>
-                <td class="col-md-1">
+                <td class="col-md-2">
                     @item._languageTo
                 </td>
-                <td class="col-md-1" style="text-align: center">
+                <td class="col-md-2" style="text-align: center">
                     <a href="/SubtitleFile/EditSubtitleFile?id=@item.Id&num=0"
                        @*onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')"*@ 
                        class="btn btn-warning btn-sm">Taka þátt í þýðingu</a>
@@ -236,30 +236,30 @@ else
 <div class="col-md-6">
     <table class="table table-striped table-hover table-bordered">
         <tr class="info">
-            <th class="col-md-2">
+            <th class="col-md-4">
                 Beiðni
             </th>
-            <th class="col-md-1">
+            <th class="col-md-2">
                 Tungumál
             </th>
             <th class="col-md-2">
                 Fjöldi atkvæða
             </th>
-            <th class="col-md-1">
+            <th class="col-md-2">
             </th>
-            <th class="col-md-1">
+            <th class="col-md-2">
             </th>
         </tr>
         @{
         foreach (Textaland.Models.TranslationRequest item in ViewBag.RequestList) {
             <tr>
-                <td>
+                <td class="col-md-2">
                     @item._name
                 </td>
                 <td class="col-md-1">
                     @item._language
                 </td>
-                <td class="col-md-2">
+                <td class="col-md-1">
                     @item._numUpvotes
                 </td>
                 <td class="col-md-1" style="text-align: center">
