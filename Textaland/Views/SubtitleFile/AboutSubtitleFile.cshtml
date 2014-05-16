@@ -6,7 +6,22 @@
     <center>
         <h1>UM TEXTASKRÁ</h1>
         <hr />
+        @if (ViewBag.addComment != null) {
+            
+            <div class="alert alert-dismissable alert-info">
+                 <button type="button" class="close" data-dismiss="alert">×</button>
+                 <strong>@ViewBag.addComment</strong>
+            </div>
+        } else if (ViewBag.addRating != null) {
+            <div class="alert alert-dismissable alert-info">
+                 <button type="button" class="close" data-dismiss="alert">×</button>
+                 <strong>@ViewBag.addRating</strong>
+            </div>
+        }
+       
     </center>
+
+    
 </div>
 <div id="main">
     <div class="col-md-3"></div>

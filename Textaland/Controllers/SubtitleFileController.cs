@@ -228,6 +228,18 @@ namespace Textaland.Controllers
 			else if (TempData["addText"] != null) {
 				ModelState.AddModelError("addText", TempData["addText"].ToString());
 			}
+
+			//the following success messages are shown when..
+
+			//user adds a comment
+			if (TempData["successMessage"] != null) {
+				ViewBag.addComment = TempData["successMessage"].ToString();
+			}
+			else if(TempData["addRating"] != null) {
+				ViewBag.addRating = TempData["addRating"].ToString();
+			}
+		
+
 			//"file" vill be the SubtitleFile that has the ID the same as "id".
 			var file = sfr.GetSubtitleFileById(id);
 
@@ -278,6 +290,8 @@ namespace Textaland.Controllers
 						giveRating._userId = userID;
 						rateRepo.AddRating(giveRating);
 						fileRepo.ChangeRating(s.Id, newRating);
+
+						TempData["addRating"] = "Þú gafst þessari skrá " + rating + " í einkunn";
 					}
 				}
 				//if the rating isn't numerical we print out an error message
@@ -315,6 +329,8 @@ namespace Textaland.Controllers
 			newComment._userId = User.Identity.GetUserId();
 
 			commentRepo.AddComment(newComment);
+
+			TempData["successMessage"] = "Athugasemdinni þinni var bætt við!";
 			}
 			else {
 				TempData["addText"] = "Athugasemdin var tóm. Vinsamlegast sláðu inn aftur.";

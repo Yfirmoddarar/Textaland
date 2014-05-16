@@ -3,7 +3,7 @@
     <hr />
 </center>
 
-<table class="table">
+<table class="table table-hover table-striped table-bordered">
     <tr>
         <th>
             Nafn
@@ -15,10 +15,7 @@
             Þýtt yfir í
         </th>
         <th>
-            Fjöldi þýðanda
-        </th>
-        <th>
-           Tegund
+            Tegund
         </th>
         <th>
             Sett inn
@@ -26,33 +23,32 @@
         <th></th>
     </tr>
 
-@foreach (var item in ViewBag.InTranslation) {
-    <tr>
-        <td>
-            @item._name
-        </td>
-        <td>
-            @item._languageFrom
-        </td>
-        <td>
-            @item._languageTo
-        </td>
-        <td>
-            @item._numOfTranslationParticipants
-        </td>
-        <td>
-            @item._type
-        </td>
-        <td>
-            @item._dateAdded
-        </td>
-        <td class="col-md-1" style="text-align: center">
-            <input onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')"
-                   type="submit" value="Taka þátt í þýðingu" class="btn btn-warning btn-sm" />
-        </td>
+    @foreach (var item in ViewBag.InTranslation)
+    {
+        <tr>
+            <td>
+                @item._name
+            </td>
+            <td>
+                @item._languageFrom
+            </td>
+            <td>
+                @item._languageTo
+            </td>
+            <td>
+                @item._type
+            </td>
+            <td>
+                @item._dateAdded
+            </td>
+            <td class="col-md-1" style="text-align: center">
+                <a href="/SubtitleFile/EditSubtitleFile?id=@item.Id&num=0"
+                   onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')"
+                   class="btn btn-warning btn-sm">Taka þátt í þýðingu</a>
+            </td>
 
-    </tr>
-}
+        </tr>
+    }
 
 </table>
 
