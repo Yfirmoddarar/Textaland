@@ -502,7 +502,7 @@ namespace Textaland.Controllers
             return RedirectToAction("FrontPage", "Home");
         }
 
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [Authorize]
         public ActionResult EditLine(FormCollection fc) {
             SubtitleFile sf = _sfr.GetSubtitleFileById(Convert.ToInt32(fc["fileId"]));
