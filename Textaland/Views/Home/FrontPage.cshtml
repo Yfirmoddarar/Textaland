@@ -185,7 +185,7 @@ else
     </div>
 
 <div class="col-md-6">
-    @Html.ValidationMessage("FileInUse")
+    <strong class="col-md-12">@Html.ValidationMessage("FileInUse")</strong>
     <table class="table table-striped table-hover table-bordered">
         <tr class="info">
             <th class="col-md-2">
@@ -208,7 +208,7 @@ else
                 </td>
                 <td class="col-md-1" style="text-align: center">
                     <a href="/SubtitleFile/EditSubtitleFile?id=@item.Id&num=0"
-                       onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')" 
+                       @*onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')"*@ 
                        class="btn btn-warning btn-sm">Taka þátt í þýðingu</a>
                 </td>
             </tr>
