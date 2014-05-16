@@ -131,10 +131,12 @@ namespace Textaland.Controllers
 				requestRepo.RemoveTranslationRequestById(tr);
 			}
 			else {
-				TempData["loggedIn"] = "Aðeins innskráðir notendur geta svarað beiðni";	
+				TempData["loggedIn"] = "Aðeins innskráðir notendur geta svarað beiðni";
+				return RedirectToAction("TranslationRequests", new { num = 0 });
 			}
 
-			return RedirectToAction("UploadFile", "SubtitleFile", new { area = "" });		
+			return RedirectToAction("UploadFile", "SubtitleFile", new { area = "" });
+
 		}
 	}
 
