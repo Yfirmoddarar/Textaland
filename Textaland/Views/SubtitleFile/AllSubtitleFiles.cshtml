@@ -8,7 +8,8 @@
 <div class="form-group" style="margin-bottom: 30px">
     <label class="control-label" for="searchInput"></label>
     <center>
-        @using (Html.BeginForm("SearchResult", "Search", FormMethod.Post)) {
+        @using (Html.BeginForm("SearchResult", "Search", FormMethod.Post)) 
+        {
             <input type="text" name="leit" id="leit" value="Leitaðu að textaskrá hér" style="text-align: center" onfocus="value=''" />
             <button class="btn btn-info btn-sm" title="Leita" type="submit">Leita</button>
         }
@@ -91,15 +92,15 @@
     <a href="/SubtitleFile/UploadFile" class="btn btn-info">Hlaða upp nýrri skrá</a>
 </p>
 
-@{int count = @Enumerable.Count(ViewBag.numOfSubs);
+@{int count = Enumerable.Count(ViewBag.numOfSubs);
 
   int numPages;
 
-  if (count % 10 == 0)
+  if (count % 10 == 0) {
       numPages = count / 10;
-  else
+  } else { 
       numPages = count / 10 + 1;
-    
+  }  
    int pageNumber = Convert.ToInt32(TempData["pageNumber"].ToString());
 }
   
@@ -110,8 +111,7 @@
     @for (int i = 1; i <= numPages; i++) { 
         if (i - 1 == pageNumber) { 
             <li class="active">@Html.ActionLink(@i.ToString("#"), "AllSubtitleFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
-        }
-        else {
+        } else {
         <li>@Html.ActionLink(@i.ToString("#"), "AllSubtitleFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
     }
     }
