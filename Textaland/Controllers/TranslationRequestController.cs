@@ -101,21 +101,13 @@ namespace Textaland.Controllers
 		[HttpPost]
 		public ActionResult AddVote(TranslationRequest request) {
 
+			//Gets the user ID.
             var userId = User.Identity.GetUserId();
-			//taka við TranslationRequest Id búa til upvote út frá því. gefa því Id þ.e.a.s kalla á add fallið
-			//í TranslationRequestUpvote og búa þannig nýtt vote.
 
-			//Takes all upvotes from the TranslationRequest whith "id".
-			//var userIdUpvotes = upvoteRepo.GetUpvoteById(id);
-			//Checks if there exists an upvote with the same userId as the new vote.
-			/*foreach(var item in userIdUpvotes) {
-				if (item._userId == tr._userId)	{
-					return RedirectToAction("TranslationRequests");
-				}
-			}*/
-
+			//Checks if the user is registered and logged in.
 			if (User.Identity.IsAuthenticated) {
 
+				// Takes all the votes that have the same user and request ID.
 				var upvotes = from u in _requestUpvoteRepo.GetAllUpvotes()
 							  where u._userId == userId &&
 							  u._requestId == request.Id
@@ -136,9 +128,6 @@ namespace Textaland.Controllers
 				return RedirectToAction("TranslationRequests", new { num = 0 });
 			}
 	
-			//Changes the number of upvotes in the TranslationRequest "tr".
-			//Returns the TranslationRequests view were "tr" has one more upvotes.
-
             return RedirectToAction("TranslationRequests", new { num = 0 });
 			
 		}
