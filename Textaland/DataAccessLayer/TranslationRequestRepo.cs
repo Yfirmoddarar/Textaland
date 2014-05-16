@@ -65,9 +65,9 @@ namespace Textaland.DataAccessLayer
         }
 
 		//This operation removes a specific TranslationRequest from the list by id.
-        public void RemoveTranslationRequestById(TranslationRequest tr) {
-			db.TranslationRequests.Attach(tr);
-			db.TranslationRequests.Remove(tr);
+        public void RemoveTranslationRequestById(int id) {
+			//db.TranslationRequests.Attach(tr);
+			db.TranslationRequests.Remove(db.TranslationRequests.Find(id));
 			db.SaveChanges();
         }
 
