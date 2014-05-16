@@ -70,8 +70,7 @@ namespace Textaland.tests.Controllers {
 
             //Assert
 
-            foreach (var item in MockRequestRepo.GetAllTranslationRequests())
-	        {
+            foreach (var item in MockRequestRepo.GetAllTranslationRequests()) {
                 Assert.IsTrue(item._name == "Her");
 	        }
             Assert.AreEqual(true, result is RedirectToRouteResult);
