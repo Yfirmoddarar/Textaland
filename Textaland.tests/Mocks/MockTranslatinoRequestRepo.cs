@@ -47,8 +47,12 @@ namespace Textaland.tests.Mocks {
             req._numUpvotes++;
         }
 
-        public void RemoveTranslationRequestById(TranslationRequest tr) {
-            _trr.Remove(tr);
+        public void RemoveTranslationRequestById(int id) {
+            foreach (var item in _trr) {
+                if (item.Id == id) {
+                    _trr.Remove(item);
+                }
+            }
         }
     }
 }
