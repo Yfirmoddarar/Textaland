@@ -8,7 +8,8 @@
 <div class="form-group" style="margin-bottom: 30px">
     <label class="control-label" for="searchInput"></label>
     <center>
-        @using (Html.BeginForm("SearchResult", "Search", FormMethod.Post)) {
+        @using (Html.BeginForm("SearchResult", "Search", FormMethod.Post)) 
+        {
             <input type="text" name="leit" id="leit" value="Leitaðu að textaskrá hér" style="text-align: center" onfocus="value=''" />
             <button class="btn btn-info btn-sm" title="Leita" type="submit">Leita</button>
         }
@@ -60,10 +61,10 @@
         </td> 
         <td>
             @{
-                if (item._numOfTimesRated == 0) {
+                    if (item._numOfTimesRated == 0) {
                     @Html.Raw("Engin einkunn")
                 } else {
-                    @item._rating.ToString("#.##")
+                @item._rating.ToString("#.##")
                 }   
             }
         </td>
@@ -100,8 +101,8 @@
   } 
   else{ 
       numPages = count / 10 + 1;
-  }
-  int pageNumber = Convert.ToInt32(TempData["pageNumber"].ToString());
+  }  
+   int pageNumber = Convert.ToInt32(TempData["pageNumber"].ToString());
 }
   
 <ul class="pagination pagination-sm">
@@ -111,10 +112,9 @@
     @for (int i = 1; i <= numPages; i++) { 
         if (i - 1 == pageNumber) { 
             <li class="active">@Html.ActionLink(@i.ToString("#"), "AllSubtitleFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
-        }
-        else {
+        } else {
         <li>@Html.ActionLink(@i.ToString("#"), "AllSubtitleFiles", "SubtitleFile", new { num = i - 1 }, null)</li>
-        }
+    }
     }
     @if (pageNumber != numPages - 1) {
         <li>@Html.ActionLink(">>", "AllSubtitleFiles", "SubtitleFile", new { num = pageNumber + 1 }, null)</li>

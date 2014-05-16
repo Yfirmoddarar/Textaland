@@ -8,7 +8,8 @@
 <div class="form-group" style="margin-bottom: 30px">
     <label class="control-label" for="searchInput"></label>
     <center>
-        @using (Html.BeginForm("SearchResultForRequests", "Search", FormMethod.Post)) {
+        @using (Html.BeginForm("SearchResultForRequests", "Search", FormMethod.Post)) 
+        {
             <input type="text" name="leit2" id="leit2" value="Leitaðu að beiðni hér" 
                    style="text-align: center" onfocus="value=''" />
             <button class="btn btn-info btn-sm" title="Leita" type="submit">Leita</button>
@@ -66,7 +67,8 @@
                         @Html.DisplayFor(modelItem => item._numUpvotes)
                     </td>
                     <td>
-                        @using (Html.BeginForm("AddVote", "TranslationRequest", item, FormMethod.Post)) {
+                        @using (Html.BeginForm("AddVote", "TranslationRequest", item, FormMethod.Post)) 
+                        {
                             <center>
                                     <input type="submit" value="Like" class="btn btn-warning btn-sm" />
                             </center>
@@ -78,8 +80,7 @@
                                 <a class="btn btn-warning btn-sm" href="/TranslationRequest/AnswerRequest?id=@item.Id"
                                     onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')">Svara beiðni</a>
                             </center>
-                        }
-                        else {
+                        } else {
                             <center>
                                 <a class="btn btn-warning btn-sm disabled" href="/TranslationRequest/AnswerRequest?id=@item.Id">Svara beiðni</a>
                             </center>
@@ -95,8 +96,8 @@
             <a href="/Translationrequest/NewTranslationRequest" class="btn btn-info">Senda inn nýja beiðni</a>
         </p>
 
+        
         @{
-
             int count = Enumerable.Count(ViewBag.countRequest);
             int numPages;
 
@@ -109,7 +110,6 @@
             int pageNumber = Convert.ToInt32(TempData["requestPageNumber"].ToString());
         }
 
-
         <ul class="pagination pagination-sm">
             @if (pageNumber != 0) { 
                 <li>@Html.ActionLink("<<", "TranslationRequests", "TranslationRequest", new { num = pageNumber - 1 }, null)</li>
@@ -117,8 +117,7 @@
             @for (int i = 1; i <= numPages; i++) {
                 if (i - 1 == pageNumber) { 
                     <li class="active" >@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
-                }
-                else {
+                } else {
                     <li>@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
                 }
             }
