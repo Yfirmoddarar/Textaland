@@ -50,7 +50,7 @@ namespace Textaland.Controllers
 			// number of participants and add them to the ViewBag.
 			var translationList = (from tl in subtitleFileRepo.GetAllSubtitles()
 								   where tl._readyForDownload == false
-								  orderby tl._numOfTranslationParticipants descending
+								  orderby tl._dateAdded descending
 								  select tl).Take(10);
 
 			ViewBag.TranslationList = translationList;

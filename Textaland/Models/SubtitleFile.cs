@@ -13,7 +13,6 @@ namespace Textaland.Models
 		public int Id { get; set; }
 		public string _userId { get; set; }
         public int _originalId { get; set; }
-		public int _numOfTranslationParticipants { get; set; }
 		public int _numOfDownloads { get; set; }
 		public int _numOfTimesRated { get; set; }
 		public double _rating { get; set; }
@@ -56,12 +55,6 @@ namespace Textaland.Models
 		// Function that will increase '_numOfDownload' by one.
 		void IncreaseNumDownloads() {
 			_numOfDownloads++;
-		}
-
-		// Function that will increase '_numOfTranslationParticipants'
-		// by one.
-		void IncreaseNumOfTranslationParticipants() {
-			_numOfTranslationParticipants++;
 		}
 
 		// This function will update the rating of some user when somebody 

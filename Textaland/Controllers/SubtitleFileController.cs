@@ -510,9 +510,6 @@ namespace Textaland.Controllers
 
                 slr.UpdateLine(sl);
             }
-            else {
-                ModelState.AddModelError("TimeLimit", "Breyting fór ekki í gegn, tók of langan tíma!");
-            }
             return RedirectToAction("EditSubtitleFile", "SubtitleFile", new { id = fc["fileId"], num = 0 });    
         }
 	}
