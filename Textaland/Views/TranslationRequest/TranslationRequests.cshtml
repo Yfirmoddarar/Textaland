@@ -80,8 +80,7 @@
                                 <a class="btn btn-warning btn-sm" href="/TranslationRequest/AnswerRequest?id=@item.Id"
                                     onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')">Svara beiðni</a>
                             </center>
-                        }
-                        else {
+                        } else {
                             <center>
                                 <a class="btn btn-warning btn-sm disabled" href="/TranslationRequest/AnswerRequest?id=@item.Id">Svara beiðni</a>
                             </center>
@@ -104,8 +103,7 @@
 
             if (count % 10 == 0) {
                 numPages = count / 10;
-            }
-            else {
+            } else {
                 numPages = count / 10 + 1;
             }
             int pageNumber = Convert.ToInt32(TempData["requestPageNumber"].ToString());
@@ -119,8 +117,7 @@
             @for (int i = 1; i <= numPages; i++) {
                 if (i - 1 == pageNumber) { 
                     <li class="active" >@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
-                }
-                else {
+                } else {
                     <li>@Html.ActionLink(@i.ToString("#"), "TranslationRequests", "TranslationRequest", new { num = i - 1 }, null)</li>
                 }
             }
