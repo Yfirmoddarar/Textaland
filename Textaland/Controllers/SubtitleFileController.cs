@@ -241,7 +241,7 @@ namespace Textaland.Controllers
 			}
 			//if the user types in a empty comment
 			else if (TempData["addText"] != null) {
-				ModelState.AddModelError("addText", TempData["addText"].ToString());
+				ViewBag.emptyText = TempData["addText"].ToString();
 			}
 
 			//the following success messages are shown when..
