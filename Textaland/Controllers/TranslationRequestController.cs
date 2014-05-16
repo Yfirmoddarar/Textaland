@@ -15,6 +15,10 @@ namespace Textaland.Controllers
         private readonly ITranslationRequestRepo _requestRepo;
         private readonly ITranslationRequestUpvoteRepo _requestUpvoteRepo;
 
+        TranslationRequest request = new TranslationRequest();
+
+        TranslationRequestUpvote requestUpvote = new TranslationRequestUpvote();
+
         public TranslationRequestController(ITranslationRequestRepo requestRepo, 
             ITranslationRequestUpvoteRepo requestUpvoteRepo) {
                 _requestRepo = requestRepo;
@@ -25,13 +29,9 @@ namespace Textaland.Controllers
         public TranslationRequestController() {
             _requestRepo = TranslationRequestRepo.Instance;
             _requestUpvoteRepo = TranslationRequestUpvoteRepo.Instance;
-            request._userId = User.Identity.GetUserId();
         }
 
-		TranslationRequest request = new TranslationRequest();
-
-
-		TranslationRequestUpvote requestUpvote = new TranslationRequestUpvote();
+		
 
 		//Get
         [Authorize]
@@ -55,7 +55,9 @@ namespace Textaland.Controllers
 
 			request._name = strName;
 			request._language = strLanguage;
-
+            if (request._userId != "TestId") {
+                request._userId = User.Identity.GetUserId();
+            }
 
 			_requestRepo.AddTranslationRequest(request);
             return RedirectToAction("TranslationRequests", new { num = 0 });		

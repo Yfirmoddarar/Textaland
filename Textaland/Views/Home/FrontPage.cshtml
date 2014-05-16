@@ -208,7 +208,6 @@ else
                 </td>
                 <td class="col-md-2" style="text-align: center">
                     <a href="/SubtitleFile/EditSubtitleFile?id=@item.Id&num=0"
-                       @*onclick="return confirm('Ertu viss um að vilja taka þátt í þýðingu á þessari skrá?')"*@ 
                        class="btn btn-warning btn-sm">Taka þátt í þýðingu</a>
                 </td>
             </tr>
@@ -239,10 +238,6 @@ else
             </th>
             <th class="col-xs-5">
                 Fjöldi atkvæða
-            </th>
-            <th class="col-xs-5">
-            </th>
-            <th class="col-md-5">
             </th>
         </tr>
         @{
@@ -275,22 +270,6 @@ else
             </tr>
         }
         }
-        @*@if (Enumerable.Count(ViewBag.RequestList) <= 0) {
-            <tr>
-                <td>
-                    Því miður eru engar beiðnir til.
-                </td>
-            </tr>
-        } else {
-            <tr>
-                <td>
-                    <button onclick="location.href = '/TranslationRequest/TranslationRequests?num=0'" class="btn btn-info btn-sm">
-                        Sjá allar beiðnir
-                    </button>
-                </td>
-            </tr>
-        }*@
-        
     </table>
     @if (Enumerable.Count(ViewBag.RequestList) <= 0)
     {
