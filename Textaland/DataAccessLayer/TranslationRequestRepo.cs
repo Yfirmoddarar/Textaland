@@ -2,12 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Textaland.Interface;
 using Textaland.Models;
 
 namespace Textaland.DataAccessLayer
 {
-	public class TranslationRequestRepo {
-		// Initialize the db.
+    public class TranslationRequestRepo : ITranslationRequestRepo {
+
+        private static TranslationRequestRepo instance;
+
+        public static TranslationRequestRepo Instance {
+            get {
+                if (instance == null) {
+                    instance = new TranslationRequestRepo();
+                }
+                return instance;
+            }
+        }
+
+        // Initialize the db.
 		AppDataContext db = new AppDataContext();
 
 		//This operation returns all TranslationRequests.

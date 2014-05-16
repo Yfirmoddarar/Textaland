@@ -2,11 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Textaland.Interface;
 using Textaland.Models;
 
 namespace Textaland.DataAccessLayer
 {
-	public class SubtitleLineRepo {
+    public class SubtitleLineRepo : ISubtitleLineRepo {
+
+        private static SubtitleLineRepo instance;
+
+        public static SubtitleLineRepo Instance {
+            get {
+                if (instance == null) {
+                    instance = new SubtitleLineRepo();
+                }
+                return instance;
+            }
+        }
+
 		// Initialize the db.
 		AppDataContext db = new AppDataContext();
 

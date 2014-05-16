@@ -2,11 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Textaland.Interface;
 using Textaland.Models;
 
 namespace Textaland.DataAccessLayer
 {
-	public class SubtitleCommentRepo : ApplicationDbContext {
+    public class SubtitleCommentRepo : ISubtitleCommentRepo {
+
+        private static SubtitleCommentRepo instance;
+
+        public static SubtitleCommentRepo Instance {
+            get {
+                if (instance == null) {
+                    instance = new SubtitleCommentRepo();
+                }
+                return instance;
+            }
+        }
 
 		//initialize a list of SubtitleComments
 
