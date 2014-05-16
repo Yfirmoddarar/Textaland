@@ -56,14 +56,16 @@ namespace Textaland.Controllers
 		//Get
 		public ActionResult TranslationRequests(int num) {
 
-			if (TempData["loggedIn"] != null) {
-				ModelState.AddModelError("loggedIn", TempData["loggedIn"].ToString());
+
+			//We give errors for the following actions..
+
+			if (TempData["addVoteAgain"] != null) {
+				ViewBag.votedAgain = TempData["addVoteAgain"].ToString();
 			}
-			else if (TempData["loggdInUpVote"] != null) {
-				ModelState.AddModelError("loggedInUpVote", TempData["loggedInUpVote"].ToString());
-			}
-			else if (TempData["addVoteAgain"] != null) {
-				ModelState.AddModelError("addVoteAgain", TempData["addVoteAgain"].ToString());
+
+			//The following success message is given if the user upvotes
+			if (TempData["upVoteSuccess"] != null) {
+				ViewBag.voteSuccess = TempData["upVoteSuccess"].ToString();
 			}
 
             ViewBag.Upvotes = requestUpvoteRepo.GetAllUpvotes();
@@ -110,14 +112,13 @@ namespace Textaland.Controllers
 					requestUpvote._userId = userId;
 					requestRepo.upVote(requestUpvote._requestId);
 					requestUpvoteRepo.AddUpvote(requestUpvote);
+					TempData["upVoteSuccess"] = "Þú bættir við atkvæði á beiðni fyrir " + request._name;
 				}
 				else {
 					TempData["addVoteAgain"] = "Aðeins er hægt að kjósa hverja beiðni einu sinni";
 				}
 			}
-			else {
-				TempData["loggedInUpVote"] = "Verður að vera innskráður til þess að geta kosið beiðni";
-			}
+	
 			//Changes the number of upvotes in the TranslationRequest "tr".
 			//Returns the TranslationRequests view were "tr" has one more upvotes.
 
@@ -135,7 +136,7 @@ namespace Textaland.Controllers
 				return RedirectToAction("TranslationRequests", new { num = 0 });
 			}
 
-			return RedirectToAction("UploadFile", "SubtitleFile", new { area = "" });
+			return RedirectToAction("UploadFile", "SubtitleFile", new { area = "" });		
 
 		}
 	}
