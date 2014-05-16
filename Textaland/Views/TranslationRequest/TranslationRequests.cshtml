@@ -74,18 +74,16 @@
                         }
                     </td>
                     <td>
-                        @using (Html.BeginForm("AnswerRequest", "TranslationRequest", item, FormMethod.Post)) {
-                            if (User.Identity.IsAuthenticated) {
-                                <center>
-                                    <input onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')"
-                                           type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
-                                </center>
-                            }
-                            else {
-                                <center>
-                                    <input type="submit" value="Svara beiðni" class="btn btn-warning btn-sm" />
-                                </center>
-                            }
+                        @if (User.Identity.IsAuthenticated) {
+                            <center>
+                                <a class="btn btn-warning btn-sm" href="/TranslationRequest/AnswerRequest?id=@item.Id"
+                                    onclick="return confirm('Með því að svara þessari beiðni mun hún hverfa af listanum. Viltu halda áfram?')">Svara beiðni</a>
+                            </center>
+                        }
+                        else {
+                            <center>
+                                <a class="btn btn-warning btn-sm disabled" href="/TranslationRequest/AnswerRequest?id=@item.Id">Svara beiðni</a>
+                            </center>
                         }
                     </td>
 

@@ -143,10 +143,9 @@ namespace Textaland.Controllers
 			
 		}
 
-		[HttpPost]
-		public ActionResult AnswerRequest(TranslationRequest tr) {
+		public ActionResult AnswerRequest(int id) {
 			if (User.Identity.IsAuthenticated) {
-				_requestRepo.RemoveTranslationRequestById(tr);
+				_requestRepo.RemoveTranslationRequestById(id);
 			}
 			else {
 				TempData["loggedIn"] = "Aðeins innskráðir notendur geta framkvæmt þessa aðgerð";

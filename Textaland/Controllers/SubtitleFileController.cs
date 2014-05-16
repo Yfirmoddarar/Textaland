@@ -518,7 +518,7 @@ namespace Textaland.Controllers
 
                 _slr.UpdateLine(sl);
             }
-            return RedirectToAction("EditSubtitleFile", "SubtitleFile", new { id = fc["fileId"], num = 0 });    
+			return RedirectToAction("EditSubtitleFile", "SubtitleFile", new { id = fc["fileId"], num = 0 });   
         }
 	}
 }
