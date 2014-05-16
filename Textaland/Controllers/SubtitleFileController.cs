@@ -241,7 +241,7 @@ namespace Textaland.Controllers
 			}
 			//if the user types in a empty comment
 			else if (TempData["addText"] != null) {
-				ModelState.AddModelError("addText", TempData["addText"].ToString());
+				ViewBag.emptyText = TempData["addText"].ToString();
 			}
 
 			//the following success messages are shown when..
@@ -502,7 +502,7 @@ namespace Textaland.Controllers
             return RedirectToAction("FrontPage", "Home");
         }
 
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [Authorize]
         public ActionResult EditLine(FormCollection fc) {
             SubtitleFile sf = _sfr.GetSubtitleFileById(Convert.ToInt32(fc["fileId"]));
@@ -518,7 +518,7 @@ namespace Textaland.Controllers
 
                 _slr.UpdateLine(sl);
             }
-            return RedirectToAction("EditSubtitleFile", "SubtitleFile", new { id = fc["fileId"], num = 0 });    
+			return RedirectToAction("EditSubtitleFile", "SubtitleFile", new { id = fc["fileId"], num = 0 });   
         }
 	}
 }
