@@ -23,13 +23,18 @@
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>@ViewBag.voteSuccess</strong>
         </div>
-    } else if (ViewBag.votedAgain != null)
-    {
-        <div class="alert alert-dismissable alert-danger">
+    } else if (ViewBag.votedAgain != null) {
+        <div class="alert alert-dismissable alert-warning">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>@ViewBag.votedAgain</strong>
         </div>
-    }
+    } else if (ViewBag.requiredLogIn != null) {
+        <div class="alert alert-dismissable alert-warning">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>@ViewBag.requiredLogIn. Þú getur skráð þig inn <a href="/Account/Login">hérna</a>
+            
+        </div>
+    } 
 
 </center>
 <p>

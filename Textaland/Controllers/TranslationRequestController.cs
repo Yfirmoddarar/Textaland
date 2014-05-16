@@ -62,6 +62,9 @@ namespace Textaland.Controllers
 			if (TempData["addVoteAgain"] != null) {
 				ViewBag.votedAgain = TempData["addVoteAgain"].ToString();
 			}
+			else if (TempData["loggedIn"] != null) {
+				ViewBag.requiredLogIn = TempData["loggedIn"].ToString();		
+			}
 
 			//The following success message is given if the user upvotes
 			if (TempData["upVoteSuccess"] != null) {
@@ -86,8 +89,8 @@ namespace Textaland.Controllers
 
 		//This operation Adds a Vote to a the "tr" requests.
 		[HttpPost]
-		[Authorize]
 		public ActionResult AddVote(TranslationRequest request) {
+
             var userId = User.Identity.GetUserId();
 			//taka við TranslationRequest Id búa til upvote út frá því. gefa því Id þ.e.a.s kalla á add fallið
 			//í TranslationRequestUpvote og búa þannig nýtt vote.
@@ -118,6 +121,10 @@ namespace Textaland.Controllers
 					TempData["addVoteAgain"] = "Aðeins er hægt að kjósa hverja beiðni einu sinni";
 				}
 			}
+			else {
+				TempData["loggedIn"] = "Aðeins innskráðir notendur geta framkvæmt þessa aðgerð";
+				return RedirectToAction("TranslationRequests", new { num = 0 });
+			}
 	
 			//Changes the number of upvotes in the TranslationRequest "tr".
 			//Returns the TranslationRequests view were "tr" has one more upvotes.
@@ -132,7 +139,7 @@ namespace Textaland.Controllers
 				requestRepo.RemoveTranslationRequestById(tr);
 			}
 			else {
-				TempData["loggedIn"] = "Aðeins innskráðir notendur geta svarað beiðni";
+				TempData["loggedIn"] = "Aðeins innskráðir notendur geta framkvæmt þessa aðgerð";
 				return RedirectToAction("TranslationRequests", new { num = 0 });
 			}
 
