@@ -25,29 +25,25 @@
 
 <div class="form-horizontal">
     @for (int i = 0; i < 10; i++) {
-        try {
-            using (Html.BeginForm("EditLine", "SubtitleFile", FormMethod.Post)) {
-                <h3>@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._lineNumber</h3>
-                <h3>@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._time</h3>
-                <input type="number" name="fileId" value=@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._textFileId class="hidden" />
-                <input type="number" name="lineId" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)].Id" class="hidden" /><br />
-                <div class="form-group">
-                    <h5 class="col-md-4 text-center">@Model.originalLines[i + (10 * ViewBag.pageNum)]._line1</h5>
-                    <input type="text" name="line1" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._line1 " size="30" class="text-center" /><br />
-                </div>
-                <div class="form-group">
-                    <h5 class="col-md-4 text-center">@Model.originalLines[i + (10 * ViewBag.pageNum)]._line2</h5>
-                    <input type="text" name="line1" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._line2 " size="30" class="text-center" /><br />
-                </div>
-                <div class="form-group">
-                    <h5 class="col-md-4 text-center">@Model.originalLines[i + (10 * ViewBag.pageNum)]._line3</h5>
-                    <input type="text" name="line1" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._line3 " size="30" class="text-center" />                    
-                    <input type="submit" name="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._lineNumber" value="Vista!" class="btn btn-success btn-sm" />   
-                </div>
-            }
-        }
-        catch (Exception e) {
-            <div><strong>ERROR</strong></div>
+        using (Html.BeginForm("EditLine", "SubtitleFile", FormMethod.Post)) 
+        {
+            <h3>@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._lineNumber</h3>
+            <h3>@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._time</h3>
+            <input type="number" name="fileId" value=@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._textFileId class="hidden" />
+            <input type="number" name="lineId" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)].Id" class="hidden" /><br />
+            <div class="form-group">
+                <h5 class="col-md-4 text-center">@Model.originalLines[i + (10 * ViewBag.pageNum)]._line1</h5>
+                <input type="text" name="line1" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._line1 " size="30" class="text-center" /><br />
+            </div>
+            <div class="form-group">
+                <h5 class="col-md-4 text-center">@Model.originalLines[i + (10 * ViewBag.pageNum)]._line2</h5>
+                <input type="text" name="line1" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._line2 " size="30" class="text-center" /><br />
+            </div>
+            <div class="form-group">
+                <h5 class="col-md-4 text-center">@Model.originalLines[i + (10 * ViewBag.pageNum)]._line3</h5>
+                <input type="text" name="line1" value="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._line3 " size="30" class="text-center" />                    
+                <input type="submit" name="@Model.subtitleLines[i + (10 * ViewBag.pageNum)]._lineNumber" value="Vista!" class="btn btn-success btn-sm" />   
+            </div>
         }
     }
 
