@@ -1,25 +1,27 @@
 ﻿@using Textaland.Models;
 @using Microsoft.AspNet.Identity;
-@{
-    ViewBag.Title = "Aðgangsstillingar";
-}
 
-<h2>@ViewBag.Title</h2>
+<div class="jumbotron" style="background: none">
+    <center>
+        <h1>Aðgangsstillingar</h1>
+        <hr />
+    </center>
+</div>
 
-<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="alert alert-dismissable alert-success">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>@ViewBag.StatusMessage</strong>
+</div>
+
 <div class="row">
     <div class="col-md-12">
-        @if (ViewBag.HasLocalPassword)
-        {
+        @if (ViewBag.HasLocalPassword) {
             @Html.Partial("_ChangePasswordPartial")
-        }
-        else
-        {
+        } else {
             @Html.Partial("_SetPasswordPartial")
         }
 
         <section id="externalLogins">
-            @Html.Action("RemoveAccountList")
             @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
         </section>
     </div>
